@@ -6,6 +6,12 @@ import InputError from '@/components/InputError.vue';
 import PasswordInput from '@/components/PasswordInput.vue';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
+import {
+    cardClasses,
+    fieldClasses,
+    labelClasses,
+    primaryButtonClasses,
+} from '@/lib/formStyles';
 import { edit } from '@/routes/security';
 import type { Props as ManagePasskeysProps } from '@/components/ManagePasskeys.vue';
 import ManagePasskeys from '@/components/ManagePasskeys.vue';
@@ -24,7 +30,7 @@ defineOptions({
     layout: {
         breadcrumbs: [
             {
-                title: 'Security settings',
+                title: 'Segurança',
                 href: edit(),
             },
         ],
@@ -33,88 +39,98 @@ defineOptions({
 </script>
 
 <template>
-    <Head title="Security settings" />
+    <Head title="Segurança" />
 
-    <h1 class="sr-only">Security settings</h1>
+    <h1 class="sr-only">Configurações de segurança</h1>
 
-    <div class="space-y-6">
-        <Heading
-            variant="small"
-            title="Update password"
-            description="Ensure your account is using a long, random password to stay secure"
+    <div class="space-y-8">
+        <section :class="cardClasses">
+            <Heading
+                variant="small"
+                title="Alterar senha"
+                description="Use uma senha longa e aleatória para manter sua conta protegida"
+            />
+
+            <Form
+                v-bind="SecurityController.update.form()"
+                :options="{
+                    preserveScroll: true,
+                }"
+                reset-on-success
+                :reset-on-error="[
+                    'password',
+                    'password_confirmation',
+                    'current_password',
+                ]"
+                class="mt-6 space-y-5"
+                v-slot="{ errors, processing }"
+            >
+                <div class="grid gap-2">
+                    <Label for="current_password" :class="labelClasses">
+                        Senha atual
+                    </Label>
+                    <PasswordInput
+                        id="current_password"
+                        name="current_password"
+                        autocomplete="current-password"
+                        placeholder="Senha atual"
+                        :class="fieldClasses"
+                    />
+                    <InputError :message="errors.current_password" />
+                </div>
+
+                <div class="grid gap-2">
+                    <Label for="password" :class="labelClasses">
+                        Nova senha
+                    </Label>
+                    <PasswordInput
+                        id="password"
+                        name="password"
+                        autocomplete="new-password"
+                        placeholder="Nova senha"
+                        :passwordrules="props.passwordRules"
+                        :class="fieldClasses"
+                    />
+                    <InputError :message="errors.password" />
+                </div>
+
+                <div class="grid gap-2">
+                    <Label for="password_confirmation" :class="labelClasses">
+                        Confirmar senha
+                    </Label>
+                    <PasswordInput
+                        id="password_confirmation"
+                        name="password_confirmation"
+                        autocomplete="new-password"
+                        placeholder="Repita a nova senha"
+                        :passwordrules="props.passwordRules"
+                        :class="fieldClasses"
+                    />
+                    <InputError :message="errors.password_confirmation" />
+                </div>
+
+                <div class="flex items-center gap-4 pt-1">
+                    <Button
+                        :disabled="processing"
+                        :aria-busy="processing"
+                        :class="[primaryButtonClasses, 'w-auto px-6']"
+                        data-test="update-password-button"
+                    >
+                        {{ processing ? 'Salvando...' : 'Salvar' }}
+                    </Button>
+                </div>
+            </Form>
+        </section>
+
+        <ManageTwoFactor
+            :canManageTwoFactor="canManageTwoFactor"
+            :requiresConfirmation="requiresConfirmation"
+            :twoFactorEnabled="twoFactorEnabled"
         />
 
-        <Form
-            v-bind="SecurityController.update.form()"
-            :options="{
-                preserveScroll: true,
-            }"
-            reset-on-success
-            :reset-on-error="[
-                'password',
-                'password_confirmation',
-                'current_password',
-            ]"
-            class="space-y-6"
-            v-slot="{ errors, processing }"
-        >
-            <div class="grid gap-2">
-                <Label for="current_password">Current password</Label>
-                <PasswordInput
-                    id="current_password"
-                    name="current_password"
-                    class="mt-1 block w-full"
-                    autocomplete="current-password"
-                    placeholder="Current password"
-                />
-                <InputError :message="errors.current_password" />
-            </div>
-
-            <div class="grid gap-2">
-                <Label for="password">New password</Label>
-                <PasswordInput
-                    id="password"
-                    name="password"
-                    class="mt-1 block w-full"
-                    autocomplete="new-password"
-                    placeholder="New password"
-                    :passwordrules="props.passwordRules"
-                />
-                <InputError :message="errors.password" />
-            </div>
-
-            <div class="grid gap-2">
-                <Label for="password_confirmation">Confirm password</Label>
-                <PasswordInput
-                    id="password_confirmation"
-                    name="password_confirmation"
-                    class="mt-1 block w-full"
-                    autocomplete="new-password"
-                    placeholder="Confirm password"
-                    :passwordrules="props.passwordRules"
-                />
-                <InputError :message="errors.password_confirmation" />
-            </div>
-
-            <div class="flex items-center gap-4">
-                <Button
-                    :disabled="processing"
-                    data-test="update-password-button"
-                >
-                    Save
-                </Button>
-            </div>
-        </Form>
+        <ManagePasskeys
+            :canManagePasskeys="canManagePasskeys"
+            :passkeys="passkeys"
+        />
     </div>
-
-    <ManageTwoFactor
-        :canManageTwoFactor="canManageTwoFactor"
-        :requiresConfirmation="requiresConfirmation"
-        :twoFactorEnabled="twoFactorEnabled"
-    />
-
-    <ManagePasskeys
-        :canManagePasskeys="canManagePasskeys"
-        :passkeys="passkeys"
-    />
 </template>

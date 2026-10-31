@@ -6,6 +6,12 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Spinner } from '@/components/ui/spinner';
+import {
+    fieldClasses,
+    labelClasses,
+    linkClasses,
+    primaryButtonClasses,
+} from '@/lib/formStyles';
 import { login } from '@/routes';
 import { store } from '@/routes/register';
 
@@ -20,12 +26,6 @@ defineOptions({
 defineProps<{
     passwordRules: string;
 }>();
-
-const fieldClasses =
-    'h-11 rounded-lg border-slate-200 bg-white px-3.5 text-sm shadow-sm placeholder:text-slate-400 hover:border-slate-300 focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-indigo-500/30 dark:border-slate-800 dark:bg-slate-950/60 dark:placeholder:text-slate-500 dark:hover:border-slate-700';
-
-const linkClasses =
-    'rounded-sm font-medium text-indigo-600 underline-offset-4 transition-colors hover:underline focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:outline-none dark:text-indigo-400';
 </script>
 
 <template>
@@ -39,9 +39,7 @@ const linkClasses =
     >
         <div class="grid gap-5">
             <div class="grid gap-2">
-                <Label for="name" class="text-slate-700 dark:text-slate-300">
-                    Nome completo
-                </Label>
+                <Label for="name" :class="labelClasses"> Nome completo </Label>
                 <Input
                     id="name"
                     type="text"
@@ -57,9 +55,7 @@ const linkClasses =
             </div>
 
             <div class="grid gap-2">
-                <Label for="email" class="text-slate-700 dark:text-slate-300">
-                    E-mail
-                </Label>
+                <Label for="email" :class="labelClasses"> E-mail </Label>
                 <Input
                     id="email"
                     type="email"
@@ -74,12 +70,7 @@ const linkClasses =
             </div>
 
             <div class="grid gap-2">
-                <Label
-                    for="password"
-                    class="text-slate-700 dark:text-slate-300"
-                >
-                    Senha
-                </Label>
+                <Label for="password" :class="labelClasses"> Senha </Label>
                 <PasswordInput
                     id="password"
                     required
@@ -94,10 +85,7 @@ const linkClasses =
             </div>
 
             <div class="grid gap-2">
-                <Label
-                    for="password_confirmation"
-                    class="text-slate-700 dark:text-slate-300"
-                >
+                <Label for="password_confirmation" :class="labelClasses">
                     Confirmar senha
                 </Label>
                 <PasswordInput
@@ -115,7 +103,8 @@ const linkClasses =
 
             <Button
                 type="submit"
-                class="mt-2 h-11 w-full rounded-lg bg-indigo-600 font-medium text-white shadow-sm transition-colors hover:bg-indigo-500 disabled:opacity-70"
+                class="mt-2"
+                :class="primaryButtonClasses"
                 :tabindex="5"
                 :disabled="processing"
                 :aria-busy="processing"

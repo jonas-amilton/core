@@ -19,17 +19,14 @@ void createInertiaApp({
                 import.meta.glob<any>([
                     '../../Modules/**/resources/assets/js/Pages/**/*.vue',
                     '../../Modules/**/Resources/assets/js/Pages/**/*.vue',
-                ])
+                ]),
             );
         }
 
         // Laravel default: Inertia::render('Dashboard')
         return resolvePageComponent(
             `./pages/${name}.vue`,
-            import.meta.glob<any>([
-                './pages/**/*.vue',
-                './Pages/**/*.vue',
-            ])
+            import.meta.glob<any>(['./pages/**/*.vue', './Pages/**/*.vue']),
         );
     },
     layout: (name) => {

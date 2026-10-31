@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { Form, Head, usePage } from '@inertiajs/vue3';
-import { Link } from '@inertiajs/vue3';
 import { computed } from 'vue';
 import ProfileController from '@/actions/App/Http/Controllers/Settings/ProfileController';
 import DeleteUser from '@/components/DeleteUser.vue';
@@ -9,14 +8,19 @@ import InputError from '@/components/InputError.vue';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import {
+    cardClasses,
+    fieldClasses,
+    labelClasses,
+    primaryButtonClasses,
+} from '@/lib/formStyles';
 import { edit } from '@/routes/profile';
-import { send } from '@/routes/verification';
 
 defineOptions({
     layout: {
         breadcrumbs: [
             {
-                title: 'Profile settings',
+                title: 'Perfil',
                 href: edit(),
             },
         ],
@@ -28,78 +32,67 @@ const user = computed(() => page.props.auth.user);
 </script>
 
 <template>
-    <Head title="Profile settings" />
+    <Head title="Perfil" />
 
-    <h1 class="sr-only">Profile settings</h1>
+    <h1 class="sr-only">Configurações de perfil</h1>
 
-    <div class="flex flex-col space-y-6">
-        <Heading
-            variant="small"
-            title="Profile"
-            description="Update your name and email address"
-        />
+    <div class="flex flex-col space-y-8">
+        <section :class="cardClasses">
+            <Heading
+                variant="small"
+                title="Perfil"
+                description="Atualize seu nome e endereço de e-mail"
+            />
 
-        <Form
-            v-bind="ProfileController.update.form()"
-            class="space-y-6"
-            v-slot="{ errors, processing }"
-        >
-            <div class="grid gap-2">
-                <Label for="name">Name</Label>
-                <Input
-                    id="name"
-                    class="mt-1 block w-full"
-                    name="name"
-                    :default-value="user.name"
-                    required
-                    autocomplete="name"
-                    placeholder="Full name"
-                />
-                <InputError class="mt-2" :message="errors.name" />
-            </div>
-
-            <div class="grid gap-2">
-                <Label for="email">Email address</Label>
-                <Input
-                    id="email"
-                    type="email"
-                    class="mt-1 block w-full"
-                    name="email"
-                    :default-value="user.email"
-                    required
-                    autocomplete="username"
-                    placeholder="Email address"
-                />
-                <InputError class="mt-2" :message="errors.email" />
-            </div>
-
-            <div v-if="page.props.mustVerifyEmail && !user.email_verified_at">
-                <p class="-mt-4 text-sm text-muted-foreground">
-                    Your email address is unverified.
-                    <Link
-                        :href="send()"
-                        as="button"
-                        class="text-foreground underline decoration-neutral-300 underline-offset-4 transition-colors duration-300 ease-out hover:decoration-current! dark:decoration-neutral-500"
-                    >
-                        Click here to re-send the verification email.
-                    </Link>
-                </p>
-
-                <div
-                    v-if="page.props.status === 'verification-link-sent'"
-                    class="mt-2 text-sm font-medium text-green-600"
-                >
-                    A new verification link has been sent to your email address.
+            <Form
+                v-bind="ProfileController.update.form()"
+                class="mt-6 space-y-5"
+                v-slot="{ errors, processing }"
+            >
+                <div class="grid gap-2">
+                    <Label for="name" :class="labelClasses">Nome</Label>
+                    <Input
+                        id="name"
+                        class="mt-1 block w-full"
+                        name="name"
+                        :default-value="user.name"
+                        required
+                        autocomplete="name"
+                        placeholder="Nome completo"
+                        :class="fieldClasses"
+                    />
+                    <InputError class="mt-2" :message="errors.name" />
                 </div>
-            </div>
 
-            <div class="flex items-center gap-4">
-                <Button :disabled="processing" data-test="update-profile-button"
-                    >Save</Button
-                >
-            </div>
-        </Form>
+                <div class="grid gap-2">
+                    <Label for="email" :class="labelClasses">E-mail</Label>
+                    <Input
+                        id="email"
+                        type="email"
+                        class="mt-1 block w-full"
+                        name="email"
+                        :default-value="user.email"
+                        required
+                        autocomplete="username"
+                        placeholder="voce@empresa.com"
+                        :class="fieldClasses"
+                    />
+                    <InputError class="mt-2" :message="errors.email" />
+                </div>
+
+                <div class="flex items-center gap-4 pt-1">
+                    <Button
+                        :disabled="processing"
+                        :aria-busy="processing"
+                        :class="[primaryButtonClasses, 'w-auto px-6']"
+                        data-test="update-profile-button"
+                    >
+                        {{ processing ? 'Salvando...' : 'Salvar' }}
+                    </Button>
+                </div>
+            </Form>
+        </section>
+
+        <DeleteUser />
     </div>
-
-    <DeleteUser />
 </template>

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Link, router } from '@inertiajs/vue3';
-import { LogOut, Settings } from '@lucide/vue';
+import { Check, LogOut, Monitor, Moon, Settings, Sun } from '@lucide/vue';
 import {
     DropdownMenuGroup,
     DropdownMenuItem,
@@ -8,6 +8,7 @@ import {
     DropdownMenuSeparator,
 } from '@/components/ui/dropdown-menu';
 import UserInfo from '@/components/UserInfo.vue';
+import { useAppearance } from '@/composables/useAppearance';
 import { logout } from '@/routes';
 import { edit } from '@/routes/profile';
 import type { User } from '@/types';
@@ -21,6 +22,14 @@ const handleLogout = () => {
 };
 
 defineProps<Props>();
+
+const { appearance, updateAppearance } = useAppearance();
+
+const themes = [
+    { value: 'light', label: 'Claro', icon: Sun },
+    { value: 'dark', label: 'Escuro', icon: Moon },
+    { value: 'system', label: 'Sistema', icon: Monitor },
+] as const;
 </script>
 
 <template>
@@ -34,8 +43,29 @@ defineProps<Props>();
         <DropdownMenuItem :as-child="true">
             <Link class="block w-full cursor-pointer" :href="edit()" prefetch>
                 <Settings class="mr-2 h-4 w-4" />
-                Settings
+                Configurações
             </Link>
+        </DropdownMenuItem>
+    </DropdownMenuGroup>
+    <DropdownMenuSeparator />
+    <DropdownMenuGroup>
+        <DropdownMenuLabel
+            class="text-xs font-medium text-slate-400 dark:text-slate-500"
+        >
+            Tema
+        </DropdownMenuLabel>
+        <DropdownMenuItem
+            v-for="theme in themes"
+            :key="theme.value"
+            class="cursor-pointer"
+            @click="updateAppearance(theme.value)"
+        >
+            <component :is="theme.icon" class="mr-2 h-4 w-4" />
+            {{ theme.label }}
+            <Check
+                v-if="appearance === theme.value"
+                class="ml-auto h-4 w-4 text-indigo-600 dark:text-indigo-400"
+            />
         </DropdownMenuItem>
     </DropdownMenuGroup>
     <DropdownMenuSeparator />
@@ -48,7 +78,7 @@ defineProps<Props>();
             data-test="logout-button"
         >
             <LogOut class="mr-2 h-4 w-4" />
-            Log out
+            Sair
         </Link>
     </DropdownMenuItem>
 </template>

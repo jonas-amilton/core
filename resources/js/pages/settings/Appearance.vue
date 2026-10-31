@@ -2,13 +2,14 @@
 import { Head } from '@inertiajs/vue3';
 import AppearanceTabs from '@/components/AppearanceTabs.vue';
 import Heading from '@/components/Heading.vue';
+import { cardClasses } from '@/lib/formStyles';
 import { edit } from '@/routes/appearance';
 
 defineOptions({
     layout: {
         breadcrumbs: [
             {
-                title: 'Appearance settings',
+                title: 'Aparência',
                 href: edit(),
             },
         ],
@@ -17,16 +18,18 @@ defineOptions({
 </script>
 
 <template>
-    <Head title="Appearance settings" />
+    <Head title="Aparência" />
 
-    <h1 class="sr-only">Appearance settings</h1>
+    <h1 class="sr-only">Configurações de aparência</h1>
 
-    <div class="space-y-6">
+    <section :class="cardClasses">
         <Heading
             variant="small"
-            title="Appearance settings"
-            description="Update the appearance settings for your account"
+            title="Aparência"
+            description="Escolha como o CoreCMS deve ser exibido para você"
         />
-        <AppearanceTabs />
-    </div>
+        <div class="mt-6">
+            <AppearanceTabs />
+        </div>
+    </section>
 </template>
