@@ -1,9 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Modules\Page\Providers;
 
-use Nwidart\Modules\Support\ModuleServiceProvider;
 use Illuminate\Console\Scheduling\Schedule;
+use Modules\Page\Contracts\PageRepository;
+use Modules\Page\Repositories\EloquentPageRepository;
+use Nwidart\Modules\Support\ModuleServiceProvider;
 
 class PageServiceProvider extends ModuleServiceProvider
 {
@@ -34,10 +38,15 @@ class PageServiceProvider extends ModuleServiceProvider
         RouteServiceProvider::class,
     ];
 
+    public function register(): void
+    {
+        parent::register();
+
+        $this->app->bind(PageRepository::class, EloquentPageRepository::class);
+    }
+
     /**
      * Define module schedules.
-     * 
-     * @param $schedule
      */
     // protected function configureSchedules(Schedule $schedule): void
     // {
