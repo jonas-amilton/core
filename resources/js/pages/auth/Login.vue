@@ -15,7 +15,6 @@ import {
     primaryButtonClasses,
     statusClasses,
 } from '@/lib/formStyles';
-import { register } from '@/routes';
 import { store } from '@/routes/login';
 import { request } from '@/routes/password';
 
@@ -121,11 +120,8 @@ defineProps<{
             </Button>
         </div>
 
-        <p class="text-center text-sm text-slate-600 dark:text-slate-400">
-            Não tem uma conta?
-            <Link :href="register()" :tabindex="5" :class="linkClasses">
-                Cadastre-se
-            </Link>
+        <p class="text-center text-xs text-slate-500 dark:text-slate-500">
+            Acesso restrito a administradores do site.
         </p>
     </Form>
 </template>

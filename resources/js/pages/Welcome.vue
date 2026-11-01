@@ -8,7 +8,7 @@ import {
     Sparkles,
 } from '@lucide/vue';
 import { computed } from 'vue';
-import { dashboard, home, login, register } from '@/routes';
+import { admin, home, login } from '@/routes';
 
 const props = withDefaults(
     defineProps<{
@@ -27,15 +27,11 @@ const isAuthenticated = computed(() => Boolean(page.props.auth?.user));
 
 const primaryCta = computed(() => {
     if (isAuthenticated.value) {
-        return { label: 'Abrir painel', href: dashboard() };
-    }
-
-    if (props.canRegister) {
-        return { label: 'Começar agora', href: register() };
+        return { label: 'Abrir painel', href: admin() };
     }
 
     if (props.canLogin) {
-        return { label: 'Entrar na conta', href: login() };
+        return { label: 'Acessar o painel', href: login() };
     }
 
     return null;
@@ -46,19 +42,19 @@ const features = [
         icon: Blocks,
         title: 'Estrutura Modular',
         description:
-            'Cada parte do site é um módulo independente, com rotas, views e componentes próprios. Ative, desative ou crie novos domínios sem tocar no núcleo.',
+            'Cada área do site é um módulo independente. Adicione ou remova domínios como páginas, mídia e usuários sem mexer no resto do painel.',
     },
     {
         icon: LayoutGrid,
         title: 'Blocos Visuais Sob Demanda',
         description:
-            'Monte páginas com blocos de Hero, Grid e CTA. O conteúdo é montado visualmente enquanto o código continua limpo, tipado e versionado.',
+            'Monte cada página com blocos de Hero, Grid e CTA direto na interface. O conteúdo publicado segue o mesmo padrão visual do site.',
     },
     {
         icon: LayoutDashboard,
         title: 'Painel Unificado',
         description:
-            'Administre páginas, usuários e módulos em um único lugar, com a mesma identidade visual em modo claro e escuro.',
+            'Páginas, biblioteca de mídia e permissões em um único lugar, com modo claro e escuro em toda a administração.',
     },
 ];
 
@@ -66,7 +62,7 @@ const currentYear = new Date().getFullYear();
 </script>
 
 <template>
-    <Head title="CoreCMS — crie sites em blocos" />
+    <Head title="CoreCMS — painel do site" />
 
     <div
         class="min-h-screen bg-white text-slate-900 antialiased dark:bg-slate-950 dark:text-slate-100"
@@ -115,7 +111,7 @@ const currentYear = new Date().getFullYear();
                 <div class="flex items-center gap-2">
                     <template v-if="isAuthenticated">
                         <Link
-                            :href="dashboard()"
+                            :href="admin()"
                             class="inline-flex h-9 items-center gap-2 rounded-md bg-indigo-600 px-4 text-sm font-medium text-white transition-colors hover:bg-indigo-500 focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2 focus-visible:outline-none dark:focus-visible:ring-offset-slate-950"
                         >
                             <LayoutDashboard
@@ -129,16 +125,9 @@ const currentYear = new Date().getFullYear();
                         <Link
                             v-if="canLogin"
                             :href="login()"
-                            class="inline-flex h-9 items-center rounded-md px-3 text-sm font-medium text-slate-600 transition-colors hover:bg-slate-100 hover:text-slate-900 focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:outline-none dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-white"
-                        >
-                            Entrar
-                        </Link>
-                        <Link
-                            v-if="canRegister"
-                            :href="register()"
                             class="inline-flex h-9 items-center rounded-md bg-indigo-600 px-4 text-sm font-medium text-white transition-colors hover:bg-indigo-500 focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2 focus-visible:outline-none dark:focus-visible:ring-offset-slate-950"
                         >
-                            Criar conta
+                            Entrar
                         </Link>
                     </template>
                 </div>
@@ -168,13 +157,13 @@ const currentYear = new Date().getFullYear();
                             class="inline-flex items-center gap-2 rounded-full border border-indigo-200 bg-indigo-50 px-3 py-1 text-xs font-medium text-indigo-700 dark:border-indigo-400/30 dark:bg-indigo-500/10 dark:text-indigo-300"
                         >
                             <Sparkles class="size-3.5" aria-hidden="true" />
-                            Arquitetura modular com Laravel + Vue
+                            Painel de administração do site
                         </span>
 
                         <h1
                             class="mt-6 text-4xl font-semibold tracking-tight text-balance sm:text-5xl lg:text-6xl"
                         >
-                            Monte sites completos
+                            Edite o site inteiro
                             <span
                                 class="bg-linear-to-r from-indigo-600 to-violet-500 bg-clip-text text-transparent dark:from-indigo-400 dark:to-violet-300"
                             >
@@ -185,10 +174,10 @@ const currentYear = new Date().getFullYear();
                         <p
                             class="mx-auto mt-6 max-w-2xl text-base text-pretty text-slate-600 sm:text-lg dark:text-slate-400"
                         >
-                            CoreCMS une a solidez do Laravel à fluidez do Vue 3
-                            para criar, compor e publicar páginas em minutos.
-                            Cada recurso é um módulo — você liga apenas o que o
-                            seu projeto precisa.
+                            O CoreCMS é o painel onde você monta e ajusta as
+                            páginas do site, organiza a biblioteca de mídia e
+                            define quem tem acesso. Entre com sua conta para
+                            começar a editar.
                         </p>
 
                         <div
@@ -217,8 +206,7 @@ const currentYear = new Date().getFullYear();
                         <p
                             class="mt-4 text-xs text-slate-500 dark:text-slate-500"
                         >
-                            Sem dependências extras. Tudo o que você já conhece
-                            do ecossistema Laravel.
+                            Acesso restrito à administração do site.
                         </p>
                     </div>
 
@@ -400,13 +388,13 @@ const currentYear = new Date().getFullYear();
                         <h2
                             class="text-2xl font-semibold tracking-tight sm:text-3xl"
                         >
-                            Três pilares, zero acoplamento
+                            O que você controla no painel
                         </h2>
                         <p
                             class="mt-3 text-base text-slate-600 dark:text-slate-400"
                         >
-                            Um CMS que cresce junto com o projeto: módulos
-                            isolados, edição por blocos e uma administração só.
+                            Tudo o que o site precisa para ser editado no dia a
+                            dia, sem sair da administração.
                         </p>
                     </div>
 
