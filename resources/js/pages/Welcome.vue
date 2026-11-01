@@ -8,7 +8,7 @@ import {
     Sparkles,
 } from '@lucide/vue';
 import { computed } from 'vue';
-import { admin, home, login } from '@/routes';
+import { admin, dashboard, login } from '@/routes';
 
 const props = withDefaults(
     defineProps<{
@@ -27,7 +27,7 @@ const isAuthenticated = computed(() => Boolean(page.props.auth?.user));
 
 const primaryCta = computed(() => {
     if (isAuthenticated.value) {
-        return { label: 'Abrir painel', href: admin() };
+        return { label: 'Abrir painel', href: dashboard() };
     }
 
     if (props.canLogin) {
@@ -75,7 +75,7 @@ const currentYear = new Date().getFullYear();
                 class="mx-auto flex h-16 w-full max-w-6xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8"
             >
                 <Link
-                    :href="home()"
+                    :href="admin()"
                     class="flex items-center gap-2.5 rounded-md text-slate-900 focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2 focus-visible:outline-none dark:text-slate-100 dark:focus-visible:ring-offset-slate-950"
                 >
                     <span
@@ -111,7 +111,7 @@ const currentYear = new Date().getFullYear();
                 <div class="flex items-center gap-2">
                     <template v-if="isAuthenticated">
                         <Link
-                            :href="admin()"
+                            :href="dashboard()"
                             class="inline-flex h-9 items-center gap-2 rounded-md bg-indigo-600 px-4 text-sm font-medium text-white transition-colors hover:bg-indigo-500 focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2 focus-visible:outline-none dark:focus-visible:ring-offset-slate-950"
                         >
                             <LayoutDashboard
@@ -233,7 +233,7 @@ const currentYear = new Date().getFullYear();
                                 <div
                                     class="mx-auto hidden max-w-xs flex-1 rounded-md border border-slate-200 bg-white px-3 py-1 text-center text-[11px] text-slate-400 sm:block dark:border-slate-800 dark:bg-slate-950 dark:text-slate-500"
                                 >
-                                    corecms.test/admin/pages/home
+                                    corecms.test/pages/1/edit
                                 </div>
                                 <span
                                     class="rounded-md bg-emerald-50 px-2 py-1 text-[11px] font-medium text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-400"

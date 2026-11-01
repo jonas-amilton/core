@@ -32,6 +32,8 @@ void createInertiaApp({
     layout: (name) => {
         switch (true) {
             case name === 'Welcome':
+            case name === 'Page::Show':
+            case name === 'Page::Preview':
                 return null;
             case name.startsWith('auth/'):
                 return AuthLayout;
