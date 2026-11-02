@@ -72,8 +72,14 @@ final class EloquentCatalogRepository implements CatalogRepository
     /**
      * @return LengthAwarePaginator<int, Product>
      */
-    public function products(?string $search, ?int $categoryId, int $perPage = 20): LengthAwarePaginator
-    {
+    public function products(
+        ?string $search,
+        ?int $categoryId,
+        int $perPage = 20,
+        string $sort = 'default',
+        ?float $minPrice = null,
+        ?float $maxPrice = null,
+    ): LengthAwarePaginator {
         return Product::query()
             ->with(['media', 'categories'])
             ->withAvg(['reviews as rating' => fn (Builder $query): Builder => $query->where('approved', true)], 'rating')
@@ -84,8 +90,9 @@ final class EloquentCatalogRepository implements CatalogRepository
                     ->orWhere('sku', 'like', "%{$search}%")))
             ->when($categoryId !== null, fn (Builder $query): Builder => $query
                 ->whereHas('categories', fn (Builder $inner): Builder => $inner->whereKey($categoryId)))
-            ->orderBy('position')
-            ->orderBy('name')
+            ->when($minPrice !== null, fn (Builder $query): Builder => $query->where('price', '>=', $minPrice))
+            ->when($maxPrice !== null, fn (Builder $query): Builder => $query->where('price', '<=', $maxPrice))
+            ->tap(fn (Builder $query): Builder => $this->applySort($query, $sort))
             ->paginate($perPage)
             ->withQueryString();
     }
@@ -94,16 +101,22 @@ final class EloquentCatalogRepository implements CatalogRepository
      * @param  array<int, int>  $categoryIds
      * @return LengthAwarePaginator<int, Product>
      */
-    public function productsOfCategories(array $categoryIds, int $perPage = 12): LengthAwarePaginator
-    {
+    public function productsOfCategories(
+        array $categoryIds,
+        int $perPage = 12,
+        string $sort = 'default',
+        ?float $minPrice = null,
+        ?float $maxPrice = null,
+    ): LengthAwarePaginator {
         return Product::query()
             ->with(['media', 'categories'])
             ->withAvg(['reviews as rating' => fn (Builder $query): Builder => $query->where('approved', true)], 'rating')
             ->withCount(['reviews as review_count' => fn (Builder $query): Builder => $query->where('approved', true)])
             ->when($categoryIds !== [], fn (Builder $query): Builder => $query
                 ->whereHas('categories', fn (Builder $inner): Builder => $inner->whereIn('catalog_categories.id', $categoryIds)))
-            ->orderBy('position')
-            ->orderBy('name')
+            ->when($minPrice !== null, fn (Builder $query): Builder => $query->where('price', '>=', $minPrice))
+            ->when($maxPrice !== null, fn (Builder $query): Builder => $query->where('price', '<=', $maxPrice))
+            ->tap(fn (Builder $query): Builder => $this->applySort($query, $sort))
             ->paginate($perPage)
             ->withQueryString();
     }
@@ -192,6 +205,21 @@ final class EloquentCatalogRepository implements CatalogRepository
             ->where('slug', $slug)
             ->when($ignore, fn (Builder $query): Builder => $query->whereKeyNot($ignore->getKey()))
             ->exists();
+    }
+
+    /**
+     * @param  Builder<Product>  $query
+     * @return Builder<Product>
+     */
+    private function applySort(Builder $query, string $sort): Builder
+    {
+        return match ($sort) {
+            'price_asc' => $query->orderBy('price'),
+            'price_desc' => $query->orderByDesc('price'),
+            'newest' => $query->orderByDesc('created_at')->orderByDesc('id'),
+            'name' => $query->orderBy('name'),
+            default => $query->orderBy('position')->orderBy('name'),
+        };
     }
 
     private function sync(Product $product, ProductData $data): void

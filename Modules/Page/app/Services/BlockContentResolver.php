@@ -6,6 +6,7 @@ namespace Modules\Page\Services;
 
 use Modules\Blog\Models\Post;
 use Modules\Blog\Services\BlogService;
+use Modules\Catalog\Models\Category;
 use Modules\Catalog\Models\Product;
 use Modules\Catalog\Services\CatalogService;
 use Modules\Content\Models\Client;
@@ -42,6 +43,7 @@ final class BlockContentResolver
                 'clients' => $this->clients(),
                 'posts' => $this->posts((int) ($block['limit'] ?? 3)),
                 'products' => $this->products((int) ($block['limit'] ?? 3)),
+                'categories' => $this->categories(),
                 default => null,
             };
 
@@ -110,6 +112,25 @@ final class BlockContentResolver
 
         return $this->blog->publishedPosts($limit)
             ->map(fn (Post $post): array => $post->toCardArray())
+            ->values()
+            ->all();
+    }
+
+    /**
+     * @return array<int, array<string, mixed>>
+     */
+    private function categories(): array
+    {
+        $categories = $this->catalog->categories()->take(4);
+        $categories->loadMissing('products.media');
+
+        return $categories
+            ->map(fn (Category $category): array => [
+                'title' => $category->transString('name') ?? $category->name,
+                'url' => '/produtos/c/'.$category->slug,
+                'cover' => $category->products->first()?->cover(),
+                'count' => (int) ($category->products_count ?? $category->products->count()),
+            ])
             ->values()
             ->all();
     }

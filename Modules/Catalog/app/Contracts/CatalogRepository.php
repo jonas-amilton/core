@@ -31,7 +31,14 @@ interface CatalogRepository
     /**
      * @return LengthAwarePaginator<int, Product>
      */
-    public function products(?string $search, ?int $categoryId, int $perPage = 20): LengthAwarePaginator;
+    public function products(
+        ?string $search,
+        ?int $categoryId,
+        int $perPage = 20,
+        string $sort = 'default',
+        ?float $minPrice = null,
+        ?float $maxPrice = null,
+    ): LengthAwarePaginator;
 
     /**
      * @param  array<int, int>  $categoryIds
@@ -40,7 +47,13 @@ interface CatalogRepository
      * @param  array<int, int>  $categoryIds
      * @return LengthAwarePaginator<int, Product>
      */
-    public function productsOfCategories(array $categoryIds, int $perPage = 12): LengthAwarePaginator;
+    public function productsOfCategories(
+        array $categoryIds,
+        int $perPage = 12,
+        string $sort = 'default',
+        ?float $minPrice = null,
+        ?float $maxPrice = null,
+    ): LengthAwarePaginator;
 
     /**
      * @return Collection<int, Product>

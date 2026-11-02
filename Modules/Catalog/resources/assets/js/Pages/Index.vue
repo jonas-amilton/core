@@ -1,25 +1,12 @@
 <script setup lang="ts">
-import { Link, router } from '@inertiajs/vue3';
-import { Heart } from '@lucide/vue';
+import { Link, router, usePage } from '@inertiajs/vue3';
 import { ref } from 'vue';
-import { store as addToCart } from '@/routes/quote/item';
 import SiteHead from '@/components/SiteHead.vue';
+import ProductCard from '../components/ProductCard.vue';
+import type { CardProduct } from '../components/ProductCard.vue';
 import SiteShell from '@modules/Page/resources/assets/js/components/SiteShell.vue';
 import type { NavigationItem } from '@modules/Page/resources/assets/js/types';
-import { formatPrice } from '@/lib/format';
 import { useI18n } from '@/i18n';
-
-type Product = {
-    id: number;
-    name: string;
-    slug: string;
-    sku: string | null;
-    price: string | null;
-    stock: number | null;
-    rating: number | null;
-    review_count: number;
-    cover: string | null;
-};
 
 type Category = {
     id: number;
@@ -30,7 +17,7 @@ type Category = {
 };
 
 type Paginator = {
-    data: Product[];
+    data: CardProduct[];
     current_page: number;
     last_page: number;
     prev_page_url: string | null;
@@ -43,6 +30,7 @@ const props = defineProps<{
     products: Paginator;
     categories: Category[];
     activeCategory: Category | null;
+    filters: { sort: string; min: string | null; max: string | null };
     navigation: NavigationItem[];
 }>();
 
@@ -50,21 +38,21 @@ const title = props.activeCategory
     ? `${t('catalog.title')} · ${props.activeCategory.name}`
     : t('catalog.title');
 
-const added = ref<Record<number, boolean>>({});
+const page = usePage();
+const sort = ref(props.filters.sort);
+const min = ref(props.filters.min ?? '');
+const max = ref(props.filters.max ?? '');
 
-function add(product: Product): void {
-    router.post(
-        addToCart.url(),
-        { product_id: product.id, quantity: 1 },
+function applyFilters(): void {
+    router.get(
+        page.url.split('?')[0],
         {
-            preserveScroll: true,
-            onSuccess: () => (added.value[product.id] = true),
+            sort: sort.value !== 'default' ? sort.value : undefined,
+            min: min.value || undefined,
+            max: max.value || undefined,
         },
+        { preserveState: true, preserveScroll: true },
     );
-}
-
-function favorite(product: Product): void {
-    router.post(`/favoritos/${product.id}`, {}, { preserveScroll: true });
 }
 </script>
 
@@ -124,97 +112,74 @@ function favorite(product: Product): void {
                 </Link>
             </nav>
 
-            <ul class="mt-8 grid gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
-                <li
-                    v-for="product in props.products.data"
-                    :key="product.id"
-                    class="group flex flex-col"
-                >
-                    <div
-                        class="relative aspect-square overflow-hidden rounded-xl bg-[#f5f5f5] dark:bg-slate-800"
-                    >
-                        <Link :href="`/produto/${product.slug}`" class="block h-full">
-                            <img
-                                v-if="product.cover"
-                                :src="product.cover"
-                                alt=""
-                                class="h-full w-full object-contain p-6 mix-blend-multiply transition-transform duration-300 motion-safe:group-hover:scale-[1.03] dark:mix-blend-normal"
-                            />
-                        </Link>
-
-                        <button
-                            type="button"
-                            class="absolute top-3 right-3 flex size-9 items-center justify-center rounded-full bg-white text-slate-500 shadow-sm transition-colors hover:text-red-500"
-                            :aria-label="`${t('catalog.favorite')}: ${product.name}`"
-                            @click="favorite(product)"
-                        >
-                            <Heart class="size-4" aria-hidden="true" />
-                        </button>
-                    </div>
-
-                    <div class="mt-4 flex items-start justify-between gap-3">
-                        <Link
-                            :href="`/produto/${product.slug}`"
-                            class="text-[15px] leading-snug font-semibold text-slate-950 hover:text-brand dark:text-slate-50"
-                        >
-                            {{ product.name }}
-                        </Link>
-                        <p
-                            class="shrink-0 text-[15px] font-semibold text-slate-950 tabular-nums dark:text-slate-50"
-                        >
-                            {{
-                                formatPrice(product.price) ??
-                                t('catalog.priceOnRequest')
-                            }}
-                        </p>
-                    </div>
-
-                    <div class="flex-1">
-                    <p
-                        v-if="product.sku"
-                        class="mt-1 text-xs text-slate-500 dark:text-slate-400"
-                    >
-                        {{ t('catalog.sku') }}: {{ product.sku }}
-                    </p>
-
-                    <p
-                        v-if="product.rating"
-                        class="mt-1 text-xs text-brand dark:text-green-400"
-                        :aria-label="`${product.rating} / 5`"
-                    >
-                        <span aria-hidden="true">
-                            {{ '★'.repeat(Math.round(product.rating)) }}
-                        </span>
-                        <span class="ml-1 text-slate-500 dark:text-slate-400">
-                            ({{ product.review_count }})
-                        </span>
-                    </p>
-                    </div>
-
+            <form
+                class="mt-4 flex flex-wrap items-center justify-between gap-3"
+                @submit.prevent="applyFilters"
+            >
+                <div class="flex flex-wrap items-center gap-2 text-sm">
+                    <span class="text-slate-500 dark:text-slate-400">
+                        {{ t('catalog.price') }}
+                    </span>
+                    <label class="sr-only" for="filter-min">
+                        {{ t('catalog.minPrice') }}
+                    </label>
+                    <input
+                        id="filter-min"
+                        v-model="min"
+                        type="number"
+                        min="0"
+                        :placeholder="t('catalog.minPrice')"
+                        class="h-9 w-24 rounded-full border border-slate-200 bg-white px-3 text-sm tabular-nums focus-visible:border-brand focus-visible:ring-2 focus-visible:ring-brand/20 dark:border-slate-800 dark:bg-slate-900"
+                    />
+                    <span class="text-slate-400">–</span>
+                    <label class="sr-only" for="filter-max">
+                        {{ t('catalog.maxPrice') }}
+                    </label>
+                    <input
+                        id="filter-max"
+                        v-model="max"
+                        type="number"
+                        min="0"
+                        :placeholder="t('catalog.maxPrice')"
+                        class="h-9 w-24 rounded-full border border-slate-200 bg-white px-3 text-sm tabular-nums focus-visible:border-brand focus-visible:ring-2 focus-visible:ring-brand/20 dark:border-slate-800 dark:bg-slate-900"
+                    />
                     <button
-                        v-if="product.stock !== 0"
-                        type="button"
-                        :class="[
-                            'mt-4 inline-flex h-10 w-full items-center justify-center gap-2 rounded-full border text-sm font-medium transition-colors',
-                            added[product.id]
-                                ? 'border-brand bg-brand text-white'
-                                : 'border-brand/30 text-brand-deep hover:border-brand hover:bg-brand hover:text-white dark:border-slate-700 dark:text-slate-200',
-                        ]"
-                        :aria-label="`${t('catalog.addToCart')}: ${product.name}`"
-                        @click="add(product)"
+                        type="submit"
+                        class="inline-flex h-9 items-center rounded-full border border-brand/30 px-4 text-sm font-medium text-brand-deep transition-colors hover:bg-brand hover:text-white dark:border-slate-700 dark:text-slate-200"
                     >
-                        {{
-                            added[product.id]
-                                ? t('catalog.added')
-                                : t('catalog.addToCart')
-                        }}
+                        {{ t('catalog.apply') }}
                     </button>
-                    <p
-                        v-else
-                        class="mt-auto inline-flex h-10 items-center justify-center rounded-full border border-slate-200 text-sm font-medium text-slate-500 dark:border-slate-700 dark:text-slate-400"
+                </div>
+
+                <label
+                    class="flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400"
+                >
+                    {{ t('catalog.sort') }}
+                    <select
+                        v-model="sort"
+                        class="h-9 rounded-full border border-slate-200 bg-white px-3 text-sm text-slate-900 focus-visible:border-brand focus-visible:ring-2 focus-visible:ring-brand/20 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-100"
+                        @change="applyFilters"
                     >
-                        {{ t('catalog.outOfStock') }}
-                    </p>
+                        <option value="default">
+                            {{ t('catalog.sortDefault') }}
+                        </option>
+                        <option value="price_asc">
+                            {{ t('catalog.sortPriceAsc') }}
+                        </option>
+                        <option value="price_desc">
+                            {{ t('catalog.sortPriceDesc') }}
+                        </option>
+                        <option value="name">{{ t('catalog.sortName') }}</option>
+                        <option value="newest">
+                            {{ t('catalog.sortNewest') }}
+                        </option>
+                    </select>
+                </label>
+            </form>
+
+            <ul class="mt-8 grid gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
+                <li v-for="product in props.products.data" :key="product.id">
+                    <ProductCard :product="product" />
                 </li>
             </ul>
 

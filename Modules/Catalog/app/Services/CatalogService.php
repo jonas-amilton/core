@@ -101,19 +101,33 @@ final class CatalogService
     /**
      * @return LengthAwarePaginator<int, Product>
      */
-    public function products(?string $search, ?int $categoryId, int $perPage = 20): LengthAwarePaginator
-    {
-        return $this->catalog->products($search, $categoryId, $perPage);
+    public function products(
+        ?string $search,
+        ?int $categoryId,
+        int $perPage = 20,
+        string $sort = 'default',
+        ?float $minPrice = null,
+        ?float $maxPrice = null,
+    ): LengthAwarePaginator {
+        return $this->catalog->products($search, $categoryId, $perPage, $sort, $minPrice, $maxPrice);
     }
 
     /**
      * @return LengthAwarePaginator<int, Product>
      */
-    public function productsOfCategory(Category $category, int $perPage = 12): LengthAwarePaginator
-    {
+    public function productsOfCategory(
+        Category $category,
+        int $perPage = 12,
+        string $sort = 'default',
+        ?float $minPrice = null,
+        ?float $maxPrice = null,
+    ): LengthAwarePaginator {
         return $this->catalog->productsOfCategories(
             $this->categoryIdsWithDescendants($category),
             $perPage,
+            $sort,
+            $minPrice,
+            $maxPrice,
         );
     }
 

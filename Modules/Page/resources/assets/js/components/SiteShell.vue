@@ -312,7 +312,7 @@ const navLink = (active: boolean): string =>
             class="mt-16 border-t border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-950"
         >
             <div
-                class="mx-auto grid w-full max-w-6xl gap-10 px-4 py-12 text-sm text-slate-600 sm:grid-cols-2 sm:px-6 lg:grid-cols-4 dark:text-slate-400"
+                class="mx-auto grid w-full max-w-6xl gap-10 px-4 py-12 text-sm text-slate-600 sm:grid-cols-2 sm:px-6 lg:grid-cols-5 dark:text-slate-400"
             >
                 <div class="grid content-start gap-3">
                     <p
@@ -386,6 +386,29 @@ const navLink = (active: boolean): string =>
                     <p v-if="site.hours" class="text-slate-500 dark:text-slate-500">
                         {{ site.hours }}
                     </p>
+                </div>
+
+                <div class="grid content-start gap-2">
+                    <p
+                        class="mb-1 text-[11px] font-semibold tracking-[0.12em] text-slate-500 uppercase dark:text-slate-400"
+                    >
+                        {{ t('footer.help') }}
+                    </p>
+                    <a href="/busca" class="hover:text-brand dark:hover:text-green-400">
+                        {{ t('search.title') }}
+                    </a>
+                    <a href="/contato" class="hover:text-brand dark:hover:text-green-400">
+                        {{ t('footer.contact') }}
+                    </a>
+                    <a href="/onde-comprar" class="hover:text-brand dark:hover:text-green-400">
+                        {{ t('stores.title') }}
+                    </a>
+                    <a href="/minha-conta" class="hover:text-brand dark:hover:text-green-400">
+                        {{ t('nav.account') }}
+                    </a>
+                    <a href="/politica-de-cookies" class="hover:text-brand dark:hover:text-green-400">
+                        {{ t('cookie.policy') }}
+                    </a>
                 </div>
 
                 <div class="grid content-start gap-2">

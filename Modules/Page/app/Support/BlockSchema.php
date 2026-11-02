@@ -63,6 +63,10 @@ final class BlockSchema
             'title' => ['nullable', 'string', 'max:120'],
             'limit' => ['nullable', 'integer', 'min:1', 'max:12'],
         ],
+        'categories' => [
+            'title' => ['nullable', 'string', 'max:120'],
+            'subtitle' => ['nullable', 'string', 'max:240'],
+        ],
         'contact' => [
             'title' => ['nullable', 'string', 'max:120'],
             'subtitle' => ['nullable', 'string', 'max:240'],

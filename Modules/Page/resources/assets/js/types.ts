@@ -10,6 +10,7 @@ export type BlockType =
     | 'clients'
     | 'posts'
     | 'products'
+    | 'categories'
     | 'contact'
     | 'career'
     | 'newsletter';
@@ -24,6 +25,7 @@ export type GridItem = {
     icon?: string | null;
     cover?: string | null;
     price?: string | number | null;
+    count?: number | null;
     category?: string | null;
     date?: string | null;
 };

@@ -3,6 +3,8 @@ import { Link, router, useForm, usePage } from '@inertiajs/vue3';
 import { Check, Heart, Plus } from '@lucide/vue';
 import { computed, ref } from 'vue';
 import { store as addToCart } from '@/routes/quote/item';
+import ProductCard from '../components/ProductCard.vue';
+import type { CardProduct } from '../components/ProductCard.vue';
 import { formatPrice } from '@/lib/format';
 import { siteFieldClasses } from '@/lib/formStyles';
 import { useI18n } from '@/i18n';
@@ -30,21 +32,14 @@ type Review = {
     created_at: string | null;
 };
 
-type RelatedProduct = {
-    title: string;
-    description: string | null;
-    price: string | null;
-    url: string;
-    cover: string | null;
-};
-
 const { t } = useI18n();
 
 const props = defineProps<{
     product: Product;
     reviews: Review[];
     isFavorite: boolean;
-    related: RelatedProduct[];
+    related: CardProduct[];
+    recentlyViewed: CardProduct[];
     navigation: NavigationItem[];
 }>();
 
@@ -509,42 +504,34 @@ function addProduct(): void {
                 >
                     {{ t('catalog.related') }}
                 </h2>
-                <ul class="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                <ul
+                    class="-mx-4 mt-4 flex snap-x gap-4 overflow-x-auto px-4 pb-2 sm:mx-0 sm:px-0"
+                >
                     <li
                         v-for="item in props.related"
-                        :key="item.url"
-                        class="overflow-hidden rounded-lg border border-slate-200 bg-white shadow-xs transition-colors hover:border-green-300 dark:border-slate-800 dark:bg-slate-900 dark:hover:border-brand/40"
+                        :key="item.id"
+                        class="w-52 shrink-0 snap-start"
                     >
-                        <Link :href="item.url" class="block">
-                            <img
-                                v-if="item.cover"
-                                :src="item.cover"
-                                alt=""
-                                class="aspect-square w-full bg-white object-contain p-4"
-                            />
-                        </Link>
-                        <div class="border-t border-slate-100 p-4 dark:border-slate-800">
-                            <Link
-                                :href="item.url"
-                                class="text-sm font-medium text-slate-900 hover:text-brand dark:text-slate-100 dark:hover:text-green-400"
-                            >
-                                {{ item.title }}
-                            </Link>
-                            <p
-                                v-if="item.description"
-                                class="mt-1 text-xs text-slate-500"
-                            >
-                                {{ item.description }}
-                            </p>
-                            <p
-                                class="mt-2 text-base font-semibold text-slate-950 tabular-nums dark:text-slate-50"
-                            >
-                                {{
-                                    formatPrice(item.price) ??
-                                    t('catalog.priceOnRequest')
-                                }}
-                            </p>
-                        </div>
+                        <ProductCard :product="item" />
+                    </li>
+                </ul>
+            </section>
+
+            <section v-if="props.recentlyViewed.length > 0" class="mt-12">
+                <h2
+                    class="text-xl font-semibold tracking-tight text-slate-950 dark:text-slate-50"
+                >
+                    {{ t('catalog.recentlyViewed') }}
+                </h2>
+                <ul
+                    class="-mx-4 mt-4 flex snap-x gap-4 overflow-x-auto px-4 pb-2 sm:mx-0 sm:px-0"
+                >
+                    <li
+                        v-for="item in props.recentlyViewed"
+                        :key="item.id"
+                        class="w-52 shrink-0 snap-start"
+                    >
+                        <ProductCard :product="item" />
                     </li>
                 </ul>
             </section>

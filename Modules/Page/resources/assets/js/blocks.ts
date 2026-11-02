@@ -12,6 +12,7 @@ export const blockLabels: Record<BlockType, string> = {
     clients: 'Clientes',
     posts: 'Últimos artigos',
     products: 'Produtos',
+    categories: 'Categorias (loja)',
     contact: 'Contato',
     career: 'Trabalhe conosco',
     newsletter: 'Newsletter',
@@ -68,6 +69,12 @@ export function createBlock(type: BlockType): Block {
             return { ...base, title: 'Últimas notícias', limit: 3 };
         case 'products':
             return { ...base, title: 'Produtos', limit: 3 };
+        case 'categories':
+            return {
+                ...base,
+                title: 'Compre por categoria',
+                subtitle: 'Atalhos para as linhas do catálogo.',
+            };
         case 'contact':
             return { ...base, title: 'Fale com a gente' };
         case 'career':
@@ -124,6 +131,10 @@ export function blockSummary(block: Block): string {
 
     if (block.type === 'products') {
         return `${block.limit ?? 3} produto(s)`;
+    }
+
+    if (block.type === 'categories') {
+        return 'Até 4 categorias do catálogo';
     }
 
     const text = block.title || block.body || block.alt || '';

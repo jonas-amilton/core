@@ -2,6 +2,7 @@
 import { computed } from 'vue';
 import ClientsBlock from '../Blocks/ClientsBlock.vue';
 import CareerBlock from '../Blocks/CareerBlock.vue';
+import CategoriesBlock from '../Blocks/CategoriesBlock.vue';
 import ContactBlock from '../Blocks/ContactBlock.vue';
 import CtaBlock from '../Blocks/CtaBlock.vue';
 import FaqBlock from '../Blocks/FaqBlock.vue';
@@ -35,6 +36,7 @@ const renderers = {
     clients: ClientsBlock,
     posts: PostsBlock,
     products: ProductsBlock,
+    categories: CategoriesBlock,
     contact: ContactBlock,
     career: CareerBlock,
     newsletter: NewsletterBlock,

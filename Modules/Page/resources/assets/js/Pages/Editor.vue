@@ -25,6 +25,7 @@ import {
 import CtaBlock from '../Blocks/CtaBlock.vue';
 import ClientsBlock from '../Blocks/ClientsBlock.vue';
 import CareerBlock from '../Blocks/CareerBlock.vue';
+import CategoriesBlock from '../Blocks/CategoriesBlock.vue';
 import ContactBlock from '../Blocks/ContactBlock.vue';
 import FaqBlock from '../Blocks/FaqBlock.vue';
 import GridBlock from '../Blocks/GridBlock.vue';
@@ -87,6 +88,7 @@ const renderers = {
     clients: ClientsBlock,
     posts: PostsBlock,
     products: ProductsBlock,
+    categories: CategoriesBlock,
     contact: ContactBlock,
     career: CareerBlock,
     newsletter: NewsletterBlock,
@@ -1021,6 +1023,20 @@ onBeforeUnmount(() => {
                                     selected.limit = Number($event) || 3
                                 "
                             />
+                        </template>
+
+                        <template v-else-if="selected.type === 'categories'">
+                            <TextField
+                                v-model="selected.title"
+                                label="Título da seção"
+                            />
+                            <TextField
+                                v-model="selected.subtitle"
+                                label="Subtítulo"
+                            />
+                            <p class="text-xs text-slate-500 dark:text-slate-400">
+                                Exibe até 4 categorias do catálogo, automáticas.
+                            </p>
                         </template>
 
                         <template v-else-if="selected.type === 'contact'">

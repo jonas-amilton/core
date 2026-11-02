@@ -173,7 +173,7 @@ class CatalogManagementTest extends TestCase
             ->assertOk()
             ->assertInertia(fn (Assert $inertia) => $inertia
                 ->has('related', 1)
-                ->where('related.0.title', '5L')
+                ->where('related.0.name', '5L')
             );
 
         $this->delete(route('catalog.product.destroy', $second))->assertRedirect();
