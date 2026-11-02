@@ -161,6 +161,11 @@ function remove(item: UserItem): void {
                             class="px-4 py-3 text-stone-600 dark:text-stone-400"
                         >
                             {{ item.email }}
+                            <span
+                                class="ml-1 border border-stone-200 px-1.5 py-0.5 text-[11px] text-stone-500 dark:border-stone-700 dark:text-stone-400"
+                            >
+                                {{ item.role_label }}
+                            </span>
                         </td>
                         <td
                             class="hidden px-4 py-3 text-xs text-stone-500 md:table-cell dark:text-stone-400"

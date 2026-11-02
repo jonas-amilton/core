@@ -11,7 +11,7 @@ use Modules\Store\Http\Controllers\Site\IndexStoreController;
 
 Route::get('onde-comprar', IndexStoreController::class)->name('stores.public');
 
-Route::middleware(['auth', 'verified'])->prefix('painel/lojas')->group(function (): void {
+Route::middleware(['auth', 'verified', 'can:access-panel'])->prefix('painel/lojas')->group(function (): void {
     Route::get('/', AdminIndexStoreController::class)->name('stores.index');
     Route::post('/', StoreStoreController::class)->name('stores.store');
     Route::patch('{store}', UpdateStoreController::class)->name('stores.update');

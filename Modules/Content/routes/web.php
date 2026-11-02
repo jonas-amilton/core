@@ -16,7 +16,7 @@ use Modules\Content\Http\Controllers\Admin\UpdateClientController;
 use Modules\Content\Http\Controllers\Admin\UpdateFaqController;
 use Modules\Content\Http\Controllers\Admin\UpdateTestimonialController;
 
-Route::middleware(['auth', 'verified'])->prefix('painel')->group(function (): void {
+Route::middleware(['auth', 'verified', 'can:access-panel'])->prefix('painel')->group(function (): void {
     Route::get('depoimentos', IndexTestimonialController::class)->name('testimonial.index');
     Route::post('depoimentos', StoreTestimonialController::class)->name('testimonial.store');
     Route::patch('depoimentos/{testimonial}', UpdateTestimonialController::class)->name('testimonial.update');

@@ -22,6 +22,7 @@ defineOptions({
 const form = useForm({
     name: '',
     email: '',
+    role: 'editor',
     password: '',
     password_confirmation: '',
 });
@@ -52,7 +53,7 @@ function submit(): void {
                 Novo usuário
             </h1>
             <p class="mt-1 text-sm text-stone-600 dark:text-stone-400">
-                A conta já é criada com acesso total ao painel.
+                Administrador vê tudo; editor cuida do conteúdo; cliente só acessa o site.
             </p>
         </header>
 
@@ -72,6 +73,21 @@ function submit(): void {
                     class="text-sm text-red-600 dark:text-red-400"
                 >
                     {{ form.errors.name }}
+                </p>
+            </div>
+
+            <div class="grid gap-2">
+                <label for="role" :class="labelClasses">Perfil</label>
+                <select id="role" v-model="form.role" :class="fieldClasses">
+                    <option value="editor">Editor</option>
+                    <option value="admin">Administrador</option>
+                    <option value="customer">Cliente</option>
+                </select>
+                <p
+                    v-if="form.errors.role"
+                    class="text-sm text-red-600 dark:text-red-400"
+                >
+                    {{ form.errors.role }}
                 </p>
             </div>
 

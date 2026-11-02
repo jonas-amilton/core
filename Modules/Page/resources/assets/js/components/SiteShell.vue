@@ -5,6 +5,7 @@ import { computed } from 'vue';
 import CookieConsent from '@/components/CookieConsent.vue';
 import { switchLocale, useI18n } from '@/i18n';
 import type { Locale } from '@/i18n';
+import type { Auth } from '@/types';
 import type { NavigationItem } from '../types';
 
 const { locale, t, locales } = useI18n();
@@ -23,6 +24,9 @@ const initial = computed(() => siteName.value.charAt(0).toUpperCase());
 const currentYear = new Date().getFullYear();
 const cartCount = computed(
     () => (page.props.cart_count as number | undefined) ?? 0,
+);
+const authUser = computed(
+    () => (page.props.auth as Auth | undefined)?.user ?? null,
 );
 
 const socials = computed(() =>
@@ -159,10 +163,18 @@ const navLink = (active: boolean): string =>
                         />
 
                         <a
-                            href="/admin"
+                            :href="
+                                authUser?.role === 'customer'
+                                    ? '/minha-conta'
+                                    : '/admin'
+                            "
                             class="hidden text-xs font-medium text-slate-500 transition-colors hover:text-blue-800 md:inline dark:text-slate-400 dark:hover:text-blue-400"
                         >
-                            {{ t('nav.panel') }}
+                            {{
+                                authUser?.role === 'customer'
+                                    ? t('nav.account')
+                                    : t('nav.panel')
+                            }}
                         </a>
 
                         <a

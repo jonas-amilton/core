@@ -19,6 +19,7 @@ final class UserService
         return $this->users->create(
             $data->name,
             $data->email,
+            $data->role,
             Hash::make((string) $data->password),
         );
     }
@@ -29,6 +30,7 @@ final class UserService
             $user,
             $data->name,
             $data->email,
+            $data->role,
             $data->password !== null ? Hash::make($data->password) : null,
         );
     }

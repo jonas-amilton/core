@@ -26,7 +26,7 @@ Route::post('orcamento', StoreQuoteController::class)
     ->middleware('throttle:5,1')
     ->name('quote.store');
 
-Route::middleware(['auth', 'verified'])->prefix('painel/orcamentos')->group(function (): void {
+Route::middleware(['auth', 'verified', 'can:access-panel'])->prefix('painel/orcamentos')->group(function (): void {
     Route::get('/', IndexQuoteController::class)->name('quote.index');
     Route::patch('{quote}', UpdateQuoteController::class)->name('quote.update');
     Route::delete('{quote}', DestroyQuoteController::class)->name('quote.destroy');

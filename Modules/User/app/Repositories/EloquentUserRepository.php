@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Modules\User\Repositories;
 
+use App\Enums\UserRole;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
@@ -30,20 +31,22 @@ final class EloquentUserRepository implements UserRepository
         return User::query()->find($id);
     }
 
-    public function create(string $name, string $email, string $passwordHash): User
+    public function create(string $name, string $email, UserRole $role, string $passwordHash): User
     {
         return User::query()->create([
             'name' => $name,
             'email' => $email,
+            'role' => $role,
             'password' => $passwordHash,
         ]);
     }
 
-    public function update(User $user, string $name, string $email, ?string $passwordHash): User
+    public function update(User $user, string $name, string $email, UserRole $role, ?string $passwordHash): User
     {
         $user->update(array_filter([
             'name' => $name,
             'email' => $email,
+            'role' => $role,
             'password' => $passwordHash,
         ], fn (mixed $value): bool => $value !== null));
 

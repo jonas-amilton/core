@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Modules\User\Http\Requests;
 
+use App\Enums\UserRole;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\Password;
 use Modules\User\Data\UserData;
 
@@ -23,6 +25,7 @@ final class StoreUserRequest extends FormRequest
         return [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
+            'role' => ['required', Rule::enum(UserRole::class)],
             'password' => ['required', 'string', 'confirmed', Password::defaults()],
         ];
     }
@@ -32,6 +35,7 @@ final class StoreUserRequest extends FormRequest
         return UserData::fromArray([
             'name' => (string) $this->input('name'),
             'email' => (string) $this->input('email'),
+            'role' => (string) $this->input('role'),
             'password' => $this->input('password'),
         ]);
     }

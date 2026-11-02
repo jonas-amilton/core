@@ -10,7 +10,7 @@ use Modules\User\Http\Controllers\Admin\IndexUserController;
 use Modules\User\Http\Controllers\Admin\StoreUserController;
 use Modules\User\Http\Controllers\Admin\UpdateUserController;
 
-Route::middleware(['auth', 'verified'])->group(function (): void {
+Route::middleware(['auth', 'verified', 'can:manage-users'])->group(function (): void {
     Route::get('users', IndexUserController::class)->name('user.index');
     Route::get('users/create', CreateUserController::class)->name('user.create');
     Route::post('users', StoreUserController::class)->name('user.store');

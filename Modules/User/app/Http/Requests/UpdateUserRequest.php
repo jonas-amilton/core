@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Modules\User\Http\Requests;
 
+use App\Enums\UserRole;
 use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
@@ -33,6 +34,7 @@ final class UpdateUserRequest extends FormRequest
                 'max:255',
                 Rule::unique('users', 'email')->ignore($user instanceof User ? $user->id : null),
             ],
+            'role' => ['required', Rule::enum(UserRole::class)],
             'password' => ['nullable', 'string', 'confirmed', Password::defaults()],
         ];
     }
@@ -42,6 +44,7 @@ final class UpdateUserRequest extends FormRequest
         return UserData::fromArray([
             'name' => (string) $this->input('name'),
             'email' => (string) $this->input('email'),
+            'role' => (string) $this->input('role'),
             'password' => $this->input('password'),
         ]);
     }

@@ -14,7 +14,7 @@ use Modules\Page\Http\Controllers\Admin\StorePageController;
 use Modules\Page\Http\Controllers\Admin\UnpublishPageController;
 use Modules\Page\Http\Controllers\Admin\UpdatePageController;
 
-Route::middleware(['auth', 'verified'])->group(function (): void {
+Route::middleware(['auth', 'verified', 'can:access-panel'])->group(function (): void {
     Route::get('pages', IndexPageController::class)->name('page.index');
     Route::get('pages/create', CreatePageController::class)->name('page.create');
     Route::post('pages', StorePageController::class)->name('page.store');

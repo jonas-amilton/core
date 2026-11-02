@@ -2,9 +2,11 @@
 
 namespace App\Providers;
 
+use App\Models\User;
 use Carbon\CarbonImmutable;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Validation\Rules\Password;
@@ -25,6 +27,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        Gate::define('access-panel', fn (User $user): bool => $user->canUsePanel());
+        Gate::define('manage-users', fn (User $user): bool => $user->isAdmin());
+        Gate::define('manage-settings', fn (User $user): bool => $user->isAdmin());
+
         $this->configureDefaults();
 
         // Página pública por slug: registrada depois de todas as rotas (painel

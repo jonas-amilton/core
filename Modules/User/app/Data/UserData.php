@@ -4,11 +4,14 @@ declare(strict_types=1);
 
 namespace Modules\User\Data;
 
+use App\Enums\UserRole;
+
 final readonly class UserData
 {
     public function __construct(
         public string $name,
         public string $email,
+        public UserRole $role = UserRole::Editor,
         public ?string $password = null,
     ) {}
 
@@ -22,6 +25,7 @@ final readonly class UserData
         return new self(
             name: (string) $data['name'],
             email: (string) $data['email'],
+            role: UserRole::from((string) ($data['role'] ?? UserRole::Editor->value)),
             password: is_string($password) && $password !== '' ? $password : null,
         );
     }

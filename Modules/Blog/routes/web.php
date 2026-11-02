@@ -21,7 +21,7 @@ Route::get('blog', IndexBlogController::class)->name('blog.feed');
 Route::get('blog/categoria/{category:slug}', CategoryBlogController::class)->name('blog.category.show');
 Route::get('blog/{post:slug}', ShowBlogController::class)->name('blog.show');
 
-Route::middleware(['auth', 'verified'])->prefix('painel/blog')->group(function (): void {
+Route::middleware(['auth', 'verified', 'can:access-panel'])->prefix('painel/blog')->group(function (): void {
     Route::get('/', IndexPostController::class)->name('blog.index');
     Route::get('novo', CreatePostController::class)->name('blog.create');
     Route::post('/', StorePostController::class)->name('blog.store');

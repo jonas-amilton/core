@@ -17,6 +17,7 @@ const ptBR: Dict = {
         blog: 'Blog',
         quote: 'Carrinho',
         panel: 'Painel',
+        account: 'Minha conta',
     },
     hero: {
         eyebrow: 'Loja da fábrica',
@@ -91,6 +92,16 @@ const ptBR: Dict = {
         readAlso: 'Leia também',
         read: 'Ler artigo',
         categoriesAria: 'Categorias do blog',
+    },
+    account: {
+        title: 'Minha conta',
+        greeting: 'Olá',
+        orders: 'Meus pedidos',
+        order: 'Pedido',
+        statusOpen: 'Em análise',
+        statusAnswered: 'Respondido',
+        logout: 'Sair',
+        empty: 'Você ainda não fez nenhum pedido.',
     },
     search: {
         title: 'Busca',
@@ -187,6 +198,7 @@ const en: Dict = {
         blog: 'Blog',
         quote: 'Cart',
         panel: 'Dashboard',
+        account: 'My account',
     },
     hero: {
         eyebrow: 'Factory store',
@@ -261,6 +273,16 @@ const en: Dict = {
         readAlso: 'Read also',
         read: 'Read article',
         categoriesAria: 'Blog categories',
+    },
+    account: {
+        title: 'My account',
+        greeting: 'Hello',
+        orders: 'My orders',
+        order: 'Order',
+        statusOpen: 'Under review',
+        statusAnswered: 'Answered',
+        logout: 'Sign out',
+        empty: 'You have not placed any order yet.',
     },
     search: {
         title: 'Search',
@@ -356,6 +378,7 @@ const es: Dict = {
         blog: 'Blog',
         quote: 'Carrito',
         panel: 'Panel',
+        account: 'Mi cuenta',
     },
     hero: {
         eyebrow: 'Tienda de fábrica',
@@ -430,6 +453,16 @@ const es: Dict = {
         readAlso: 'Lee también',
         read: 'Leer artículo',
         categoriesAria: 'Categorías del blog',
+    },
+    account: {
+        title: 'Mi cuenta',
+        greeting: 'Hola',
+        orders: 'Mis pedidos',
+        order: 'Pedido',
+        statusOpen: 'En análisis',
+        statusAnswered: 'Respondido',
+        logout: 'Salir',
+        empty: 'Todavía no hiciste ningún pedido.',
     },
     search: {
         title: 'Búsqueda',

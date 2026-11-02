@@ -28,6 +28,7 @@ defineOptions({
 const form = useForm({
     name: props.user.name,
     email: props.user.email,
+    role: props.user.role,
     password: '',
     password_confirmation: '',
 });
@@ -94,6 +95,21 @@ function remove(): void {
                     class="text-sm text-red-600 dark:text-red-400"
                 >
                     {{ form.errors.name }}
+                </p>
+            </div>
+
+            <div class="grid gap-2">
+                <label for="role" :class="labelClasses">Perfil</label>
+                <select id="role" v-model="form.role" :class="fieldClasses">
+                    <option value="editor">Editor</option>
+                    <option value="admin">Administrador</option>
+                    <option value="customer">Cliente</option>
+                </select>
+                <p
+                    v-if="form.errors.role"
+                    class="text-sm text-red-600 dark:text-red-400"
+                >
+                    {{ form.errors.role }}
                 </p>
             </div>
 

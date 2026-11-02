@@ -46,6 +46,7 @@ class UserManagementTest extends TestCase
         $this->post(route('user.store'), [
             'name' => 'Novo Admin',
             'email' => 'novo@example.com',
+            'role' => 'admin',
             'password' => 'senha-forte-123',
             'password_confirmation' => 'senha-forte-123',
         ])->assertRedirect(route('user.index'));
@@ -63,6 +64,7 @@ class UserManagementTest extends TestCase
         $this->post(route('user.store'), [
             'name' => 'Duplicado',
             'email' => 'existente@example.com',
+            'role' => 'admin',
             'password' => 'senha-forte-123',
             'password_confirmation' => 'senha-forte-123',
         ])->assertSessionHasErrors('email');
@@ -80,6 +82,7 @@ class UserManagementTest extends TestCase
         $this->patch(route('user.update', $user), [
             'name' => 'Atualizado',
             'email' => 'atualizado@example.com',
+            'role' => 'admin',
         ])->assertRedirect();
 
         $user->refresh();
@@ -97,6 +100,7 @@ class UserManagementTest extends TestCase
         $this->patch(route('user.update', $user), [
             'name' => $user->name,
             'email' => $user->email,
+            'role' => 'admin',
             'password' => 'outra-senha-456',
             'password_confirmation' => 'outra-senha-456',
         ])->assertRedirect();

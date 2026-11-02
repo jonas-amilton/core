@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Link } from '@inertiajs/vue3';
+import { Link, usePage } from '@inertiajs/vue3';
 import {
     Building2,
     ClipboardList,
@@ -43,6 +43,7 @@ import { index as stores } from '@/routes/stores';
 import { index as testimonials } from '@/routes/testimonial';
 import { index as users } from '@/routes/user';
 import type { NavItem } from '@/types';
+import { computed } from 'vue';
 
 const overviewItems: NavItem[] = [
     {
@@ -106,6 +107,9 @@ const operationItems: NavItem[] = [
         href: messages(),
         icon: Inbox,
     },
+];
+
+const adminItems: NavItem[] = [
     {
         title: 'Usuários',
         href: users(),
@@ -117,6 +121,14 @@ const operationItems: NavItem[] = [
         icon: Settings2,
     },
 ];
+
+const page = usePage();
+const isAdmin = computed(
+    () =>
+        (
+            page.props.auth as { user?: { role?: string } | null } | undefined
+        )?.user?.role === 'admin',
+);
 
 const footerNavItems: NavItem[] = [
     {
@@ -145,6 +157,7 @@ const footerNavItems: NavItem[] = [
             <NavMain :items="overviewItems" />
             <NavMain :items="contentItems" label="Conteúdo" />
             <NavMain :items="operationItems" label="Operação" />
+            <NavMain v-if="isAdmin" :items="adminItems" label="Administração" />
         </SidebarContent>
 
         <SidebarFooter>

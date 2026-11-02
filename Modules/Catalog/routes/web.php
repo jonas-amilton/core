@@ -21,7 +21,7 @@ Route::get('produtos', IndexCatalogController::class)->name('catalog.index');
 Route::get('produtos/c/{category:slug}', CategoryCatalogController::class)->name('catalog.category');
 Route::get('produto/{product:slug}', ShowProductController::class)->name('catalog.show');
 
-Route::middleware(['auth', 'verified'])->prefix('painel/produtos')->group(function (): void {
+Route::middleware(['auth', 'verified', 'can:access-panel'])->prefix('painel/produtos')->group(function (): void {
     Route::get('/', IndexProductController::class)->name('catalog.product.index');
     Route::get('novo', CreateProductController::class)->name('catalog.product.create');
     Route::post('/', StoreProductController::class)->name('catalog.product.store');

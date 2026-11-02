@@ -23,7 +23,7 @@ Route::post('newsletter', StoreSubscriberController::class)
     ->middleware('throttle:5,1')
     ->name('newsletter.store');
 
-Route::middleware(['auth', 'verified'])->prefix('painel/mensagens')->group(function (): void {
+Route::middleware(['auth', 'verified', 'can:access-panel'])->prefix('painel/mensagens')->group(function (): void {
     Route::get('/', IndexContactController::class)->name('contact.message.index');
     Route::delete('contato/{message}', DestroyContactMessageController::class)->name('contact.message.destroy');
     Route::delete('inscrito/{subscriber}', DestroySubscriberController::class)->name('contact.subscriber.destroy');
