@@ -39,7 +39,7 @@ final class MediaService
             disk: self::DISK,
             path: $path,
             originalName: $file->getClientOriginalName(),
-            mime: (string) $file->getClientMimeType(),
+            mime: $file->getMimeType() ?? (string) $file->getClientMimeType(),
             size: (int) $file->getSize(),
             width: $width,
             height: $height,

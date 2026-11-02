@@ -175,4 +175,34 @@ class MediaManagementTest extends TestCase
         $this->assertCount(1, $response->json('data'));
         $this->assertSame('foto.jpg', $response->json('data.0.original_name'));
     }
+
+    public function test_a_file_rejected_by_php_ini_explains_the_server_limit(): void
+    {
+        $this->actingAs(User::factory()->create());
+
+        $this->post(route('media.store'), [])
+            ->assertSessionHasErrors([
+                'file' => 'Nenhum arquivo chegou ao servidor. Se você selecionou um, ele passa do limite do PHP ('
+                    .ini_get('upload_max_filesize').' por arquivo, '.ini_get('post_max_size').' por requisição).',
+            ]);
+    }
+
+    public function test_the_mime_type_is_detected_from_the_content(): void
+    {
+        $this->actingAs(User::factory()->create());
+
+        $path = tempnam(sys_get_temp_dir(), 'media');
+        $this->assertIsString($path);
+        file_put_contents(
+            $path,
+            base64_decode('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8DwHwAFAAH/q842iQAAAABJRU5ErkJggg=='),
+        );
+
+        $file = new UploadedFile($path, 'foto.jpg', 'application/octet-stream', null, true);
+
+        $this->post(route('media.store'), ['file' => $file])
+            ->assertRedirect(route('media.index'));
+
+        $this->assertSame('image/png', Media::firstOrFail()->mime);
+    }
 }
