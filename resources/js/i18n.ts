@@ -95,6 +95,7 @@ const ptBR: Dict = {
         submit: 'Enviar orçamento',
         emptyCart: 'Adicione ao menos um produto ao orçamento.',
         quantity: 'Qtd.',
+        remove: 'Remover',
     },
     stores: {
         title: 'Onde comprar',
@@ -227,6 +228,7 @@ const en: Dict = {
         submit: 'Send quote',
         emptyCart: 'Add at least one product to the quote.',
         quantity: 'Qty.',
+        remove: 'Remove',
     },
     stores: {
         title: 'Where to buy',
@@ -358,6 +360,7 @@ const es: Dict = {
         submit: 'Enviar presupuesto',
         emptyCart: 'Añade al menos un producto al presupuesto.',
         quantity: 'Cant.',
+        remove: 'Quitar',
     },
     stores: {
         title: 'Dónde comprar',

@@ -17,11 +17,11 @@ final class CategoryCatalogController
     {
         return Inertia::render('Catalog::Index', [
             'products' => $catalog->productsOfCategory($category)
-                ->through(fn (Product $product): array => $product->toAdminArray()),
+                ->through(fn (Product $product): array => $product->toSiteArray()),
             'categories' => $catalog->categories()
-                ->map(fn (Category $item): array => $item->toAdminArray())
+                ->map(fn (Category $item): array => $item->toSiteArray())
                 ->all(),
-            'activeCategory' => $category->toAdminArray(),
+            'activeCategory' => $category->toSiteArray(),
             'navigation' => $navigation->items(),
         ]);
     }

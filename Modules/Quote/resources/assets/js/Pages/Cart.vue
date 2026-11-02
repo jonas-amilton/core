@@ -106,7 +106,7 @@ function submit(): void {
                         <button
                             type="button"
                             class="rounded-md p-1 text-slate-400 hover:bg-red-50 hover:text-red-600 dark:hover:bg-red-500/10"
-                            :aria-label="`Remover ${item.name}`"
+                            :aria-label="`${t('quote.remove')} ${item.name}`"
                             @click="remove(item)"
                         >
                             <Trash2 class="size-4" aria-hidden="true" />

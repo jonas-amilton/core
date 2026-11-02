@@ -77,11 +77,25 @@ class Category extends Model
         return [
             'id' => $this->id,
             'parent_id' => $this->parent_id,
-            'name' => $this->transString('name') ?? $this->name,
+            'name' => $this->name,
             'slug' => $this->slug,
             'position' => $this->position,
             'products_count' => $this->products_count ?? null,
             'translations' => $this->editorTranslations(['name']),
+        ];
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    public function toSiteArray(): array
+    {
+        return [
+            'id' => $this->id,
+            'parent_id' => $this->parent_id,
+            'name' => $this->transString('name') ?? $this->name,
+            'slug' => $this->slug,
+            'products_count' => $this->products_count ?? null,
         ];
     }
 }

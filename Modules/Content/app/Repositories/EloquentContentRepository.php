@@ -116,6 +116,7 @@ final class EloquentContentRepository implements ContentRepository
             'quote' => $data->quote,
             'avatar' => $data->avatar,
             'sort_order' => $data->sortOrder,
+            'translations' => $data->translations !== [] ? $data->translations : null,
         ];
     }
 
@@ -128,6 +129,7 @@ final class EloquentContentRepository implements ContentRepository
             'question' => $data->question,
             'answer' => $data->answer,
             'sort_order' => $data->sortOrder,
+            'translations' => $data->translations !== [] ? $data->translations : null,
         ];
     }
 

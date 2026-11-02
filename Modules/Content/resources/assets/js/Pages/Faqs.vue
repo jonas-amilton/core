@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { Head, router, useForm } from '@inertiajs/vue3';
 import { Check, Pencil, Plus, Trash2, X } from '@lucide/vue';
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import { destroy, index as faqIndex, store, update } from '@/routes/faq';
 import { fieldClasses } from '@/lib/formStyles';
 
@@ -10,6 +10,7 @@ type Faq = {
     question: string;
     answer: string;
     sort_order: number;
+    translations: Record<'en' | 'es', { question: string | null; answer: string | null }>;
 };
 
 const props = defineProps<{
@@ -29,11 +30,47 @@ defineOptions({
 
 const editing = ref<Faq | null>(null);
 
+type EditLocale = 'pt_BR' | 'en' | 'es';
+
+const locales: EditLocale[] = ['pt_BR', 'en', 'es'];
+const localeLabels: Record<EditLocale, string> = {
+    pt_BR: 'PT',
+    en: 'EN',
+    es: 'ES',
+};
+const editLocale = ref<EditLocale>('pt_BR');
+
 const form = useForm({
     question: '',
     answer: '',
     sort_order: 0,
+    translations: {
+        en: { question: '', answer: '' },
+        es: { question: '', answer: '' },
+    },
 });
+
+function translatedField(field: 'question' | 'answer') {
+    return computed<string>({
+        get: () =>
+            editLocale.value === 'pt_BR'
+                ? form[field]
+                : (form.translations[editLocale.value as 'en' | 'es'][field] ??
+                  ''),
+        set: (value: string) => {
+            if (editLocale.value === 'pt_BR') {
+                form[field] = value;
+
+                return;
+            }
+
+            form.translations[editLocale.value as 'en' | 'es'][field] = value;
+        },
+    });
+}
+
+const question = translatedField('question');
+const answer = translatedField('answer');
 
 function reset(): void {
     editing.value = null;
@@ -43,9 +80,14 @@ function reset(): void {
 
 function edit(item: Faq): void {
     editing.value = item;
+    editLocale.value = 'pt_BR';
     form.question = item.question;
     form.answer = item.answer;
     form.sort_order = item.sort_order;
+    form.translations.en.question = item.translations?.en?.question ?? '';
+    form.translations.en.answer = item.translations?.en?.answer ?? '';
+    form.translations.es.question = item.translations?.es?.question ?? '';
+    form.translations.es.answer = item.translations?.es?.answer ?? '';
     form.clearErrors();
 }
 
@@ -107,6 +149,29 @@ function remove(item: Faq): void {
                 </button>
             </div>
 
+            <div class="flex items-center gap-1">
+                <button
+                    v-for="loc in locales"
+                    :key="loc"
+                    type="button"
+                    class="rounded-md px-2 py-0.5 text-[11px] font-medium transition-colors"
+                    :class="
+                        editLocale === loc
+                            ? 'bg-indigo-100 text-indigo-700 dark:bg-indigo-500/20 dark:text-indigo-300'
+                            : 'text-slate-500 hover:bg-slate-100 dark:text-slate-500 dark:hover:bg-slate-800'
+                    "
+                    @click="editLocale = loc"
+                >
+                    {{ localeLabels[loc] }}
+                </button>
+                <span
+                    v-if="editLocale !== 'pt_BR'"
+                    class="ml-1 text-[11px] text-slate-400"
+                >
+                    Tradução — vazio usa o português
+                </span>
+            </div>
+
             <label class="grid gap-1.5">
                 <span
                     class="text-xs font-medium text-slate-600 dark:text-slate-400"
@@ -114,7 +179,7 @@ function remove(item: Faq): void {
                     Pergunta
                 </span>
                 <input
-                    v-model="form.question"
+                    v-model="question"
                     type="text"
                     :class="fieldClasses"
                 />
@@ -130,7 +195,7 @@ function remove(item: Faq): void {
                     Resposta
                 </span>
                 <textarea
-                    v-model="form.answer"
+                    v-model="answer"
                     :rows="4"
                     :class="[fieldClasses, 'h-auto py-2 leading-relaxed']"
                 />

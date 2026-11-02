@@ -17,9 +17,9 @@ final class IndexCatalogController
     {
         return Inertia::render('Catalog::Index', [
             'products' => $catalog->products(null, null, 12)
-                ->through(fn (Product $product): array => $product->toAdminArray()),
+                ->through(fn (Product $product): array => $product->toSiteArray()),
             'categories' => $catalog->categories()
-                ->map(fn (Category $category): array => $category->toAdminArray())
+                ->map(fn (Category $category): array => $category->toSiteArray())
                 ->all(),
             'activeCategory' => null,
             'navigation' => $navigation->items(),

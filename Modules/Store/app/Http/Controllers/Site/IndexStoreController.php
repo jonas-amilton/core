@@ -20,12 +20,12 @@ final class IndexStoreController
         return Inertia::render('Store::WhereToBuy', [
             'physical' => $all
                 ->filter(fn (Store $store): bool => $store->kind === StoreKind::Physical)
-                ->map(fn (Store $store): array => $store->toAdminArray())
+                ->map(fn (Store $store): array => $store->toSiteArray())
                 ->values()
                 ->all(),
             'online' => $all
                 ->filter(fn (Store $store): bool => $store->kind === StoreKind::Online)
-                ->map(fn (Store $store): array => $store->toAdminArray())
+                ->map(fn (Store $store): array => $store->toSiteArray())
                 ->values()
                 ->all(),
             'navigation' => $navigation->items(),

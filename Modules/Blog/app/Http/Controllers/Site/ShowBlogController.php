@@ -26,7 +26,7 @@ final class ShowBlogController
                 ->values()
                 ->all(),
             'categories' => $blog->categories()
-                ->map(fn (Category $category): array => $category->toAdminArray())
+                ->map(fn (Category $category): array => $category->toSiteArray())
                 ->all(),
         ]);
     }

@@ -56,6 +56,7 @@ final class EloquentStoreRepository implements StoreRepository
             'phone' => $data->phone,
             'url' => $data->url,
             'position' => $data->position,
+            'translations' => $data->translations !== [] ? $data->translations : null,
         ];
     }
 }

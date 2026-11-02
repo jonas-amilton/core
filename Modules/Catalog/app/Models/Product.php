@@ -93,12 +93,26 @@ class Product extends Model
     {
         return [
             'id' => $this->id,
-            'name' => $this->transString('name') ?? $this->name,
+            'name' => $this->name,
             'slug' => $this->slug,
             'sku' => $this->sku,
             'position' => $this->position,
             'cover' => $this->cover(),
             'updated_at' => $this->updated_at?->toIso8601String(),
+        ];
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    public function toSiteArray(): array
+    {
+        return [
+            'id' => $this->id,
+            'name' => $this->transString('name') ?? $this->name,
+            'slug' => $this->slug,
+            'sku' => $this->sku,
+            'cover' => $this->cover(),
         ];
     }
 

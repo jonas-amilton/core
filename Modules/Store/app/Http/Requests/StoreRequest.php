@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Modules\Store\Http\Requests;
 
+use App\Support\TranslationInput;
 use Illuminate\Foundation\Http\FormRequest;
 use Modules\Store\Data\StoreData;
 
@@ -26,11 +27,17 @@ final class StoreRequest extends FormRequest
             'phone' => ['nullable', 'string', 'max:60'],
             'url' => ['nullable', 'string', 'max:2048'],
             'position' => ['nullable', 'integer', 'min:0', 'max:9999'],
+            'translations' => ['nullable', 'array'],
+            'translations.*.name' => ['nullable', 'string', 'max:150'],
+            'translations.*.address' => ['nullable', 'string', 'max:255'],
         ];
     }
 
     public function toData(): StoreData
     {
-        return StoreData::fromArray($this->validated());
+        return StoreData::fromArray([
+            ...$this->validated(),
+            'translations' => TranslationInput::fromArray($this->input('translations'), ['name', 'address']),
+        ]);
     }
 }

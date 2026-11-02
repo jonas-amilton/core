@@ -91,6 +91,57 @@ class ContentManagementTest extends TestCase
         $this->assertSame(0, Faq::query()->count());
     }
 
+    public function test_faqs_and_testimonials_translate_on_the_site(): void
+    {
+        $this->actingAs(User::factory()->create());
+
+        $this->post(route('faq.store'), [
+            'question' => 'Como funciona?',
+            'answer' => 'Assim.',
+            'translations' => [
+                'en' => [
+                    'question' => 'How does it work?',
+                    'answer' => 'Like this.',
+                ],
+            ],
+        ]);
+
+        $this->post(route('testimonial.store'), [
+            'author' => 'Maria',
+            'role' => 'Diretora',
+            'quote' => 'Muito bom.',
+            'translations' => [
+                'en' => ['role' => 'Director', 'quote' => 'Very good.'],
+            ],
+        ]);
+
+        Page::query()->create([
+            'title' => 'Contábil',
+            'slug' => 'contabil',
+            'blocks' => [
+                ['id' => 'b1', 'type' => 'testimonials'],
+                ['id' => 'b2', 'type' => 'faq'],
+            ],
+            'status' => PageStatus::Published,
+            'published_at' => now()->subMinute(),
+        ]);
+
+        $this->get('/contabil?locale=en')
+            ->assertOk()
+            ->assertInertia(fn (Assert $inertia) => $inertia
+                ->where('page.blocks.0.items.0.description', 'Very good.')
+                ->where('page.blocks.0.items.0.role', 'Director')
+                ->where('page.blocks.1.items.0.title', 'How does it work?')
+                ->where('page.blocks.1.items.0.description', 'Like this.')
+            );
+
+        $this->get('/contabil?locale=es')
+            ->assertOk()
+            ->assertInertia(fn (Assert $inertia) => $inertia
+                ->where('page.blocks.1.items.0.title', 'Como funciona?')
+            );
+    }
+
     public function test_the_block_resolver_attaches_live_content(): void
     {
         Testimonial::query()->create([

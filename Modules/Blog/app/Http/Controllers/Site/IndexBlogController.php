@@ -20,7 +20,7 @@ final class IndexBlogController
                 ->map(fn (Post $post): array => $post->toPublicArray())
                 ->all(),
             'categories' => $blog->categories()
-                ->map(fn (Category $category): array => $category->toAdminArray())
+                ->map(fn (Category $category): array => $category->toSiteArray())
                 ->all(),
             'activeCategory' => null,
             'navigation' => $navigation->items(),

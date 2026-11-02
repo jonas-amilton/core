@@ -52,7 +52,7 @@ function addProduct(): void {
             <nav
                 v-if="props.product.categories.length > 0"
                 class="flex flex-wrap gap-2 text-xs text-slate-500"
-                aria-label="Categorias do produto"
+                :aria-label="t('catalog.categoriesAria')"
             >
                 <Link
                     v-for="category in props.product.categories"

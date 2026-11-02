@@ -20,9 +20,9 @@ final class CategoryBlogController
                 ->map(fn (Post $post): array => $post->toPublicArray())
                 ->all(),
             'categories' => $blog->categories()
-                ->map(fn (Category $item): array => $item->toAdminArray())
+                ->map(fn (Category $item): array => $item->toSiteArray())
                 ->all(),
-            'activeCategory' => $category->toAdminArray(),
+            'activeCategory' => $category->toSiteArray(),
             'navigation' => $navigation->items(),
         ]);
     }

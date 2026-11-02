@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Modules\Content\Models;
 
+use App\Support\Translatable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
 
@@ -12,17 +13,21 @@ use Illuminate\Support\Carbon;
  * @property string $author
  * @property string|null $role
  * @property string $quote
+ * @property array<string, array<string, mixed>>|null $translations
  * @property string|null $avatar
  * @property int $sort_order
  * @property Carbon|null $created_at
  */
 class Testimonial extends Model
 {
+    use Translatable;
+
     protected $fillable = [
         'author',
         'role',
         'quote',
         'avatar',
+        'translations',
         'sort_order',
     ];
 
@@ -33,6 +38,7 @@ class Testimonial extends Model
     {
         return [
             'sort_order' => 'integer',
+            'translations' => 'array',
         ];
     }
 
@@ -48,6 +54,7 @@ class Testimonial extends Model
             'quote' => $this->quote,
             'avatar' => $this->avatar,
             'sort_order' => $this->sort_order,
+            'translations' => $this->editorTranslations(['role', 'quote']),
         ];
     }
 
@@ -58,8 +65,8 @@ class Testimonial extends Model
     {
         return [
             'title' => $this->author,
-            'description' => $this->quote,
-            'role' => $this->role,
+            'description' => $this->transString('quote') ?? $this->quote,
+            'role' => $this->transString('role') ?? $this->role,
             'avatar' => $this->avatar,
         ];
     }

@@ -4,20 +4,25 @@ declare(strict_types=1);
 
 namespace Modules\Content\Models;
 
+use App\Support\Translatable;
 use Illuminate\Database\Eloquent\Model;
 
 /**
  * @property int $id
  * @property string $question
  * @property string $answer
+ * @property array<string, array<string, mixed>>|null $translations
  * @property int $sort_order
  */
 class Faq extends Model
 {
+    use Translatable;
+
     protected $fillable = [
         'question',
         'answer',
         'sort_order',
+        'translations',
     ];
 
     /**
@@ -27,6 +32,7 @@ class Faq extends Model
     {
         return [
             'sort_order' => 'integer',
+            'translations' => 'array',
         ];
     }
 
@@ -40,6 +46,7 @@ class Faq extends Model
             'question' => $this->question,
             'answer' => $this->answer,
             'sort_order' => $this->sort_order,
+            'translations' => $this->editorTranslations(['question', 'answer']),
         ];
     }
 
@@ -49,8 +56,8 @@ class Faq extends Model
     public function toCardArray(): array
     {
         return [
-            'title' => $this->question,
-            'description' => $this->answer,
+            'title' => $this->transString('question') ?? $this->question,
+            'description' => $this->transString('answer') ?? $this->answer,
         ];
     }
 }

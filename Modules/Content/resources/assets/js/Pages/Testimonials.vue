@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { Head, router, useForm } from '@inertiajs/vue3';
 import { Check, Pencil, Plus, Trash2, X } from '@lucide/vue';
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import MediaPicker from '@modules/Media/resources/assets/js/components/MediaPicker.vue';
 import type { PickedMedia } from '@modules/Media/resources/assets/js/types';
 import {
@@ -19,6 +19,7 @@ type Testimonial = {
     quote: string;
     avatar: string | null;
     sort_order: number;
+    translations: Record<'en' | 'es', { role: string | null; quote: string | null }>;
 };
 
 const props = defineProps<{
@@ -39,13 +40,49 @@ defineOptions({
 const editing = ref<Testimonial | null>(null);
 const pickerOpen = ref(false);
 
+type EditLocale = 'pt_BR' | 'en' | 'es';
+
+const locales: EditLocale[] = ['pt_BR', 'en', 'es'];
+const localeLabels: Record<EditLocale, string> = {
+    pt_BR: 'PT',
+    en: 'EN',
+    es: 'ES',
+};
+const editLocale = ref<EditLocale>('pt_BR');
+
 const form = useForm({
     author: '',
     role: '',
     quote: '',
     avatar: '',
     sort_order: 0,
+    translations: {
+        en: { role: '', quote: '' },
+        es: { role: '', quote: '' },
+    },
 });
+
+function translatedField(field: 'role' | 'quote') {
+    return computed<string>({
+        get: () =>
+            editLocale.value === 'pt_BR'
+                ? form[field]
+                : (form.translations[editLocale.value as 'en' | 'es'][field] ??
+                  ''),
+        set: (value: string) => {
+            if (editLocale.value === 'pt_BR') {
+                form[field] = value;
+
+                return;
+            }
+
+            form.translations[editLocale.value as 'en' | 'es'][field] = value;
+        },
+    });
+}
+
+const role = translatedField('role');
+const quote = translatedField('quote');
 
 function reset(): void {
     editing.value = null;
@@ -55,11 +92,16 @@ function reset(): void {
 
 function edit(item: Testimonial): void {
     editing.value = item;
+    editLocale.value = 'pt_BR';
     form.author = item.author;
     form.role = item.role ?? '';
     form.quote = item.quote;
     form.avatar = item.avatar ?? '';
     form.sort_order = item.sort_order;
+    form.translations.en.role = item.translations?.en?.role ?? '';
+    form.translations.en.quote = item.translations?.en?.quote ?? '';
+    form.translations.es.role = item.translations?.es?.role ?? '';
+    form.translations.es.quote = item.translations?.es?.quote ?? '';
     form.clearErrors();
 }
 
@@ -125,6 +167,29 @@ function pickAvatar(media: PickedMedia): void {
                 </button>
             </div>
 
+            <div class="flex items-center gap-1">
+                <button
+                    v-for="loc in locales"
+                    :key="loc"
+                    type="button"
+                    class="rounded-md px-2 py-0.5 text-[11px] font-medium transition-colors"
+                    :class="
+                        editLocale === loc
+                            ? 'bg-indigo-100 text-indigo-700 dark:bg-indigo-500/20 dark:text-indigo-300'
+                            : 'text-slate-500 hover:bg-slate-100 dark:text-slate-500 dark:hover:bg-slate-800'
+                    "
+                    @click="editLocale = loc"
+                >
+                    {{ localeLabels[loc] }}
+                </button>
+                <span
+                    v-if="editLocale !== 'pt_BR'"
+                    class="ml-1 text-[11px] text-slate-400"
+                >
+                    Tradução — vazio usa o português
+                </span>
+            </div>
+
             <div class="grid gap-3 sm:grid-cols-2">
                 <label class="grid gap-1.5">
                     <span
@@ -152,7 +217,7 @@ function pickAvatar(media: PickedMedia): void {
                         Cargo
                     </span>
                     <input
-                        v-model="form.role"
+                        v-model="role"
                         type="text"
                         :class="fieldClasses"
                     />
@@ -165,7 +230,7 @@ function pickAvatar(media: PickedMedia): void {
                         Depoimento
                     </span>
                     <textarea
-                        v-model="form.quote"
+                        v-model="quote"
                         :rows="4"
                         :class="[fieldClasses, 'h-auto py-2 leading-relaxed']"
                     />

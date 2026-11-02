@@ -6,12 +6,16 @@ namespace Modules\Content\Data;
 
 final readonly class TestimonialData
 {
+    /**
+     * @param  array<string, array<string, string>>  $translations
+     */
     public function __construct(
         public string $author,
         public ?string $role,
         public string $quote,
         public ?string $avatar,
         public int $sortOrder,
+        public array $translations = [],
     ) {}
 
     /**
@@ -25,6 +29,7 @@ final readonly class TestimonialData
             quote: (string) $data['quote'],
             avatar: self::string($data['avatar'] ?? null),
             sortOrder: (int) ($data['sort_order'] ?? 0),
+            translations: is_array($data['translations'] ?? null) ? $data['translations'] : [],
         );
     }
 

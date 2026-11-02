@@ -73,6 +73,36 @@ class StoreManagementTest extends TestCase
             );
     }
 
+    public function test_store_content_translates_on_the_site(): void
+    {
+        $this->actingAs(User::factory()->create());
+
+        $this->post(route('stores.store'), [
+            'name' => 'Loja Centro',
+            'kind' => 'physical',
+            'address' => 'Rua A, 100',
+            'translations' => [
+                'en' => [
+                    'name' => 'Downtown store',
+                    'address' => '100 A Street',
+                ],
+            ],
+        ]);
+
+        $this->get(route('stores.public').'?locale=en')
+            ->assertOk()
+            ->assertInertia(fn (Assert $inertia) => $inertia
+                ->where('physical.0.name', 'Downtown store')
+                ->where('physical.0.address', '100 A Street')
+            );
+
+        $this->get(route('stores.public').'?locale=es')
+            ->assertOk()
+            ->assertInertia(fn (Assert $inertia) => $inertia
+                ->where('physical.0.name', 'Loja Centro')
+            );
+    }
+
     public function test_required_fields_are_validated(): void
     {
         $this->actingAs(User::factory()->create());

@@ -52,9 +52,21 @@ class Category extends Model
     {
         return [
             'id' => $this->id,
-            'name' => $this->transString('name') ?? $this->name,
+            'name' => $this->name,
             'slug' => $this->slug,
             'translations' => $this->editorTranslations(['name']),
+        ];
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    public function toSiteArray(): array
+    {
+        return [
+            'id' => $this->id,
+            'name' => $this->transString('name') ?? $this->name,
+            'slug' => $this->slug,
         ];
     }
 }

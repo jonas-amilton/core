@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { Head, router, useForm } from '@inertiajs/vue3';
 import { Check, Pencil, Plus, Trash2, X } from '@lucide/vue';
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import {
     destroy,
     index as storesIndex,
@@ -19,6 +19,10 @@ type StoreItem = {
     phone: string | null;
     url: string | null;
     position: number;
+    translations: Record<
+        'en' | 'es',
+        { name: string | null; address: string | null }
+    >;
 };
 
 type KindOption = {
@@ -39,6 +43,16 @@ defineOptions({
 
 const editing = ref<StoreItem | null>(null);
 
+type EditLocale = 'pt_BR' | 'en' | 'es';
+
+const locales: EditLocale[] = ['pt_BR', 'en', 'es'];
+const localeLabels: Record<EditLocale, string> = {
+    pt_BR: 'PT',
+    en: 'EN',
+    es: 'ES',
+};
+const editLocale = ref<EditLocale>('pt_BR');
+
 const form = useForm({
     name: '',
     kind: 'physical',
@@ -46,7 +60,33 @@ const form = useForm({
     phone: '',
     url: '',
     position: 0,
+    translations: {
+        en: { name: '', address: '' },
+        es: { name: '', address: '' },
+    },
 });
+
+function translatedField(field: 'name' | 'address') {
+    return computed<string>({
+        get: () =>
+            editLocale.value === 'pt_BR'
+                ? form[field]
+                : (form.translations[editLocale.value as 'en' | 'es'][field] ??
+                  ''),
+        set: (value: string) => {
+            if (editLocale.value === 'pt_BR') {
+                form[field] = value;
+
+                return;
+            }
+
+            form.translations[editLocale.value as 'en' | 'es'][field] = value;
+        },
+    });
+}
+
+const name = translatedField('name');
+const address = translatedField('address');
 
 function reset(): void {
     editing.value = null;
@@ -56,12 +96,17 @@ function reset(): void {
 
 function edit(item: StoreItem): void {
     editing.value = item;
+    editLocale.value = 'pt_BR';
     form.name = item.name;
     form.kind = item.kind;
     form.address = item.address ?? '';
     form.phone = item.phone ?? '';
     form.url = item.url ?? '';
     form.position = item.position;
+    form.translations.en.name = item.translations?.en?.name ?? '';
+    form.translations.en.address = item.translations?.en?.address ?? '';
+    form.translations.es.name = item.translations?.es?.name ?? '';
+    form.translations.es.address = item.translations?.es?.address ?? '';
     form.clearErrors();
 }
 
@@ -121,11 +166,34 @@ function remove(item: StoreItem): void {
                 </button>
             </div>
 
+            <div class="flex items-center gap-1 sm:col-span-2">
+                <button
+                    v-for="loc in locales"
+                    :key="loc"
+                    type="button"
+                    class="rounded-md px-2 py-0.5 text-[11px] font-medium transition-colors"
+                    :class="
+                        editLocale === loc
+                            ? 'bg-indigo-100 text-indigo-700 dark:bg-indigo-500/20 dark:text-indigo-300'
+                            : 'text-slate-500 hover:bg-slate-100 dark:text-slate-500 dark:hover:bg-slate-800'
+                    "
+                    @click="editLocale = loc"
+                >
+                    {{ localeLabels[loc] }}
+                </button>
+                <span
+                    v-if="editLocale !== 'pt_BR'"
+                    class="ml-1 text-[11px] text-slate-400"
+                >
+                    Tradução — vazio usa o português
+                </span>
+            </div>
+
             <label class="grid gap-1.5">
                 <span class="text-xs font-medium text-slate-600 dark:text-slate-400">
                     Nome
                 </span>
-                <input v-model="form.name" type="text" :class="fieldClasses" />
+                <input v-model="name" type="text" :class="fieldClasses" />
                 <span v-if="form.errors.name" class="text-xs text-red-600">
                     {{ form.errors.name }}
                 </span>
@@ -150,7 +218,7 @@ function remove(item: StoreItem): void {
                 <span class="text-xs font-medium text-slate-600 dark:text-slate-400">
                     Endereço
                 </span>
-                <input v-model="form.address" type="text" :class="fieldClasses" />
+                <input v-model="address" type="text" :class="fieldClasses" />
             </label>
 
             <label class="grid gap-1.5">

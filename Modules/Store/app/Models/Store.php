@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Modules\Store\Models;
 
+use App\Support\Translatable;
 use Illuminate\Database\Eloquent\Model;
 use Modules\Store\Enums\StoreKind;
 
@@ -14,10 +15,13 @@ use Modules\Store\Enums\StoreKind;
  * @property string|null $address
  * @property string|null $phone
  * @property string|null $url
+ * @property array<string, array<string, mixed>>|null $translations
  * @property int $position
  */
 class Store extends Model
 {
+    use Translatable;
+
     protected $fillable = [
         'name',
         'kind',
@@ -25,6 +29,7 @@ class Store extends Model
         'phone',
         'url',
         'position',
+        'translations',
     ];
 
     /**
@@ -35,6 +40,7 @@ class Store extends Model
         return [
             'kind' => StoreKind::class,
             'position' => 'integer',
+            'translations' => 'array',
         ];
     }
 
@@ -52,6 +58,22 @@ class Store extends Model
             'phone' => $this->phone,
             'url' => $this->url,
             'position' => $this->position,
+            'translations' => $this->editorTranslations(['name', 'address']),
+        ];
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    public function toSiteArray(): array
+    {
+        return [
+            'id' => $this->id,
+            'name' => $this->transString('name') ?? $this->name,
+            'kind_label' => $this->kind->label(),
+            'address' => $this->transString('address') ?? $this->address,
+            'phone' => $this->phone,
+            'url' => $this->url,
         ];
     }
 }
