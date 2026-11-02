@@ -2,6 +2,7 @@
 import { onMounted, ref } from 'vue';
 import { usePage } from '@inertiajs/vue3';
 import { Cookie, Settings2 } from '@lucide/vue';
+import { useI18n } from '@/i18n';
 
 type Consent = {
     essential: true;
@@ -17,6 +18,7 @@ const analytics = ref(true);
 const marketing = ref(true);
 
 const site = usePage().props.site as Record<string, string> | undefined;
+const { locale, t } = useI18n();
 
 onMounted(() => {
     if (!localStorage.getItem(STORAGE_KEY)) {
@@ -48,7 +50,7 @@ const savePreferences = (): void =>
     <div
         v-if="visible"
         role="region"
-        aria-label="Aviso de cookies"
+        :aria-label="t('cookie.aria')"
         class="fixed inset-x-0 bottom-0 z-50 border-t border-slate-200 bg-white/95 px-4 py-4 shadow-lg backdrop-blur dark:border-slate-800 dark:bg-slate-950/95"
     >
         <div class="mx-auto w-full max-w-5xl">
@@ -59,14 +61,14 @@ const savePreferences = (): void =>
                     <Cookie class="mt-0.5 size-4 shrink-0" aria-hidden="true" />
                     <span>
                         {{
-                            site?.cookie_text ||
-                            'Este site utiliza cookies para melhorar sua experiência de navegação.'
+                            (locale === 'pt_BR' && site?.cookie_text) ||
+                            t('cookie.text')
                         }}
                         <a
                             href="/politica-de-cookies"
                             class="ml-1 underline hover:text-indigo-600"
                         >
-                            Política de cookies
+                            {{ t('cookie.policy') }}
                         </a>
                     </span>
                 </p>
@@ -76,7 +78,7 @@ const savePreferences = (): void =>
                         class="rounded-md border border-slate-200 px-3 py-1.5 text-xs font-medium text-slate-700 hover:bg-slate-50 dark:border-slate-800 dark:text-slate-200 dark:hover:bg-slate-800"
                         @click="essentialOnly"
                     >
-                        Apenas essenciais
+                        {{ t('cookie.onlyEssential') }}
                     </button>
                     <button
                         type="button"
@@ -84,14 +86,14 @@ const savePreferences = (): void =>
                         @click="customizing = !customizing"
                     >
                         <Settings2 class="size-3.5" aria-hidden="true" />
-                        Personalizar
+                        {{ t('cookie.customize') }}
                     </button>
                     <button
                         type="button"
                         class="rounded-md bg-indigo-600 px-3 py-1.5 text-xs font-medium text-white hover:bg-indigo-500"
                         @click="acceptAll"
                     >
-                        Aceitar todos
+                        {{ t('cookie.acceptAll') }}
                     </button>
                 </div>
             </div>
@@ -103,23 +105,22 @@ const savePreferences = (): void =>
                 <label class="flex items-start gap-2 text-slate-600 dark:text-slate-400">
                     <input type="checkbox" checked disabled />
                     <span>
-                        <strong class="text-slate-800 dark:text-slate-200">Essenciais</strong>
-                        — necessários para o funcionamento do site (sessão e
-                        proteção contra CSRF). Não podem ser desativados.
+                        <strong class="text-slate-800 dark:text-slate-200">{{ t('cookie.essential') }}</strong>
+                        — {{ t('cookie.essentialDesc') }}
                     </span>
                 </label>
                 <label class="flex items-start gap-2 text-slate-600 dark:text-slate-400">
                     <input v-model="analytics" type="checkbox" />
                     <span>
-                        <strong class="text-slate-800 dark:text-slate-200">Análise</strong>
-                        — métricas anônimas de uso para melhorar o conteúdo.
+                        <strong class="text-slate-800 dark:text-slate-200">{{ t('cookie.analytics') }}</strong>
+                        — {{ t('cookie.analyticsDesc') }}
                     </span>
                 </label>
                 <label class="flex items-start gap-2 text-slate-600 dark:text-slate-400">
                     <input v-model="marketing" type="checkbox" />
                     <span>
-                        <strong class="text-slate-800 dark:text-slate-200">Marketing</strong>
-                        — medição de campanhas e anúncios.
+                        <strong class="text-slate-800 dark:text-slate-200">{{ t('cookie.marketing') }}</strong>
+                        — {{ t('cookie.marketingDesc') }}
                     </span>
                 </label>
                 <div>
@@ -128,7 +129,7 @@ const savePreferences = (): void =>
                         class="rounded-md bg-indigo-600 px-3 py-1.5 text-xs font-medium text-white hover:bg-indigo-500"
                         @click="savePreferences"
                     >
-                        Salvar preferências
+                        {{ t('cookie.save') }}
                     </button>
                 </div>
             </div>

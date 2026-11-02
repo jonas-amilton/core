@@ -34,10 +34,10 @@ final class ContactMessageRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'name.required' => 'Informe seu nome.',
-            'email.required' => 'Informe um e-mail para contato.',
-            'email.email' => 'Informe um e-mail válido.',
-            'message.required' => 'Escreva sua mensagem.',
+            'name.required' => __('site.contact.name_required'),
+            'email.required' => __('site.contact.email_required'),
+            'email.email' => __('site.contact.email_email'),
+            'message.required' => __('site.contact.message_required'),
         ];
     }
 

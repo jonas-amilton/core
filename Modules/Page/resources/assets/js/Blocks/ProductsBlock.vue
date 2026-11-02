@@ -1,5 +1,8 @@
 <script setup lang="ts">
+import { useI18n } from '@/i18n';
 import type { Block } from '../types';
+
+const { t } = useI18n();
 
 defineProps<{
     block: Block;
@@ -19,7 +22,7 @@ defineProps<{
                 href="/produtos"
                 class="text-sm font-medium text-indigo-600 hover:underline dark:text-indigo-400"
             >
-                Ver catálogo
+                {{ t('products.viewCatalog') }}
             </a>
         </div>
 

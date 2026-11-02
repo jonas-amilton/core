@@ -2,6 +2,7 @@
 import { Head, Link } from '@inertiajs/vue3';
 import SiteShell from '@modules/Page/resources/assets/js/components/SiteShell.vue';
 import type { NavigationItem } from '@modules/Page/resources/assets/js/types';
+import { useI18n } from '@/i18n';
 
 type Product = {
     id: number;
@@ -27,6 +28,8 @@ type Paginator = {
     next_page_url: string | null;
 };
 
+const { t } = useI18n();
+
 const props = defineProps<{
     products: Paginator;
     categories: Category[];
@@ -35,8 +38,8 @@ const props = defineProps<{
 }>();
 
 const title = props.activeCategory
-    ? `Produtos · ${props.activeCategory.name}`
-    : 'Produtos';
+    ? `${t('catalog.title')} · ${props.activeCategory.name}`
+    : t('catalog.title');
 </script>
 
 <template>
@@ -47,12 +50,16 @@ const title = props.activeCategory
             <h1
                 class="text-3xl font-semibold tracking-tight text-slate-900 dark:text-slate-100"
             >
-                {{ props.activeCategory ? props.activeCategory.name : 'Produtos' }}
+                {{
+                    props.activeCategory
+                        ? props.activeCategory.name
+                        : t('catalog.title')
+                }}
             </h1>
 
             <nav
                 v-if="props.categories.length > 0"
-                aria-label="Categorias de produtos"
+                :aria-label="t('catalog.categoriesAria')"
                 class="mt-4 flex flex-wrap gap-2"
             >
                 <Link
@@ -64,7 +71,7 @@ const title = props.activeCategory
                             : 'border-slate-200 text-slate-600 hover:border-indigo-300 dark:border-slate-800 dark:text-slate-400',
                     ]"
                 >
-                    Todos
+                    {{ t('common.all') }}
                 </Link>
                 <Link
                     v-for="category in props.categories"
@@ -107,7 +114,7 @@ const title = props.activeCategory
                                 {{ product.name }}
                             </h2>
                             <p v-if="product.sku" class="mt-1 text-xs text-slate-400">
-                                SKU: {{ product.sku }}
+                                {{ t('catalog.sku') }}: {{ product.sku }}
                             </p>
                         </div>
                     </Link>
@@ -118,7 +125,7 @@ const title = props.activeCategory
                 v-if="props.products.data.length === 0"
                 class="mt-10 rounded-xl border border-dashed border-slate-300 px-6 py-16 text-center text-sm text-slate-500 dark:border-slate-700 dark:text-slate-400"
             >
-                Nenhum produto publicado ainda.
+                {{ t('catalog.empty') }}
             </p>
 
             <nav
@@ -131,13 +138,16 @@ const title = props.activeCategory
                     :href="props.products.prev_page_url"
                     class="text-indigo-600 hover:underline dark:text-indigo-400"
                 >
-                    Anterior
+                    {{ t('common.previous') }}
                 </Link>
-                <span v-else class="text-slate-400">Anterior</span>
+                <span v-else class="text-slate-400">{{ t('common.previous') }}</span>
 
                 <span class="text-xs text-slate-500">
-                    Página {{ props.products.current_page }} de
-                    {{ props.products.last_page }}
+                    {{
+                        t('common.pageOf')
+                            .replace(':current', String(props.products.current_page))
+                            .replace(':total', String(props.products.last_page))
+                    }}
                 </span>
 
                 <Link
@@ -145,9 +155,9 @@ const title = props.activeCategory
                     :href="props.products.next_page_url"
                     class="text-indigo-600 hover:underline dark:text-indigo-400"
                 >
-                    Próxima
+                    {{ t('common.next') }}
                 </Link>
-                <span v-else class="text-slate-400">Próxima</span>
+                <span v-else class="text-slate-400">{{ t('common.next') }}</span>
             </nav>
         </section>
     </SiteShell>

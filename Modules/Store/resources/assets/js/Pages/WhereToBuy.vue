@@ -2,6 +2,7 @@
 import { Head } from '@inertiajs/vue3';
 import SiteShell from '@modules/Page/resources/assets/js/components/SiteShell.vue';
 import type { NavigationItem } from '@modules/Page/resources/assets/js/types';
+import { useI18n } from '@/i18n';
 
 type StoreItem = {
     id: number;
@@ -12,6 +13,8 @@ type StoreItem = {
     url: string | null;
 };
 
+const { t } = useI18n();
+
 const props = defineProps<{
     physical: StoreItem[];
     online: StoreItem[];
@@ -20,21 +23,21 @@ const props = defineProps<{
 </script>
 
 <template>
-    <Head title="Onde comprar" />
+    <Head :title="t('stores.title')" />
 
     <SiteShell :navigation="props.navigation">
         <section class="px-4 py-10 sm:px-6">
             <h1
                 class="text-3xl font-semibold tracking-tight text-slate-900 dark:text-slate-100"
             >
-                Onde comprar
+                {{ t('stores.title') }}
             </h1>
 
             <h2
                 v-if="props.physical.length > 0"
                 class="mt-8 text-lg font-semibold text-slate-900 dark:text-slate-100"
             >
-                Lojas físicas
+                {{ t('stores.physical') }}
             </h2>
             <ul class="mt-4 grid gap-3 sm:grid-cols-2">
                 <li
@@ -62,7 +65,7 @@ const props = defineProps<{
                 v-if="props.online.length > 0"
                 class="mt-10 text-lg font-semibold text-slate-900 dark:text-slate-100"
             >
-                Lojas virtuais
+                {{ t('stores.online') }}
             </h2>
             <ul class="mt-4 grid gap-3 sm:grid-cols-2">
                 <li
@@ -92,7 +95,7 @@ const props = defineProps<{
                 v-if="props.physical.length === 0 && props.online.length === 0"
                 class="mt-8 rounded-xl border border-dashed border-slate-300 px-6 py-16 text-center text-sm text-slate-500 dark:border-slate-700 dark:text-slate-400"
             >
-                Nenhuma loja cadastrada ainda.
+                {{ t('stores.empty') }}
             </p>
         </section>
     </SiteShell>

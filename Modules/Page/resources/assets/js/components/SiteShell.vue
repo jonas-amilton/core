@@ -2,7 +2,10 @@
 import { Link, usePage } from '@inertiajs/vue3';
 import { computed } from 'vue';
 import CookieConsent from '@/components/CookieConsent.vue';
+import { switchLocale, useI18n } from '@/i18n';
 import type { NavigationItem } from '../types';
+
+const { locale, t, locales } = useI18n();
 
 const props = defineProps<{
     navigation: NavigationItem[];
@@ -29,6 +32,10 @@ const socials = computed(() =>
 
 const isCurrent = (item: NavigationItem): boolean =>
     item.url === page.url || item.url === page.url.split('?')[0];
+
+function changeLocale(event: Event): void {
+    switchLocale((event.target as HTMLSelectElement).value as typeof locale.value);
+}
 </script>
 
 <template>
@@ -49,7 +56,7 @@ const isCurrent = (item: NavigationItem): boolean =>
                 </Link>
 
                 <nav
-                    aria-label="Páginas do site"
+                    :aria-label="t('nav.pages')"
                     class="hidden items-center gap-1 sm:flex"
                 >
                     <a
@@ -70,25 +77,43 @@ const isCurrent = (item: NavigationItem): boolean =>
                         href="/blog"
                         class="rounded-md px-3 py-1.5 text-sm text-slate-600 transition-colors hover:bg-slate-100 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-slate-100"
                     >
-                        Blog
+                        {{ t('nav.blog') }}
                     </a>
                     <a
                         href="/orcamento"
                         class="rounded-md px-3 py-1.5 text-sm text-slate-600 transition-colors hover:bg-slate-100 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-slate-100"
                     >
-                        Orçamento
+                        {{ t('nav.quote') }}
                         <span v-if="cartCount > 0" class="text-xs text-indigo-600 dark:text-indigo-400">
                             ({{ cartCount }})
                         </span>
                     </a>
                 </nav>
 
-                <a
-                    href="/admin"
-                    class="rounded-md px-2 py-1 text-xs font-medium text-slate-500 hover:text-indigo-600 dark:text-slate-500 dark:hover:text-indigo-400"
-                >
-                    Painel
-                </a>
+                <div class="flex items-center gap-2">
+                    <label class="sr-only" for="site-locale">Idioma</label>
+                    <select
+                        id="site-locale"
+                        :value="locale"
+                        class="h-8 rounded-md border border-slate-200 bg-transparent px-1.5 text-xs font-medium text-slate-600 dark:border-slate-800 dark:text-slate-400"
+                        @change="changeLocale"
+                    >
+                        <option
+                            v-for="option in locales"
+                            :key="option.value"
+                            :value="option.value"
+                        >
+                            {{ option.short }}
+                        </option>
+                    </select>
+
+                    <a
+                        href="/admin"
+                        class="rounded-md px-2 py-1 text-xs font-medium text-slate-500 hover:text-indigo-600 dark:text-slate-500 dark:hover:text-indigo-400"
+                    >
+                        {{ t('nav.panel') }}
+                    </a>
+                </div>
             </div>
         </header>
 

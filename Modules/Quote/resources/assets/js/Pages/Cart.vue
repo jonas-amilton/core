@@ -7,6 +7,7 @@ import type { NavigationItem } from '@modules/Page/resources/assets/js/types';
 import { destroy } from '@/routes/quote/item';
 import { store } from '@/routes/quote';
 import { fieldClasses } from '@/lib/formStyles';
+import { useI18n } from '@/i18n';
 
 type CartItem = {
     id: number;
@@ -16,6 +17,8 @@ type CartItem = {
     cover: string | null;
     quantity: number;
 };
+
+const { t } = useI18n();
 
 const props = defineProps<{
     items: CartItem[];
@@ -54,10 +57,10 @@ function submit(): void {
             <h1
                 class="text-3xl font-semibold tracking-tight text-slate-900 dark:text-slate-100"
             >
-                Orçamento
+                {{ t('quote.title') }}
             </h1>
             <p class="mt-1 text-sm text-slate-600 dark:text-slate-400">
-                Monte sua lista de produtos e envie. Respondemos por e-mail.
+                {{ t('quote.subtitle') }}
             </p>
 
             <p
@@ -65,7 +68,7 @@ function submit(): void {
                 class="mt-4 inline-flex items-center gap-1.5 rounded-lg bg-emerald-50 px-3 py-2 text-sm text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-300"
             >
                 <Check class="size-4" aria-hidden="true" />
-                Orçamento enviado. Entraremos em contato em breve.
+                {{ t('quote.success') }}
             </p>
 
             <p
@@ -96,8 +99,8 @@ function submit(): void {
                                 {{ item.name }}
                             </Link>
                             <p class="text-xs text-slate-500">
-                                <template v-if="item.sku">SKU {{ item.sku }} · </template>
-                                Qtd. {{ item.quantity }}
+                                <template v-if="item.sku">{{ t('catalog.sku') }} {{ item.sku }} · </template>
+                                {{ t('quote.quantity') }} {{ item.quantity }}
                             </p>
                         </div>
                         <button
@@ -117,7 +120,7 @@ function submit(): void {
                 >
                     <label class="grid gap-1.5">
                         <span class="text-xs font-medium text-slate-600 dark:text-slate-400">
-                            Nome
+                            {{ t('quote.name') }}
                         </span>
                         <input v-model="form.name" type="text" :class="fieldClasses" />
                         <span v-if="form.errors.name" class="text-xs text-red-600">
@@ -127,7 +130,7 @@ function submit(): void {
 
                     <label class="grid gap-1.5">
                         <span class="text-xs font-medium text-slate-600 dark:text-slate-400">
-                            E-mail
+                            {{ t('quote.email') }}
                         </span>
                         <input v-model="form.email" type="email" :class="fieldClasses" />
                         <span v-if="form.errors.email" class="text-xs text-red-600">
@@ -137,14 +140,14 @@ function submit(): void {
 
                     <label class="grid gap-1.5">
                         <span class="text-xs font-medium text-slate-600 dark:text-slate-400">
-                            Telefone (opcional)
+                            {{ t('quote.phone') }}
                         </span>
                         <input v-model="form.phone" type="tel" :class="fieldClasses" />
                     </label>
 
                     <label class="grid gap-1.5">
                         <span class="text-xs font-medium text-slate-600 dark:text-slate-400">
-                            Observações
+                            {{ t('quote.message') }}
                         </span>
                         <textarea
                             v-model="form.message"
@@ -168,7 +171,7 @@ function submit(): void {
                         class="inline-flex h-10 items-center justify-center rounded-lg bg-indigo-600 px-5 text-sm font-medium text-white hover:bg-indigo-500 disabled:opacity-50"
                         :disabled="form.processing"
                     >
-                        Enviar orçamento
+                        {{ t('quote.submit') }}
                     </button>
                 </form>
             </div>
@@ -177,9 +180,9 @@ function submit(): void {
                 v-else
                 class="mt-8 rounded-xl border border-dashed border-slate-300 px-6 py-16 text-center text-sm text-slate-500 dark:border-slate-700 dark:text-slate-400"
             >
-                Seu orçamento está vazio.
+                {{ t('quote.empty') }}
                 <Link href="/produtos" class="text-indigo-600 hover:underline dark:text-indigo-400">
-                    Ver produtos
+                    {{ t('quote.viewProducts') }}
                 </Link>
             </p>
         </section>

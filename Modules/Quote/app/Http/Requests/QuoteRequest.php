@@ -34,9 +34,9 @@ final class QuoteRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'name.required' => 'Informe seu nome.',
-            'email.required' => 'Informe um e-mail para o orçamento.',
-            'email.email' => 'Informe um e-mail válido.',
+            'name.required' => __('site.quote.name_required'),
+            'email.required' => __('site.quote.email_required'),
+            'email.email' => __('site.quote.email_email'),
         ];
     }
 

@@ -2,6 +2,7 @@
 import { Head } from '@inertiajs/vue3';
 import SiteShell from '@modules/Page/resources/assets/js/components/SiteShell.vue';
 import type { NavigationItem } from '@modules/Page/resources/assets/js/types';
+import { useI18n } from '@/i18n';
 
 type Post = {
     id: number;
@@ -21,6 +22,8 @@ type Category = {
     slug: string;
 };
 
+const { locale, t } = useI18n();
+
 const props = defineProps<{
     posts: Post[];
     categories: Category[];
@@ -30,7 +33,7 @@ const props = defineProps<{
 
 const formatDate = (value: string | null): string =>
     value
-        ? new Date(value).toLocaleDateString('pt-BR', {
+        ? new Date(value).toLocaleDateString(locale.value.replace('_', '-'), {
               day: '2-digit',
               month: 'long',
               year: 'numeric',
@@ -39,7 +42,7 @@ const formatDate = (value: string | null): string =>
 
 const title = props.activeCategory
     ? `Blog · ${props.activeCategory.name}`
-    : 'Blog';
+    : t('blog.title');
 </script>
 
 <template>
@@ -50,12 +53,12 @@ const title = props.activeCategory
             <h1
                 class="text-3xl font-semibold tracking-tight text-slate-900 dark:text-slate-100"
             >
-                {{ props.activeCategory ? props.activeCategory.name : 'Blog' }}
+                {{ props.activeCategory ? props.activeCategory.name : t('blog.title') }}
             </h1>
 
             <nav
                 v-if="props.categories.length > 0"
-                aria-label="Categorias do blog"
+                :aria-label="t('blog.categoriesAria')"
                 class="mt-4 flex flex-wrap gap-2"
             >
                 <a
@@ -67,7 +70,7 @@ const title = props.activeCategory
                             : 'border-slate-200 text-slate-600 hover:border-indigo-300 dark:border-slate-800 dark:text-slate-400',
                     ]"
                 >
-                    Todos
+                    {{ t('blog.all') }}
                 </a>
                 <a
                     v-for="category in props.categories"
@@ -124,7 +127,7 @@ const title = props.activeCategory
                 v-if="props.posts.length === 0"
                 class="mt-10 rounded-xl border border-dashed border-slate-300 px-6 py-16 text-center text-sm text-slate-500 dark:border-slate-700 dark:text-slate-400"
             >
-                Nenhum artigo publicado ainda.
+                {{ t('blog.empty') }}
             </p>
         </section>
     </SiteShell>

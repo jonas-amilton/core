@@ -3,6 +3,7 @@ import { Head, Link } from '@inertiajs/vue3';
 import { ArrowLeft } from '@lucide/vue';
 import SiteShell from '@modules/Page/resources/assets/js/components/SiteShell.vue';
 import type { NavigationItem } from '@modules/Page/resources/assets/js/types';
+import { useI18n } from '@/i18n';
 
 type Post = {
     id: number;
@@ -16,6 +17,8 @@ type Post = {
     category_slug: string | null;
 };
 
+const { locale, t } = useI18n();
+
 const props = defineProps<{
     post: Post;
     navigation: NavigationItem[];
@@ -24,7 +27,7 @@ const props = defineProps<{
 
 const formatDate = (value: string | null): string =>
     value
-        ? new Date(value).toLocaleDateString('pt-BR', {
+        ? new Date(value).toLocaleDateString(locale.value.replace('_', '-'), {
               day: '2-digit',
               month: 'long',
               year: 'numeric',
@@ -88,7 +91,7 @@ const formatDate = (value: string | null): string =>
                 <h2
                     class="text-lg font-semibold tracking-tight text-slate-900 dark:text-slate-100"
                 >
-                    Leia também
+                    {{ t('blog.readAlso') }}
                 </h2>
                 <ul class="mt-4 grid gap-3 sm:grid-cols-3">
                     <li

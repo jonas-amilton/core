@@ -4,6 +4,9 @@ import { Check } from '@lucide/vue';
 import type { Block } from '../types';
 import { store as newsletterStore } from '@/routes/newsletter';
 import { fieldClasses } from '@/lib/formStyles';
+import { useI18n } from '@/i18n';
+
+const { t } = useI18n();
 
 defineProps<{
     block: Block;
@@ -45,15 +48,15 @@ function submit(): void {
                 class="inline-flex items-center gap-1.5 text-sm text-emerald-600 dark:text-emerald-400"
             >
                 <Check class="size-4" aria-hidden="true" />
-                Inscrição confirmada. Obrigado!
+                {{ t('newsletter.success') }}
             </p>
 
             <form class="flex w-full max-w-md gap-2" @submit.prevent="submit">
                 <input
                     v-model="form.email"
                     type="email"
-                    placeholder="seu@email.com"
-                    aria-label="E-mail para newsletter"
+                    :placeholder="t('newsletter.placeholder')"
+                    :aria-label="t('newsletter.aria')"
                     :class="fieldClasses"
                 />
                 <input
@@ -70,7 +73,7 @@ function submit(): void {
                     class="inline-flex h-10 shrink-0 items-center rounded-lg bg-indigo-600 px-4 text-sm font-medium text-white hover:bg-indigo-500 disabled:opacity-50"
                     :disabled="form.processing"
                 >
-                    Enviar
+                    {{ t('newsletter.submit') }}
                 </button>
             </form>
             <span v-if="form.errors.email" class="text-xs text-red-600">

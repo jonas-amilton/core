@@ -40,7 +40,7 @@ final class QuoteService
 
         if ($items === []) {
             throw ValidationException::withMessages([
-                'cart' => 'Adicione ao menos um produto ao orçamento.',
+                'cart' => __('site.quote.empty_cart'),
             ]);
         }
 

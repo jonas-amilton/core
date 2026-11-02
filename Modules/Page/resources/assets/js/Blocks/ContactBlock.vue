@@ -4,6 +4,9 @@ import { Check } from '@lucide/vue';
 import type { Block } from '../types';
 import { store as contactStore } from '@/routes/contact';
 import { fieldClasses } from '@/lib/formStyles';
+import { useI18n } from '@/i18n';
+
+const { t } = useI18n();
 
 defineProps<{
     block: Block;
@@ -46,7 +49,7 @@ function submit(): void {
                 class="mt-4 inline-flex items-center gap-1.5 rounded-lg bg-emerald-50 px-3 py-2 text-sm text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-300"
             >
                 <Check class="size-4" aria-hidden="true" />
-                Mensagem enviada. Retornaremos em breve.
+                {{ t('contact.success') }}
             </p>
 
             <form
@@ -57,7 +60,7 @@ function submit(): void {
                     <span
                         class="text-xs font-medium text-slate-600 dark:text-slate-400"
                     >
-                        Nome
+                        {{ t('contact.name') }}
                     </span>
                     <input
                         v-model="form.name"
@@ -73,7 +76,7 @@ function submit(): void {
                     <span
                         class="text-xs font-medium text-slate-600 dark:text-slate-400"
                     >
-                        E-mail
+                        {{ t('contact.email') }}
                     </span>
                     <input
                         v-model="form.email"
@@ -89,7 +92,7 @@ function submit(): void {
                     <span
                         class="text-xs font-medium text-slate-600 dark:text-slate-400"
                     >
-                        Telefone (opcional)
+                        {{ t('contact.phone') }}
                     </span>
                     <input
                         v-model="form.phone"
@@ -102,7 +105,7 @@ function submit(): void {
                     <span
                         class="text-xs font-medium text-slate-600 dark:text-slate-400"
                     >
-                        Mensagem
+                        {{ t('contact.message') }}
                     </span>
                     <textarea
                         v-model="form.message"
@@ -133,7 +136,7 @@ function submit(): void {
                         class="inline-flex h-10 items-center rounded-lg bg-indigo-600 px-5 text-sm font-medium text-white hover:bg-indigo-500 disabled:opacity-50"
                         :disabled="form.processing"
                     >
-                        Enviar mensagem
+                        {{ t('contact.submit') }}
                     </button>
                 </div>
             </form>

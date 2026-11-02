@@ -1,5 +1,8 @@
 <script setup lang="ts">
+import { useI18n } from '@/i18n';
 import type { Block } from '../types';
+
+const { t } = useI18n();
 
 defineProps<{
     block: Block;
@@ -48,8 +51,7 @@ const sectionClass = 'px-4 py-12 sm:px-6';
             v-if="(block.items ?? []).length === 0"
             class="mt-4 text-sm text-slate-500 dark:text-slate-400"
         >
-            Nenhuma área publicada. Marque páginas como "Área de atuação" no
-            editor.
+            {{ t('services.empty') }}
         </p>
     </section>
 </template>

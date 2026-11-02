@@ -3,6 +3,7 @@ import { Head, Link, router } from '@inertiajs/vue3';
 import { Check, Plus } from '@lucide/vue';
 import { ref } from 'vue';
 import { store as addToQuote } from '@/routes/quote/item';
+import { useI18n } from '@/i18n';
 import SiteShell from '@modules/Page/resources/assets/js/components/SiteShell.vue';
 import type { NavigationItem } from '@modules/Page/resources/assets/js/types';
 
@@ -22,6 +23,8 @@ type RelatedProduct = {
     url: string;
     cover: string | null;
 };
+
+const { t } = useI18n();
 
 const props = defineProps<{
     product: Product;
@@ -99,7 +102,7 @@ function addProduct(): void {
                     </h1>
 
                     <p v-if="props.product.sku" class="mt-2 text-sm text-slate-500">
-                        SKU: {{ props.product.sku }}
+                        {{ t('catalog.sku') }}: {{ props.product.sku }}
                     </p>
 
                     <div
@@ -116,20 +119,20 @@ function addProduct(): void {
                             @click="addProduct"
                         >
                             <Plus class="size-4" aria-hidden="true" />
-                            Adicionar ao orçamento
+                            {{ t('catalog.addToQuote') }}
                         </button>
                         <Link
                             href="/orcamento"
                             class="text-sm text-indigo-600 hover:underline dark:text-indigo-400"
                         >
-                            Ver orçamento
+                            {{ t('catalog.viewQuote') }}
                         </Link>
                         <span
                             v-if="added"
                             class="inline-flex items-center gap-1 text-sm text-emerald-600 dark:text-emerald-400"
                         >
                             <Check class="size-4" aria-hidden="true" />
-                            Adicionado
+                            {{ t('catalog.added') }}
                         </span>
                     </div>
                 </div>
@@ -139,7 +142,7 @@ function addProduct(): void {
                 <h2
                     class="text-lg font-semibold tracking-tight text-slate-900 dark:text-slate-100"
                 >
-                    Produtos relacionados
+                    {{ t('catalog.related') }}
                 </h2>
                 <ul class="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                     <li
