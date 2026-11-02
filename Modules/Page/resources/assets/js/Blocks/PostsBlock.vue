@@ -22,7 +22,7 @@ defineProps<{
                 </h2>
                 <a
                     href="/blog"
-                    class="inline-flex h-9 items-center gap-1.5 rounded-md border border-slate-300 px-3.5 text-xs font-medium text-slate-700 transition-colors hover:border-blue-300 hover:text-blue-800 dark:border-slate-700 dark:text-slate-300 dark:hover:border-blue-500/40 dark:hover:text-blue-400"
+                    class="inline-flex h-9 items-center gap-1.5 rounded-md border border-slate-300 px-3.5 text-xs font-medium text-slate-700 transition-colors hover:border-green-300 hover:text-green-900 dark:border-slate-700 dark:text-slate-300 dark:hover:border-green-600/40 dark:hover:text-green-400"
                 >
                     {{ t('posts.viewAll') }}
                     <ArrowRight class="size-3.5" aria-hidden="true" />
@@ -33,7 +33,7 @@ defineProps<{
                 <li v-for="(item, index) in block.items ?? []" :key="index">
                     <a
                         :href="item.url ?? '/blog'"
-                        class="group flex h-full flex-col overflow-hidden rounded-lg border border-slate-200 bg-white shadow-xs transition-colors hover:border-blue-300 dark:border-slate-800 dark:bg-slate-900 dark:hover:border-blue-500/40"
+                        class="group flex h-full flex-col overflow-hidden rounded-lg border border-slate-200 bg-white shadow-xs transition-colors hover:border-green-300 dark:border-slate-800 dark:bg-slate-900 dark:hover:border-green-600/40"
                     >
                         <div
                             v-if="item.cover"
@@ -58,7 +58,7 @@ defineProps<{
                                 </template>
                             </p>
                             <h3
-                                class="mt-2 text-base font-semibold text-slate-950 group-hover:text-blue-800 dark:text-slate-50 dark:group-hover:text-blue-400"
+                                class="mt-2 text-base font-semibold text-slate-950 group-hover:text-green-900 dark:text-slate-50 dark:group-hover:text-green-400"
                             >
                                 {{ item.title }}
                             </h3>
@@ -69,7 +69,7 @@ defineProps<{
                                 {{ item.description }}
                             </p>
                             <span
-                                class="mt-4 inline-flex items-center gap-1.5 text-xs font-medium text-blue-800 dark:text-blue-400"
+                                class="mt-4 inline-flex items-center gap-1.5 text-xs font-medium text-green-900 dark:text-green-400"
                             >
                                 {{ t('blog.read') }}
                                 <ArrowRight class="size-3.5" aria-hidden="true" />

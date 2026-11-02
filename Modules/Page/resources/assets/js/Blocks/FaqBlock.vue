@@ -29,7 +29,7 @@ defineProps<{
                     >
                         {{ item.title }}
                         <span
-                            class="text-lg leading-none text-blue-700 transition-transform group-open:rotate-45 dark:text-blue-400"
+                            class="text-lg leading-none text-green-800 transition-transform group-open:rotate-45 dark:text-green-400"
                             aria-hidden="true"
                         >
                             +

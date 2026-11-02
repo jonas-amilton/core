@@ -155,7 +155,7 @@ const formatDate = (value: string | null): string =>
                 class="mt-4 rounded-lg border border-dashed border-slate-300 bg-white px-6 py-16 text-center text-sm text-slate-500 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-400"
             >
                 {{ t('account.empty') }}
-                <Link href="/produtos" class="text-blue-700 hover:underline dark:text-blue-400">
+                <Link href="/produtos" class="text-green-800 hover:underline dark:text-green-400">
                     {{ t('quote.viewProducts') }}
                 </Link>
             </p>
@@ -187,7 +187,7 @@ const formatDate = (value: string | null): string =>
                         />
                         <span class="min-w-0">
                             <span
-                                class="block text-sm font-medium text-slate-900 hover:text-blue-700 dark:text-slate-100"
+                                class="block text-sm font-medium text-slate-900 hover:text-green-800 dark:text-slate-100"
                             >
                                 {{ favorite.name }}
                             </span>

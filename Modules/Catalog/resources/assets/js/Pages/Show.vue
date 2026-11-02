@@ -65,6 +65,28 @@ function submitReview(): void {
 
 const activeImage = ref(0);
 const added = ref(false);
+const quantity = ref(1);
+
+const averageRating = computed<number | null>(() => {
+    if (props.reviews.length === 0) {
+        return null;
+    }
+
+    const total = props.reviews.reduce((sum, review) => sum + review.rating, 0);
+
+    return Math.round((total / props.reviews.length) * 10) / 10;
+});
+
+const maxQuantity = computed(() =>
+    props.product.stock === null ? 999 : Math.max(1, props.product.stock),
+);
+
+function stepQuantity(delta: number): void {
+    quantity.value = Math.min(
+        maxQuantity.value,
+        Math.max(1, quantity.value + delta),
+    );
+}
 
 const page = usePage();
 
@@ -89,7 +111,7 @@ function toggleFavorite(): void {
 function addProduct(): void {
     router.post(
         addToCart.url(),
-        { product_id: props.product.id, quantity: 1 },
+        { product_id: props.product.id, quantity: quantity.value },
         { preserveScroll: true, onSuccess: () => (added.value = true) },
     );
 }
@@ -114,7 +136,7 @@ function addProduct(): void {
                     v-for="category in props.product.categories"
                     :key="category.slug"
                     :href="`/produtos/c/${category.slug}`"
-                    class="hover:text-blue-700"
+                    class="hover:text-green-800"
                 >
                     {{ category.name }}
                 </Link>
@@ -126,7 +148,7 @@ function addProduct(): void {
                         v-if="props.product.images.length > 0"
                         :src="props.product.images[activeImage]"
                         :alt="props.product.name"
-                        class="aspect-square w-full rounded-lg border border-slate-200 bg-white object-contain p-6 dark:border-slate-800 dark:bg-slate-900"
+                        class="aspect-square w-full rounded-xl bg-slate-100 object-contain p-8 mix-blend-multiply dark:bg-slate-800 dark:mix-blend-normal"
                     />
                     <div
                         v-if="props.product.images.length > 1"
@@ -139,7 +161,7 @@ function addProduct(): void {
                             :class="[
                                 'size-16 overflow-hidden rounded-sm border bg-white p-1',
                                 index === activeImage
-                                    ? 'border-blue-600'
+                                    ? 'border-green-700'
                                     : 'border-slate-200 dark:border-slate-800',
                             ]"
                             :aria-label="`Ver foto ${index + 1}`"
@@ -155,8 +177,21 @@ function addProduct(): void {
                 </div>
 
                 <div>
+                    <p
+                        v-if="averageRating"
+                        class="flex items-center gap-2 text-sm text-green-700 dark:text-green-400"
+                        :aria-label="`${averageRating} / 5`"
+                    >
+                        <span aria-hidden="true">
+                            {{ '★'.repeat(Math.round(averageRating)) }}
+                        </span>
+                        <span class="text-slate-500 dark:text-slate-400">
+                            ({{ props.reviews.length }})
+                        </span>
+                    </p>
+
                     <h1
-                        class="text-3xl font-semibold tracking-tight text-slate-950 sm:text-4xl dark:text-slate-50"
+                        class="mt-1 text-3xl font-semibold tracking-tight text-slate-950 sm:text-4xl dark:text-slate-50"
                     >
                         {{ props.product.name }}
                     </h1>
@@ -210,19 +245,55 @@ function addProduct(): void {
                         {{ props.product.description }}
                     </div>
 
-                    <div class="mt-8 flex flex-wrap items-center gap-3">
+                    <div class="mt-8 flex flex-wrap items-center gap-2">
+                        <div
+                            v-if="props.product.stock !== 0"
+                            class="inline-flex h-11 items-center rounded-full border border-slate-300 dark:border-slate-700"
+                        >
+                            <button
+                                type="button"
+                                class="flex size-11 items-center justify-center text-lg text-slate-600 hover:text-green-900 dark:text-slate-300"
+                                aria-label="-"
+                                @click="stepQuantity(-1)"
+                            >
+                                −
+                            </button>
+                            <input
+                                v-model.number="quantity"
+                                type="number"
+                                min="1"
+                                :max="maxQuantity"
+                                class="h-11 w-12 border-0 bg-transparent text-center text-sm tabular-nums focus:outline-none"
+                                :aria-label="t('quote.quantity')"
+                            />
+                            <button
+                                type="button"
+                                class="flex size-11 items-center justify-center text-lg text-slate-600 hover:text-green-900 dark:text-slate-300"
+                                aria-label="+"
+                                @click="stepQuantity(1)"
+                            >
+                                +
+                            </button>
+                        </div>
+
                         <button
                             v-if="props.product.stock !== 0"
                             type="button"
-                            class="inline-flex h-10 items-center gap-2 rounded-md bg-blue-800 px-5 text-sm font-medium text-white hover:bg-blue-900"
+                            class="inline-flex h-11 items-center gap-2 rounded-full bg-green-900 px-6 text-sm font-medium text-white transition-colors hover:bg-green-950"
                             @click="addProduct"
                         >
                             <Plus class="size-4" aria-hidden="true" />
                             {{ t('catalog.addToCart') }}
                         </button>
+
                         <button
                             type="button"
-                            class="inline-flex h-10 items-center gap-2 rounded-md border border-slate-300 px-4 text-sm font-medium text-slate-700 transition-colors hover:border-red-300 hover:text-red-600 dark:border-slate-700 dark:text-slate-300"
+                            class="inline-flex size-11 items-center justify-center rounded-full border border-slate-300 text-slate-600 transition-colors hover:border-red-300 hover:text-red-600 dark:border-slate-700 dark:text-slate-300"
+                            :aria-label="
+                                props.isFavorite
+                                    ? t('catalog.favorited')
+                                    : t('catalog.favorite')
+                            "
                             @click="toggleFavorite"
                         >
                             <Heart
@@ -234,18 +305,15 @@ function addProduct(): void {
                                 "
                                 aria-hidden="true"
                             />
-                            {{
-                                props.isFavorite
-                                    ? t('catalog.favorited')
-                                    : t('catalog.favorite')
-                            }}
                         </button>
+
                         <Link
                             href="/orcamento"
-                            class="text-sm text-blue-700 hover:underline dark:text-blue-400"
+                            class="text-sm text-green-800 hover:underline dark:text-green-400"
                         >
                             {{ t('catalog.viewCart') }}
                         </Link>
+
                         <span
                             v-if="added"
                             class="inline-flex items-center gap-1 text-sm text-emerald-600 dark:text-emerald-400"
@@ -254,6 +322,26 @@ function addProduct(): void {
                             {{ t('catalog.added') }}
                         </span>
                     </div>
+
+                    <ul
+                        class="mt-8 grid gap-2 border-t border-slate-200 pt-6 text-sm text-slate-600 sm:grid-cols-3 dark:border-slate-800 dark:text-slate-400"
+                    >
+                        <li
+                            v-for="benefit in [
+                                t('hero.benefit1'),
+                                t('hero.benefit2'),
+                                t('hero.benefit3'),
+                            ]"
+                            :key="benefit"
+                            class="inline-flex items-center gap-1.5"
+                        >
+                            <Check
+                                class="size-4 text-green-800 dark:text-green-400"
+                                aria-hidden="true"
+                            />
+                            {{ benefit }}
+                        </li>
+                    </ul>
                 </div>
             </div>
 
@@ -405,7 +493,7 @@ function addProduct(): void {
                         <div class="sm:col-span-2">
                             <button
                                 type="submit"
-                                class="inline-flex h-10 items-center justify-center rounded-md bg-blue-800 px-5 text-sm font-medium text-white hover:bg-blue-900 disabled:opacity-50"
+                                class="inline-flex h-10 items-center justify-center rounded-full bg-green-900 px-5 text-sm font-medium text-white hover:bg-green-950 disabled:opacity-50"
                                 :disabled="reviewForm.processing"
                             >
                                 {{ t('reviews.submit') }}
@@ -425,7 +513,7 @@ function addProduct(): void {
                     <li
                         v-for="item in props.related"
                         :key="item.url"
-                        class="overflow-hidden rounded-lg border border-slate-200 bg-white shadow-xs transition-colors hover:border-blue-300 dark:border-slate-800 dark:bg-slate-900 dark:hover:border-blue-500/40"
+                        class="overflow-hidden rounded-lg border border-slate-200 bg-white shadow-xs transition-colors hover:border-green-300 dark:border-slate-800 dark:bg-slate-900 dark:hover:border-green-600/40"
                     >
                         <Link :href="item.url" class="block">
                             <img
@@ -438,7 +526,7 @@ function addProduct(): void {
                         <div class="border-t border-slate-100 p-4 dark:border-slate-800">
                             <Link
                                 :href="item.url"
-                                class="text-sm font-medium text-slate-900 hover:text-blue-700 dark:text-slate-100 dark:hover:text-blue-400"
+                                class="text-sm font-medium text-slate-900 hover:text-green-800 dark:text-slate-100 dark:hover:text-green-400"
                             >
                                 {{ item.title }}
                             </Link>

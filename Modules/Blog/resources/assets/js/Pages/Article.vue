@@ -48,7 +48,7 @@ const formatDate = (value: string | null): string =>
         <article class="px-4 py-12 sm:px-6 sm:py-16">
             <Link
                 href="/blog"
-                class="inline-flex items-center gap-1.5 text-sm text-slate-500 hover:text-blue-700 dark:text-slate-400"
+                class="inline-flex items-center gap-1.5 text-sm text-slate-500 hover:text-green-800 dark:text-slate-400"
             >
                 <ArrowLeft class="size-4" aria-hidden="true" />
                 Blog
@@ -60,7 +60,7 @@ const formatDate = (value: string | null): string =>
                     ·
                     <a
                         :href="`/blog/categoria/${props.post.category_slug}`"
-                        class="hover:text-blue-700"
+                        class="hover:text-green-800"
                     >
                         {{ props.post.category }}
                     </a>
@@ -107,7 +107,7 @@ const formatDate = (value: string | null): string =>
                     >
                         <a
                             :href="`/blog/${item.slug}`"
-                            class="text-sm font-medium text-slate-900 hover:text-blue-700 dark:text-slate-100 dark:hover:text-blue-400"
+                            class="text-sm font-medium text-slate-900 hover:text-green-800 dark:text-slate-100 dark:hover:text-green-400"
                         >
                             {{ item.title }}
                         </a>

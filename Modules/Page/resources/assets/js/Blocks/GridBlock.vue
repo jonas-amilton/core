@@ -22,7 +22,7 @@ defineProps<{ block: Block }>();
                     class="rounded-lg border border-slate-200 bg-white p-6 shadow-xs dark:border-slate-800 dark:bg-slate-900"
                 >
                     <span
-                        class="flex size-9 items-center justify-center rounded-md bg-blue-50 text-blue-800 dark:bg-blue-500/10 dark:text-blue-400"
+                        class="flex size-9 items-center justify-center rounded-md bg-green-50 text-green-900 dark:bg-green-600/10 dark:text-green-400"
                         aria-hidden="true"
                     >
                         <Check class="size-4" />

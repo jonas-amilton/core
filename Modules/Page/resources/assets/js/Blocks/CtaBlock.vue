@@ -7,10 +7,10 @@ defineProps<{ block: Block }>();
 
 <template>
     <section
-        class="bg-slate-900 px-4 py-12 text-white sm:px-6 sm:py-14 dark:border-y dark:border-slate-800"
+        class="px-4 py-6 sm:px-6"
     >
         <div
-            class="mx-auto flex max-w-5xl flex-col gap-6 sm:flex-row sm:items-center sm:justify-between"
+            class="mx-auto flex max-w-6xl flex-col gap-6 rounded-2xl bg-green-950 px-6 py-10 text-white sm:flex-row sm:items-center sm:justify-between sm:px-10"
         >
             <div class="max-w-2xl">
                 <p
@@ -29,7 +29,7 @@ defineProps<{ block: Block }>();
             <a
                 v-if="block.button_label"
                 :href="block.button_href || '#'"
-                class="inline-flex h-11 shrink-0 items-center justify-center gap-2 rounded-md bg-blue-700 px-5 text-sm font-medium text-white transition-colors hover:bg-blue-600"
+                class="inline-flex h-11 shrink-0 items-center justify-center gap-2 rounded-md bg-green-800 px-5 text-sm font-medium text-white transition-colors hover:bg-green-700"
             >
                 {{ block.button_label }}
                 <ArrowRight class="size-4" aria-hidden="true" />

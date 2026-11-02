@@ -68,7 +68,7 @@ const savePreferences = (): void =>
                         }}
                         <a
                             href="/politica-de-cookies"
-                            class="ml-1 underline hover:text-blue-700"
+                            class="ml-1 underline hover:text-green-800"
                         >
                             {{ t('cookie.policy') }}
                         </a>

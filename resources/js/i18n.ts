@@ -38,6 +38,9 @@ const ptBR: Dict = {
         social: 'Redes',
         navigation: 'Navegação',
     },
+    clients: {
+        supply: 'Fornecimento contínuo',
+    },
     common: {
         all: 'Todos',
         previous: 'Anterior',
@@ -241,6 +244,9 @@ const en: Dict = {
         social: 'Social',
         navigation: 'Navigation',
     },
+    clients: {
+        supply: 'Ongoing supply',
+    },
     common: {
         all: 'All',
         previous: 'Previous',
@@ -442,6 +448,9 @@ const es: Dict = {
         contact: 'Contacto',
         social: 'Redes',
         navigation: 'Navegación',
+    },
+    clients: {
+        supply: 'Suministro continuo',
     },
     common: {
         all: 'Todos',

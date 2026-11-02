@@ -73,7 +73,7 @@ function submit(): void {
                 />
                 <button
                     type="submit"
-                    class="inline-flex h-11 shrink-0 items-center justify-center gap-2 rounded-md bg-blue-800 px-5 text-sm font-medium text-white transition-colors hover:bg-blue-900 disabled:opacity-50"
+                    class="inline-flex h-11 shrink-0 items-center justify-center gap-2 rounded-full bg-green-900 px-5 text-sm font-medium text-white transition-colors hover:bg-green-950 disabled:opacity-50"
                     :disabled="form.processing"
                 >
                     {{ t('newsletter.submit') }}

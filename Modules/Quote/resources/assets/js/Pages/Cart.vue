@@ -140,7 +140,7 @@ function submit(): void {
                         <div class="min-w-0 flex-1">
                             <Link
                                 :href="`/produto/${item.slug}`"
-                                class="text-sm font-medium text-slate-900 hover:text-blue-700 dark:text-slate-100 dark:hover:text-blue-400"
+                                class="text-sm font-medium text-slate-900 hover:text-green-800 dark:text-slate-100 dark:hover:text-green-400"
                             >
                                 {{ item.name }}
                             </Link>
@@ -160,7 +160,7 @@ function submit(): void {
                                         max="999"
                                         :value="item.quantity"
                                         :aria-label="`${t('quote.quantity')} ${item.name}`"
-                                        class="h-8 w-16 rounded-md border border-slate-300 bg-white px-2 text-sm text-slate-900 tabular-nums focus-visible:border-blue-700 focus-visible:ring-2 focus-visible:ring-blue-700/20 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100"
+                                        class="h-8 w-16 rounded-md border border-slate-300 bg-white px-2 text-sm text-slate-900 tabular-nums focus-visible:border-green-800 focus-visible:ring-2 focus-visible:ring-green-800/20 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100"
                                         @change="changeQuantity(item, $event)"
                                     />
                                 </label>
@@ -215,7 +215,7 @@ function submit(): void {
                             type="text"
                             :placeholder="t('quote.couponPlaceholder')"
                             :aria-label="t('quote.coupon')"
-                            class="h-10 min-w-0 flex-1 rounded-md border border-slate-300 bg-white px-3 text-sm uppercase text-slate-900 placeholder:normal-case placeholder:text-slate-500 focus-visible:border-blue-700 focus-visible:ring-2 focus-visible:ring-blue-700/20 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100"
+                            class="h-10 min-w-0 flex-1 rounded-md border border-slate-300 bg-white px-3 text-sm uppercase text-slate-900 placeholder:normal-case placeholder:text-slate-500 focus-visible:border-green-800 focus-visible:ring-2 focus-visible:ring-green-800/20 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100"
                         />
                         <button
                             type="submit"
@@ -352,7 +352,7 @@ function submit(): void {
 
                     <button
                         type="submit"
-                        class="inline-flex h-10 items-center justify-center rounded-md bg-blue-800 px-5 text-sm font-medium text-white hover:bg-blue-900 disabled:opacity-50"
+                        class="inline-flex h-10 items-center justify-center rounded-full bg-green-900 px-5 text-sm font-medium text-white hover:bg-green-950 disabled:opacity-50"
                         :disabled="form.processing"
                     >
                         {{ t('quote.submit') }}
@@ -367,7 +367,7 @@ function submit(): void {
                 {{ t('quote.empty') }}
                 <Link
                     href="/produtos"
-                    class="text-blue-700 hover:underline dark:text-blue-400"
+                    class="text-green-800 hover:underline dark:text-green-400"
                 >
                     {{ t('quote.viewProducts') }}
                 </Link>

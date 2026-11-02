@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import { Link, router } from '@inertiajs/vue3';
-import { Check, Plus } from '@lucide/vue';
+import { Heart } from '@lucide/vue';
 import { ref } from 'vue';
 import { store as addToCart } from '@/routes/quote/item';
+import SiteHead from '@/components/SiteHead.vue';
 import SiteShell from '@modules/Page/resources/assets/js/components/SiteShell.vue';
 import type { NavigationItem } from '@modules/Page/resources/assets/js/types';
 import { formatPrice } from '@/lib/format';
 import { useI18n } from '@/i18n';
-import SiteHead from '@/components/SiteHead.vue';
 
 type Product = {
     id: number;
@@ -16,6 +16,8 @@ type Product = {
     sku: string | null;
     price: string | null;
     stock: number | null;
+    rating: number | null;
+    review_count: number;
     cover: string | null;
 };
 
@@ -60,15 +62,19 @@ function add(product: Product): void {
         },
     );
 }
+
+function favorite(product: Product): void {
+    router.post(`/favoritos/${product.id}`, {}, { preserveScroll: true });
+}
 </script>
 
 <template>
     <SiteHead :title="title" />
 
     <SiteShell :navigation="props.navigation">
-        <section class="px-4 py-12 sm:px-6 sm:py-16">
+        <section class="px-4 py-8 sm:px-6 sm:py-10">
             <h1
-                class="text-3xl font-semibold tracking-tight text-slate-950 sm:text-4xl dark:text-slate-50"
+                class="text-2xl font-semibold tracking-tight text-slate-950 sm:text-3xl dark:text-slate-50"
             >
                 {{
                     props.activeCategory
@@ -80,15 +86,15 @@ function add(product: Product): void {
             <nav
                 v-if="props.categories.length > 0"
                 :aria-label="t('catalog.categoriesAria')"
-                class="mt-4 flex flex-wrap gap-2"
+                class="mt-5 flex flex-wrap items-center gap-2"
             >
                 <Link
                     href="/produtos"
                     :class="[
-                        'rounded-full border px-3.5 py-1.5 text-xs font-medium',
+                        'inline-flex h-9 items-center rounded-full px-4 text-sm font-medium transition-colors',
                         props.activeCategory === null
-                            ? 'border-blue-200 bg-blue-50 text-blue-800 dark:border-slate-700 dark:bg-blue-600/10 dark:text-blue-300'
-                            : 'border-slate-200 text-slate-600 hover:border-blue-300 dark:border-slate-800 dark:text-slate-400',
+                            ? 'bg-green-900 text-white'
+                            : 'bg-slate-100 text-slate-700 hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-300',
                     ]"
                 >
                     {{ t('common.all') }}
@@ -98,101 +104,136 @@ function add(product: Product): void {
                     :key="category.id"
                     :href="`/produtos/c/${category.slug}`"
                     :class="[
-                        'rounded-full border px-3.5 py-1.5 text-xs font-medium',
+                        'inline-flex h-9 items-center gap-1.5 rounded-full px-4 text-sm font-medium transition-colors',
                         props.activeCategory?.id === category.id
-                            ? 'border-blue-200 bg-blue-50 text-blue-800 dark:border-slate-700 dark:bg-blue-600/10 dark:text-blue-300'
-                            : 'border-slate-200 text-slate-600 hover:border-blue-300 dark:border-slate-800 dark:text-slate-400',
+                            ? 'bg-green-900 text-white'
+                            : 'bg-slate-100 text-slate-700 hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-300',
                     ]"
                 >
                     {{ category.name }}
-                    <span v-if="category.products_count" class="text-slate-400">
-                        ({{ category.products_count }})
+                    <span
+                        v-if="category.products_count"
+                        :class="
+                            props.activeCategory?.id === category.id
+                                ? 'text-white/60'
+                                : 'text-slate-400'
+                        "
+                    >
+                        {{ category.products_count }}
                     </span>
                 </Link>
             </nav>
 
-            <ul class="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            <ul class="mt-8 grid gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
                 <li
                     v-for="product in props.products.data"
                     :key="product.id"
-                    class="flex flex-col overflow-hidden rounded-lg border border-slate-200 bg-white shadow-xs transition-colors hover:border-blue-300 dark:border-slate-800 dark:bg-slate-900 dark:hover:border-blue-500/40"
+                    class="group flex flex-col"
                 >
-                    <Link :href="`/produto/${product.slug}`" class="block">
-                        <img
-                            v-if="product.cover"
-                            :src="product.cover"
-                            alt=""
-                            class="aspect-square w-full bg-white object-contain p-6"
-                        />
-                        <h2
-                            class="px-4 pt-4 text-sm leading-snug font-semibold text-slate-900 dark:text-slate-100"
+                    <div
+                        class="relative aspect-square overflow-hidden rounded-xl bg-slate-100 dark:bg-slate-800"
+                    >
+                        <Link :href="`/produto/${product.slug}`" class="block h-full">
+                            <img
+                                v-if="product.cover"
+                                :src="product.cover"
+                                alt=""
+                                class="h-full w-full object-contain p-6 mix-blend-multiply transition-transform duration-300 motion-safe:group-hover:scale-[1.03] dark:mix-blend-normal"
+                            />
+                        </Link>
+
+                        <button
+                            type="button"
+                            class="absolute top-3 right-3 flex size-9 items-center justify-center rounded-full bg-white text-slate-500 shadow-sm transition-colors hover:text-red-500"
+                            :aria-label="`${t('catalog.favorite')}: ${product.name}`"
+                            @click="favorite(product)"
+                        >
+                            <Heart class="size-4" aria-hidden="true" />
+                        </button>
+                    </div>
+
+                    <div class="mt-4 flex items-start justify-between gap-3">
+                        <Link
+                            :href="`/produto/${product.slug}`"
+                            class="text-[15px] leading-snug font-semibold text-slate-950 hover:text-green-800 dark:text-slate-50"
                         >
                             {{ product.name }}
-                        </h2>
-                    </Link>
-
-                    <div class="flex flex-1 flex-col p-4">
+                        </Link>
                         <p
-                            v-if="product.sku"
-                            class="text-xs text-slate-400"
-                        >
-                            {{ t('catalog.sku') }}: {{ product.sku }}
-                        </p>
-
-                        <p
-                            class="mt-2 text-lg font-semibold tracking-tight text-slate-950 tabular-nums dark:text-slate-50"
+                            class="shrink-0 text-[15px] font-semibold text-slate-950 tabular-nums dark:text-slate-50"
                         >
                             {{
                                 formatPrice(product.price) ??
                                 t('catalog.priceOnRequest')
                             }}
                         </p>
-
-                        <button
-                            v-if="product.stock !== 0"
-                            type="button"
-                            class="mt-3 inline-flex h-10 items-center justify-center gap-2 rounded-md bg-blue-800 px-4 text-sm font-medium text-white transition-colors hover:bg-blue-900 disabled:opacity-50"
-                            :aria-label="`${t('catalog.addToCart')}: ${product.name}`"
-                            @click="add(product)"
-                        >
-                            <Check
-                                v-if="added[product.id]"
-                                class="size-4"
-                                aria-hidden="true"
-                            />
-                            <Plus v-else class="size-4" aria-hidden="true" />
-                            {{
-                                added[product.id]
-                                    ? t('catalog.added')
-                                    : t('catalog.addToCart')
-                            }}
-                        </button>
-                        <p
-                            v-else
-                            class="mt-3 inline-flex h-10 items-center justify-center rounded-md border border-slate-200 text-sm font-medium text-slate-500 dark:border-slate-800 dark:text-slate-400"
-                        >
-                            {{ t('catalog.outOfStock') }}
-                        </p>
                     </div>
+
+                    <div class="flex-1">
+                    <p
+                        v-if="product.sku"
+                        class="mt-1 text-xs text-slate-500 dark:text-slate-400"
+                    >
+                        {{ t('catalog.sku') }}: {{ product.sku }}
+                    </p>
+
+                    <p
+                        v-if="product.rating"
+                        class="mt-1 text-xs text-green-700 dark:text-green-400"
+                        :aria-label="`${product.rating} / 5`"
+                    >
+                        <span aria-hidden="true">
+                            {{ '★'.repeat(Math.round(product.rating)) }}
+                        </span>
+                        <span class="ml-1 text-slate-500 dark:text-slate-400">
+                            ({{ product.review_count }})
+                        </span>
+                    </p>
+                    </div>
+
+                    <button
+                        v-if="product.stock !== 0"
+                        type="button"
+                        :class="[
+                            'mt-4 inline-flex h-10 w-full items-center justify-center gap-2 rounded-full border text-sm font-medium transition-colors',
+                            added[product.id]
+                                ? 'border-green-900 bg-green-900 text-white'
+                                : 'border-green-900/30 text-green-950 hover:border-green-900 hover:bg-green-900 hover:text-white dark:border-slate-700 dark:text-slate-200',
+                        ]"
+                        :aria-label="`${t('catalog.addToCart')}: ${product.name}`"
+                        @click="add(product)"
+                    >
+                        {{
+                            added[product.id]
+                                ? t('catalog.added')
+                                : t('catalog.addToCart')
+                        }}
+                    </button>
+                    <p
+                        v-else
+                        class="mt-auto inline-flex h-10 items-center justify-center rounded-full border border-slate-200 text-sm font-medium text-slate-500 dark:border-slate-700 dark:text-slate-400"
+                    >
+                        {{ t('catalog.outOfStock') }}
+                    </p>
                 </li>
             </ul>
 
             <p
                 v-if="props.products.data.length === 0"
-                class="mt-10 rounded-lg border border-dashed border-slate-300 bg-white px-6 py-16 text-center text-sm text-slate-500 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-400"
+                class="mt-10 rounded-xl border border-dashed border-slate-300 bg-white px-6 py-16 text-center text-sm text-slate-500 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-400"
             >
                 {{ t('catalog.empty') }}
             </p>
 
             <nav
                 v-if="props.products.last_page > 1"
-                class="mt-8 flex items-center justify-between text-sm"
+                class="mt-10 flex items-center justify-between text-sm"
                 aria-label="Paginação"
             >
                 <Link
                     v-if="props.products.prev_page_url"
                     :href="props.products.prev_page_url"
-                    class="text-blue-700 hover:underline dark:text-blue-400"
+                    class="text-green-800 hover:underline dark:text-green-400"
                 >
                     {{ t('common.previous') }}
                 </Link>
@@ -214,7 +255,7 @@ function add(product: Product): void {
                 <Link
                     v-if="props.products.next_page_url"
                     :href="props.products.next_page_url"
-                    class="text-blue-700 hover:underline dark:text-blue-400"
+                    class="text-green-800 hover:underline dark:text-green-400"
                 >
                     {{ t('common.next') }}
                 </Link>

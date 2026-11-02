@@ -76,6 +76,8 @@ final class EloquentCatalogRepository implements CatalogRepository
     {
         return Product::query()
             ->with(['media', 'categories'])
+            ->withAvg(['reviews as rating' => fn (Builder $query): Builder => $query->where('approved', true)], 'rating')
+            ->withCount(['reviews as review_count' => fn (Builder $query): Builder => $query->where('approved', true)])
             ->when($search !== null && $search !== '', fn (Builder $query): Builder => $query
                 ->where(fn (Builder $inner): Builder => $inner
                     ->where('name', 'like', "%{$search}%")
@@ -96,6 +98,8 @@ final class EloquentCatalogRepository implements CatalogRepository
     {
         return Product::query()
             ->with(['media', 'categories'])
+            ->withAvg(['reviews as rating' => fn (Builder $query): Builder => $query->where('approved', true)], 'rating')
+            ->withCount(['reviews as review_count' => fn (Builder $query): Builder => $query->where('approved', true)])
             ->when($categoryIds !== [], fn (Builder $query): Builder => $query
                 ->whereHas('categories', fn (Builder $inner): Builder => $inner->whereIn('catalog_categories.id', $categoryIds)))
             ->orderBy('position')
@@ -119,6 +123,8 @@ final class EloquentCatalogRepository implements CatalogRepository
     {
         return Product::query()
             ->with(['media', 'categories'])
+            ->withAvg(['reviews as rating' => fn (Builder $query): Builder => $query->where('approved', true)], 'rating')
+            ->withCount(['reviews as review_count' => fn (Builder $query): Builder => $query->where('approved', true)])
             ->orderBy('position')
             ->orderBy('name')
             ->limit(max(1, min(12, $limit)))

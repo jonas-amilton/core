@@ -22,6 +22,8 @@ use Modules\Media\Models\Media;
  * @property string|null $description
  * @property array<string, array<string, mixed>>|null $translations
  * @property int $position
+ * @property-read float|null $rating
+ * @property-read int|null $review_count
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  */
@@ -138,6 +140,8 @@ class Product extends Model
             'sku' => $this->sku,
             'price' => $this->price,
             'stock' => $this->stock,
+            'rating' => $this->rating !== null ? round((float) $this->rating, 1) : null,
+            'review_count' => (int) ($this->review_count ?? 0),
             'cover' => $this->cover(),
         ];
     }

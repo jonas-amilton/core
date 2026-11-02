@@ -42,19 +42,19 @@ const isCurrent = (item: NavigationItem): boolean =>
 
 const navLink = (active: boolean): string =>
     [
-        'rounded-md px-3 py-2 text-sm font-medium transition-colors focus-visible:ring-2 focus-visible:ring-blue-700 focus-visible:outline-none',
+        'rounded-md px-3 py-2 text-sm font-medium transition-colors focus-visible:ring-2 focus-visible:ring-green-800 focus-visible:outline-none',
         active
-            ? 'text-blue-800 dark:text-blue-400'
+            ? 'text-green-900 dark:text-green-400'
             : 'text-slate-600 hover:bg-slate-100 hover:text-slate-950 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-slate-100',
     ].join(' ');
 </script>
 
 <template>
-    <div class="flex min-h-screen flex-col bg-slate-50 text-slate-900">
+    <div class="flex min-h-screen flex-col bg-white text-slate-900">
         <header class="sticky top-0 z-40">
             <div
                 v-if="site.phone || site.email || site.hours"
-                class="hidden border-b border-slate-800 bg-slate-900 text-slate-300 md:block"
+                class="hidden bg-green-950 text-green-100/80 md:block"
             >
                 <div
                     class="mx-auto flex h-9 w-full max-w-6xl items-center justify-between gap-4 px-4 text-xs sm:px-6"
@@ -88,7 +88,7 @@ const navLink = (active: boolean): string =>
             </div>
 
             <div
-                class="border-b border-slate-200 bg-white/95 backdrop-blur-sm dark:border-slate-800 dark:bg-slate-950/95"
+                class="border-b border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-950"
             >
                 <div
                     class="mx-auto flex h-16 w-full max-w-6xl items-center justify-between gap-4 px-4 sm:px-6"
@@ -98,7 +98,7 @@ const navLink = (active: boolean): string =>
                         class="flex items-center gap-2.5 text-slate-950 dark:text-slate-50"
                     >
                         <span
-                            class="flex size-8 items-center justify-center rounded-md bg-blue-800 text-sm font-semibold text-white"
+                            class="flex size-9 items-center justify-center rounded-lg bg-green-900 text-sm font-semibold text-white"
                             aria-hidden="true"
                         >
                             {{ initial }}
@@ -122,11 +122,11 @@ const navLink = (active: boolean): string =>
                             type="search"
                             name="q"
                             :placeholder="t('search.placeholder')"
-                            class="h-9 w-full rounded-md border border-slate-200 bg-slate-50 px-3 text-sm text-slate-900 placeholder:text-slate-400 focus-visible:border-blue-700 focus-visible:bg-white focus-visible:ring-2 focus-visible:ring-blue-700/20 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-100"
+                            class="h-10 w-full rounded-full border border-slate-200 bg-slate-50 px-4 text-sm text-slate-900 placeholder:text-slate-400 focus-visible:border-green-800 focus-visible:bg-white focus-visible:ring-2 focus-visible:ring-green-800/20 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-100"
                         />
                         <button
                             type="submit"
-                            class="flex size-9 shrink-0 items-center justify-center rounded-md border border-slate-200 text-slate-600 hover:border-blue-300 hover:text-blue-800 dark:border-slate-800 dark:text-slate-400"
+                            class="flex size-9 shrink-0 items-center justify-center rounded-md border border-slate-200 text-slate-600 hover:border-green-300 hover:text-green-900 dark:border-slate-800 dark:text-slate-400"
                             :aria-label="t('search.submit')"
                         >
                             <Search class="size-4" aria-hidden="true" />
@@ -146,9 +146,9 @@ const navLink = (active: boolean): string =>
                                 type="button"
                                 :aria-pressed="locale === option.value"
                                 :class="[
-                                    'rounded px-1 py-1 text-[11px] font-semibold tracking-wide uppercase transition-colors focus-visible:ring-2 focus-visible:ring-blue-700 focus-visible:outline-none',
+                                    'rounded px-1 py-1 text-[11px] font-semibold tracking-wide uppercase transition-colors focus-visible:ring-2 focus-visible:ring-green-800 focus-visible:outline-none',
                                     locale === option.value
-                                        ? 'text-blue-800 dark:text-blue-400'
+                                        ? 'text-green-900 dark:text-green-400'
                                         : 'text-slate-400 hover:text-slate-700 dark:text-slate-500 dark:hover:text-slate-300',
                                 ]"
                                 @click="switchLocale(option.value as Locale)"
@@ -168,7 +168,7 @@ const navLink = (active: boolean): string =>
                                     ? '/minha-conta'
                                     : '/admin'
                             "
-                            class="hidden text-xs font-medium text-slate-500 transition-colors hover:text-blue-800 md:inline dark:text-slate-400 dark:hover:text-blue-400"
+                            class="hidden text-xs font-medium text-slate-500 transition-colors hover:text-green-900 md:inline dark:text-slate-400 dark:hover:text-green-400"
                         >
                             {{
                                 authUser?.role === 'customer'
@@ -179,10 +179,12 @@ const navLink = (active: boolean): string =>
 
                         <a
                             href="/orcamento"
-                            class="hidden h-9 items-center gap-2 rounded-md bg-blue-800 px-4 text-sm font-medium text-white transition-colors hover:bg-blue-900 sm:inline-flex"
+                            class="inline-flex h-10 items-center gap-2 rounded-full bg-green-900 px-3 text-sm font-medium text-white transition-colors hover:bg-green-950 sm:px-5"
                         >
                             <ShoppingBag class="size-4" aria-hidden="true" />
-                            {{ t('nav.quote') }}
+                            <span class="hidden sm:inline">
+                                {{ t('nav.quote') }}
+                            </span>
                             <span
                                 v-if="cartCount > 0"
                                 class="rounded-full bg-white/20 px-1.5 text-[11px] leading-4"
@@ -193,7 +195,7 @@ const navLink = (active: boolean): string =>
 
                         <details class="relative lg:hidden">
                             <summary
-                                class="flex size-9 cursor-pointer items-center justify-center rounded-md border border-slate-200 text-slate-600 marker:content-none hover:bg-slate-50 dark:border-slate-800 dark:text-slate-400 dark:hover:bg-slate-900"
+                                class="flex size-10 cursor-pointer items-center justify-center rounded-full border border-slate-200 text-slate-600 marker:content-none hover:bg-slate-50 dark:border-slate-800 dark:text-slate-400 dark:hover:bg-slate-900"
                                 :aria-label="t('nav.pages')"
                             >
                                 <Menu class="size-4" aria-hidden="true" />
@@ -230,7 +232,7 @@ const navLink = (active: boolean): string =>
                                         type="search"
                                         name="q"
                                         :placeholder="t('search.placeholder')"
-                                        class="h-9 w-full rounded-md border border-slate-200 bg-white px-3 text-sm text-slate-900 placeholder:text-slate-400 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-100"
+                                        class="h-10 w-full rounded-full border border-slate-200 bg-white px-4 text-sm text-slate-900 placeholder:text-slate-400 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-100"
                                     />
                                     <button
                                         type="submit"
@@ -242,7 +244,7 @@ const navLink = (active: boolean): string =>
                                 </form>
                                 <a
                                     href="/orcamento"
-                                    class="mt-1 flex items-center justify-center gap-2 rounded-md bg-blue-800 px-3 py-2 text-sm font-medium text-white"
+                                    class="mt-1 flex items-center justify-center gap-2 rounded-md bg-green-900 px-3 py-2 text-sm font-medium text-white"
                                 >
                                     {{ t('nav.quote') }}
                                     <span
@@ -263,7 +265,7 @@ const navLink = (active: boolean): string =>
                     </div>
                 </div>
 
-                <div class="border-t border-slate-200 dark:border-slate-800">
+                <div class="hidden border-t border-slate-200 lg:block dark:border-slate-800">
                     <div
                         class="mx-auto flex h-11 w-full max-w-6xl items-center px-4 sm:px-6"
                     >
@@ -310,7 +312,7 @@ const navLink = (active: boolean): string =>
                         class="flex items-center gap-2 text-base font-semibold text-slate-950 dark:text-slate-50"
                     >
                         <span
-                            class="flex size-7 items-center justify-center rounded-md bg-blue-800 text-xs font-semibold text-white"
+                            class="flex size-7 items-center justify-center rounded-md bg-green-900 text-xs font-semibold text-white"
                             aria-hidden="true"
                         >
                             {{ initial }}
@@ -333,13 +335,13 @@ const navLink = (active: boolean): string =>
                         v-for="item in props.navigation"
                         :key="item.slug"
                         :href="item.url"
-                        class="hover:text-blue-800 dark:hover:text-blue-400"
+                        class="hover:text-green-900 dark:hover:text-green-400"
                     >
                         {{ item.title }}
                     </a>
                     <a
                         href="/blog"
-                        class="hover:text-blue-800 dark:hover:text-blue-400"
+                        class="hover:text-green-900 dark:hover:text-green-400"
                     >
                         {{ t('nav.blog') }}
                     </a>
@@ -354,14 +356,14 @@ const navLink = (active: boolean): string =>
                     <a
                         v-if="site.phone"
                         :href="`tel:${site.phone}`"
-                        class="hover:text-blue-800 dark:hover:text-blue-400"
+                        class="hover:text-green-900 dark:hover:text-green-400"
                     >
                         {{ site.phone }}
                     </a>
                     <a
                         v-if="site.email"
                         :href="`mailto:${site.email}`"
-                        class="hover:text-blue-800 dark:hover:text-blue-400"
+                        class="hover:text-green-900 dark:hover:text-green-400"
                     >
                         {{ site.email }}
                     </a>
@@ -370,7 +372,7 @@ const navLink = (active: boolean): string =>
                         :href="`https://api.whatsapp.com/send?phone=55${site.whatsapp}`"
                         target="_blank"
                         rel="noopener"
-                        class="hover:text-blue-800 dark:hover:text-blue-400"
+                        class="hover:text-green-900 dark:hover:text-green-400"
                     >
                         WhatsApp
                     </a>
@@ -391,13 +393,13 @@ const navLink = (active: boolean): string =>
                         :href="social.url"
                         target="_blank"
                         rel="noopener"
-                        class="hover:text-blue-800 dark:hover:text-blue-400"
+                        class="hover:text-green-900 dark:hover:text-green-400"
                     >
                         {{ social.label }}
                     </a>
                     <a
                         href="/orcamento"
-                        class="mt-2 inline-flex h-9 w-fit items-center gap-2 rounded-md bg-blue-800 px-3 text-xs font-medium text-white hover:bg-blue-900"
+                        class="mt-2 inline-flex h-9 w-fit items-center gap-2 rounded-md bg-green-900 px-3 text-xs font-medium text-white hover:bg-green-950"
                     >
                         <ShoppingBag class="size-3.5" aria-hidden="true" />
                         {{ t('nav.quote') }}
@@ -412,7 +414,7 @@ const navLink = (active: boolean): string =>
                     <p>© {{ currentYear }} {{ siteName }}</p>
                     <a
                         href="/politica-de-cookies"
-                        class="hover:text-blue-800 dark:hover:text-blue-400"
+                        class="hover:text-green-900 dark:hover:text-green-400"
                     >
                         {{ t('cookie.policy') }}
                     </a>
