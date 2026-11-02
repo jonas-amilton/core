@@ -6,9 +6,13 @@ namespace Modules\Blog\Data;
 
 final readonly class CategoryData
 {
+    /**
+     * @param  array<string, array<string, string>>  $translations
+     */
     public function __construct(
         public string $name,
         public ?string $slug,
+        public array $translations = [],
     ) {}
 
     /**
@@ -19,6 +23,7 @@ final readonly class CategoryData
         return new self(
             name: (string) $data['name'],
             slug: isset($data['slug']) && $data['slug'] !== '' ? (string) $data['slug'] : null,
+            translations: is_array($data['translations'] ?? null) ? $data['translations'] : [],
         );
     }
 }

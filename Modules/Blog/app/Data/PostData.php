@@ -6,6 +6,9 @@ namespace Modules\Blog\Data;
 
 final readonly class PostData
 {
+    /**
+     * @param  array<string, array<string, string>>  $translations
+     */
     public function __construct(
         public string $title,
         public ?string $slug,
@@ -14,6 +17,7 @@ final readonly class PostData
         public string $body,
         public ?string $cover,
         public bool $published,
+        public array $translations = [],
     ) {}
 
     /**
@@ -29,6 +33,7 @@ final readonly class PostData
             body: (string) $data['body'],
             cover: self::string($data['cover'] ?? null),
             published: (bool) ($data['published'] ?? false),
+            translations: is_array($data['translations'] ?? null) ? $data['translations'] : [],
         );
     }
 

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { Head, Link, useForm } from '@inertiajs/vue3';
 import { ArrowLeft, Check, ImageIcon, Save, Trash2 } from '@lucide/vue';
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import MediaPicker from '@modules/Media/resources/assets/js/components/MediaPicker.vue';
 import type { PickedMedia } from '@modules/Media/resources/assets/js/types';
 import { destroy, index as blogIndex, store, update } from '@/routes/blog';
@@ -18,6 +18,10 @@ type Post = {
     cover: string | null;
     published_at: string | null;
     updated_at: string | null;
+    translations: Record<
+        'en' | 'es',
+        { title: string | null; excerpt: string | null; body: string | null }
+    >;
 };
 
 type Category = {
@@ -44,6 +48,16 @@ defineOptions({
 
 const pickerOpen = ref(false);
 
+type EditLocale = 'pt_BR' | 'en' | 'es';
+
+const locales: EditLocale[] = ['pt_BR', 'en', 'es'];
+const localeLabels: Record<EditLocale, string> = {
+    pt_BR: 'PT',
+    en: 'EN',
+    es: 'ES',
+};
+const editLocale = ref<EditLocale>('pt_BR');
+
 const form = useForm({
     title: props.post?.title ?? '',
     slug: props.post?.slug ?? '',
@@ -54,7 +68,42 @@ const form = useForm({
     published:
         props.post?.published_at !== null &&
         props.post?.published_at !== undefined,
+    translations: {
+        en: {
+            title: props.post?.translations?.en?.title ?? '',
+            excerpt: props.post?.translations?.en?.excerpt ?? '',
+            body: props.post?.translations?.en?.body ?? '',
+        },
+        es: {
+            title: props.post?.translations?.es?.title ?? '',
+            excerpt: props.post?.translations?.es?.excerpt ?? '',
+            body: props.post?.translations?.es?.body ?? '',
+        },
+    },
 });
+
+function translatedField(field: 'title' | 'excerpt' | 'body') {
+    return computed<string>({
+        get: () =>
+            editLocale.value === 'pt_BR'
+                ? form[field]
+                : (form.translations[editLocale.value as 'en' | 'es'][field] ??
+                  ''),
+        set: (value: string) => {
+            if (editLocale.value === 'pt_BR') {
+                form[field] = value;
+
+                return;
+            }
+
+            form.translations[editLocale.value as 'en' | 'es'][field] = value;
+        },
+    });
+}
+
+const title = translatedField('title');
+const excerpt = translatedField('excerpt');
+const body = translatedField('body');
 
 function save(): void {
     if (props.post) {
@@ -106,6 +155,29 @@ function pickCover(media: PickedMedia): void {
             <div
                 class="grid gap-4 rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900"
             >
+                <div class="flex items-center gap-1">
+                    <button
+                        v-for="loc in locales"
+                        :key="loc"
+                        type="button"
+                        class="rounded-md px-2 py-0.5 text-[11px] font-medium transition-colors"
+                        :class="
+                            editLocale === loc
+                                ? 'bg-indigo-100 text-indigo-700 dark:bg-indigo-500/20 dark:text-indigo-300'
+                                : 'text-slate-500 hover:bg-slate-100 dark:text-slate-500 dark:hover:bg-slate-800'
+                        "
+                        @click="editLocale = loc"
+                    >
+                        {{ localeLabels[loc] }}
+                    </button>
+                    <span
+                        v-if="editLocale !== 'pt_BR'"
+                        class="ml-1 text-[11px] text-slate-400"
+                    >
+                        Tradução — vazio usa o português
+                    </span>
+                </div>
+
                 <label class="grid gap-1.5">
                     <span
                         class="text-xs font-medium text-slate-600 dark:text-slate-400"
@@ -113,7 +185,7 @@ function pickCover(media: PickedMedia): void {
                         Título
                     </span>
                     <input
-                        v-model="form.title"
+                        v-model="title"
                         type="text"
                         :class="fieldClasses"
                     />
@@ -129,7 +201,7 @@ function pickCover(media: PickedMedia): void {
                         Resumo
                     </span>
                     <textarea
-                        v-model="form.excerpt"
+                        v-model="excerpt"
                         :rows="2"
                         :class="[fieldClasses, 'h-auto py-2 leading-relaxed']"
                     />
@@ -142,7 +214,7 @@ function pickCover(media: PickedMedia): void {
                         Conteúdo
                     </span>
                     <textarea
-                        v-model="form.body"
+                        v-model="body"
                         :rows="18"
                         :class="[fieldClasses, 'h-auto py-2 leading-relaxed']"
                     />

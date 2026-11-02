@@ -76,6 +76,7 @@ final class EloquentBlogRepository implements BlogRepository
             'body' => $data->body,
             'cover' => $data->cover,
             'published_at' => $publishedAt,
+            'translations' => $data->translations !== [] ? $data->translations : null,
         ]);
     }
 
@@ -89,6 +90,7 @@ final class EloquentBlogRepository implements BlogRepository
             'body' => $data->body,
             'cover' => $data->cover,
             'published_at' => $publishedAt,
+            'translations' => $data->translations !== [] ? $data->translations : null,
         ]);
 
         return $post->refresh()->load('category');
@@ -122,6 +124,7 @@ final class EloquentBlogRepository implements BlogRepository
         return Category::query()->create([
             'name' => $data->name,
             'slug' => $slug,
+            'translations' => $data->translations !== [] ? $data->translations : null,
         ]);
     }
 
@@ -130,6 +133,7 @@ final class EloquentBlogRepository implements BlogRepository
         $category->update([
             'name' => $data->name,
             'slug' => $slug,
+            'translations' => $data->translations !== [] ? $data->translations : null,
         ]);
 
         return $category->refresh();

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Modules\Blog\Models;
 
+use App\Support\Translatable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Carbon;
@@ -15,6 +16,7 @@ use Illuminate\Support\Carbon;
  * @property string $slug
  * @property string|null $excerpt
  * @property string $body
+ * @property array<string, array<string, mixed>>|null $translations
  * @property string|null $cover
  * @property Carbon|null $published_at
  * @property Carbon|null $created_at
@@ -22,6 +24,8 @@ use Illuminate\Support\Carbon;
  */
 class Post extends Model
 {
+    use Translatable;
+
     protected $table = 'blog_posts';
 
     protected $fillable = [
@@ -31,6 +35,7 @@ class Post extends Model
         'excerpt',
         'body',
         'cover',
+        'translations',
         'published_at',
     ];
 
@@ -41,6 +46,7 @@ class Post extends Model
     {
         return [
             'published_at' => 'datetime',
+            'translations' => 'array',
         ];
     }
 
@@ -82,6 +88,7 @@ class Post extends Model
             ...$this->toAdminArray(),
             'excerpt' => $this->excerpt,
             'body' => $this->body,
+            'translations' => $this->editorTranslations(['title', 'excerpt', 'body']),
         ];
     }
 
@@ -92,13 +99,15 @@ class Post extends Model
     {
         return [
             'id' => $this->id,
-            'title' => $this->title,
+            'title' => $this->transString('title') ?? $this->title,
             'slug' => $this->slug,
-            'excerpt' => $this->excerpt,
-            'body' => $this->body,
+            'excerpt' => $this->transString('excerpt') ?? $this->excerpt,
+            'body' => $this->transString('body') ?? $this->body,
             'cover' => $this->cover,
             'published_at' => $this->published_at?->toIso8601String(),
-            'category' => $this->category?->name,
+            'category' => $this->category !== null
+                ? ($this->category->transString('name') ?? $this->category->name)
+                : null,
             'category_slug' => $this->category?->slug,
         ];
     }
@@ -109,11 +118,13 @@ class Post extends Model
     public function toCardArray(): array
     {
         return [
-            'title' => $this->title,
-            'description' => $this->excerpt,
+            'title' => $this->transString('title') ?? $this->title,
+            'description' => $this->transString('excerpt') ?? $this->excerpt,
             'url' => '/blog/'.$this->slug,
             'cover' => $this->cover,
-            'category' => $this->category?->name,
+            'category' => $this->category !== null
+                ? ($this->category->transString('name') ?? $this->category->name)
+                : null,
             'date' => $this->published_at?->format('d/m'),
         ];
     }

@@ -117,6 +117,55 @@ class BlogManagementTest extends TestCase
         $this->assertNull($post->refresh()->category_id);
     }
 
+    public function test_posts_and_categories_translate_on_the_site(): void
+    {
+        $this->actingAs(User::factory()->create());
+
+        $this->post(route('blog.category.store'), [
+            'name' => 'Notícias',
+            'translations' => ['en' => ['name' => 'News']],
+        ]);
+
+        $category = Category::query()->firstOrFail();
+
+        $this->post(route('blog.store'), $this->payload([
+            'category_id' => $category->id,
+            'translations' => [
+                'en' => [
+                    'title' => 'New article',
+                    'excerpt' => 'Summary',
+                    'body' => 'Article content.',
+                ],
+            ],
+        ]));
+
+        $post = Post::query()->firstOrFail();
+
+        $this->get('/blog?locale=en')
+            ->assertOk()
+            ->assertInertia(fn (Assert $inertia) => $inertia
+                ->where('posts.0.title', 'New article')
+                ->where('posts.0.excerpt', 'Summary')
+                ->where('posts.0.category', 'News')
+                ->where('categories.0.name', 'News')
+            );
+
+        $this->get('/blog/'.$post->slug.'?locale=en')
+            ->assertOk()
+            ->assertInertia(fn (Assert $inertia) => $inertia
+                ->where('post.title', 'New article')
+                ->where('post.body', 'Article content.')
+            );
+
+        $this->get('/blog/'.$post->slug.'?locale=es')
+            ->assertOk()
+            ->assertInertia(fn (Assert $inertia) => $inertia
+                ->where('post.title', 'Novo artigo')
+            );
+
+        $this->assertSame('New article', $post->translations['en']['title']);
+    }
+
     public function test_admin_screens_render(): void
     {
         $this->actingAs(User::factory()->create());
