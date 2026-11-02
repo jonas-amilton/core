@@ -80,7 +80,18 @@
     }
 }
 
+@theme {
+    --color-brand: #003d28;
+    --color-brand-deep: #002a1b;
+    --color-cream: #fbefe3;
+    --font-shop: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif;
+}
+
 @layer utilities {
+    .shop {
+        font-family: var(--font-shop);
+    }
+
     body,
     html {
         --font-sans:

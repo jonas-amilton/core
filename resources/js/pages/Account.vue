@@ -69,7 +69,7 @@ const formatDate = (value: string | null): string =>
 
                 <button
                     type="button"
-                    class="inline-flex h-9 items-center rounded-md border border-slate-300 px-4 text-sm font-medium text-slate-700 hover:bg-slate-50 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800"
+                    class="inline-flex h-9 items-center rounded-md border border-slate-300 px-4 text-sm font-medium text-slate-700 hover:bg-white dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800"
                     @click="router.post('/logout')"
                 >
                     {{ t('account.logout') }}
@@ -102,7 +102,7 @@ const formatDate = (value: string | null): string =>
                             :class="
                                 order.answered
                                     ? 'border-emerald-200 bg-emerald-50 text-emerald-800 dark:border-emerald-500/30 dark:bg-emerald-500/10 dark:text-emerald-300'
-                                    : 'border-slate-200 bg-slate-50 text-slate-600 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300'
+                                    : 'border-slate-200 bg-white text-slate-600 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300'
                             "
                         >
                             {{
@@ -155,7 +155,7 @@ const formatDate = (value: string | null): string =>
                 class="mt-4 rounded-lg border border-dashed border-slate-300 bg-white px-6 py-16 text-center text-sm text-slate-500 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-400"
             >
                 {{ t('account.empty') }}
-                <Link href="/produtos" class="text-green-800 hover:underline dark:text-green-400">
+                <Link href="/produtos" class="text-brand hover:underline dark:text-green-400">
                     {{ t('quote.viewProducts') }}
                 </Link>
             </p>
@@ -187,7 +187,7 @@ const formatDate = (value: string | null): string =>
                         />
                         <span class="min-w-0">
                             <span
-                                class="block text-sm font-medium text-slate-900 hover:text-green-800 dark:text-slate-100"
+                                class="block text-sm font-medium text-slate-900 hover:text-brand dark:text-slate-100"
                             >
                                 {{ favorite.name }}
                             </span>

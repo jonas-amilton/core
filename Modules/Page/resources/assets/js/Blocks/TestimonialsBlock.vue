@@ -24,7 +24,7 @@ defineProps<{
                     class="flex flex-col rounded-lg border border-slate-200 bg-white p-6 shadow-xs dark:border-slate-800 dark:bg-slate-900"
                 >
                     <Quote
-                        class="size-5 text-green-800 dark:text-green-400"
+                        class="size-5 text-brand dark:text-green-400"
                         aria-hidden="true"
                     />
                     <p

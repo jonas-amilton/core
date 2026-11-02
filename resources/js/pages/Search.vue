@@ -69,11 +69,11 @@ const total = props.products.length + props.posts.length + props.pages.length;
                     name="q"
                     :value="props.term"
                     :placeholder="t('search.placeholder')"
-                    class="h-11 flex-1 rounded-md border border-slate-300 bg-white px-3.5 text-sm text-slate-900 placeholder:text-slate-500 focus-visible:border-green-800 focus-visible:ring-2 focus-visible:ring-green-800/20 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100"
+                    class="h-11 flex-1 rounded-md border border-slate-300 bg-white px-3.5 text-sm text-slate-900 placeholder:text-slate-500 focus-visible:border-brand focus-visible:ring-2 focus-visible:ring-brand/20 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100"
                 />
                 <button
                     type="submit"
-                    class="inline-flex h-11 items-center gap-2 rounded-full bg-green-900 px-5 text-sm font-medium text-white hover:bg-green-950"
+                    class="inline-flex h-11 items-center gap-2 rounded-full bg-brand px-5 text-sm font-medium text-white hover:bg-brand-deep"
                 >
                     <Search class="size-4" aria-hidden="true" />
                     {{ t('search.submit') }}
@@ -121,7 +121,7 @@ const total = props.products.length + props.posts.length + props.pages.length;
                             />
                             <span class="min-w-0">
                                 <span
-                                    class="block text-sm font-medium text-slate-900 hover:text-green-800 dark:text-slate-100"
+                                    class="block text-sm font-medium text-slate-900 hover:text-brand dark:text-slate-100"
                                 >
                                     {{ product.name }}
                                 </span>
@@ -153,7 +153,7 @@ const total = props.products.length + props.posts.length + props.pages.length;
                     >
                         <Link
                             :href="`/blog/${post.slug}`"
-                            class="text-base font-medium text-slate-900 hover:text-green-800 dark:text-slate-100"
+                            class="text-base font-medium text-slate-900 hover:text-brand dark:text-slate-100"
                         >
                             {{ post.title }}
                         </Link>
@@ -177,7 +177,7 @@ const total = props.products.length + props.posts.length + props.pages.length;
                     <li v-for="page in props.pages" :key="page.url" class="py-3">
                         <Link
                             :href="page.url"
-                            class="text-sm font-medium text-slate-900 hover:text-green-800 dark:text-slate-100"
+                            class="text-sm font-medium text-slate-900 hover:text-brand dark:text-slate-100"
                         >
                             {{ page.title }}
                         </Link>

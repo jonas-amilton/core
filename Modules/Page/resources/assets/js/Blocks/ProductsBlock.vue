@@ -23,7 +23,7 @@ defineProps<{
                 </h2>
                 <a
                     href="/produtos"
-                    class="inline-flex h-9 items-center gap-1.5 rounded-full border border-green-900/25 px-4 text-sm font-medium text-green-950 transition-colors hover:bg-green-900 hover:text-white dark:border-slate-700 dark:text-slate-200"
+                    class="inline-flex h-9 items-center gap-1.5 rounded-full border border-brand/25 px-4 text-sm font-medium text-brand-deep transition-colors hover:bg-brand hover:text-white dark:border-slate-700 dark:text-slate-200"
                 >
                     {{ t('products.viewCatalog') }}
                     <ArrowRight class="size-3.5" aria-hidden="true" />
@@ -41,7 +41,7 @@ defineProps<{
                         class="flex h-full flex-col"
                     >
                         <div
-                            class="aspect-square overflow-hidden rounded-xl bg-slate-100 dark:bg-slate-800"
+                            class="aspect-square overflow-hidden rounded-xl bg-[#f5f5f5] dark:bg-slate-800"
                         >
                             <img
                                 v-if="item.cover"
@@ -53,7 +53,7 @@ defineProps<{
 
                         <div class="mt-4 flex items-start justify-between gap-3">
                             <h3
-                                class="text-[15px] leading-snug font-semibold text-slate-950 group-hover:text-green-800 dark:text-slate-50"
+                                class="text-[15px] leading-snug font-semibold text-slate-950 group-hover:text-brand dark:text-slate-50"
                             >
                                 {{ item.title }}
                             </h3>
@@ -75,7 +75,7 @@ defineProps<{
                         </p>
 
                         <span
-                            class="mt-4 inline-flex h-10 items-center justify-center rounded-full border border-green-900/30 text-sm font-medium text-green-950 transition-colors group-hover:border-green-900 group-hover:bg-green-900 group-hover:text-white dark:border-slate-700 dark:text-slate-200"
+                            class="mt-4 inline-flex h-10 items-center justify-center rounded-full border border-brand/30 text-sm font-medium text-brand-deep transition-colors group-hover:border-brand group-hover:bg-brand group-hover:text-white dark:border-slate-700 dark:text-slate-200"
                         >
                             {{ t('catalog.view') }}
                         </span>

@@ -60,7 +60,7 @@ const props = defineProps<{
                     <a
                         v-if="store.phone"
                         :href="`tel:${store.phone}`"
-                        class="mt-1 block text-sm text-green-800 dark:text-green-400"
+                        class="mt-1 block text-sm text-brand dark:text-green-400"
                     >
                         {{ store.phone }}
                     </a>
@@ -84,7 +84,7 @@ const props = defineProps<{
                         :href="store.url"
                         target="_blank"
                         rel="noopener"
-                        class="text-sm font-medium text-green-800 hover:underline dark:text-green-400"
+                        class="text-sm font-medium text-brand hover:underline dark:text-green-400"
                     >
                         {{ store.name }}
                     </a>

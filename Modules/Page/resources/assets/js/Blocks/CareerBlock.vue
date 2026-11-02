@@ -132,7 +132,7 @@ function submit(): void {
                 <div class="sm:col-span-2">
                     <button
                         type="submit"
-                        class="inline-flex h-11 items-center justify-center rounded-full bg-green-900 px-5 text-sm font-medium text-white transition-colors hover:bg-green-950 disabled:opacity-50"
+                        class="inline-flex h-11 items-center justify-center rounded-full bg-brand px-5 text-sm font-medium text-white transition-colors hover:bg-brand-deep disabled:opacity-50"
                         :disabled="form.processing"
                     >
                         {{ t('career.submit') }}

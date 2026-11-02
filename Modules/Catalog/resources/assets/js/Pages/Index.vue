@@ -93,8 +93,8 @@ function favorite(product: Product): void {
                     :class="[
                         'inline-flex h-9 items-center rounded-full px-4 text-sm font-medium transition-colors',
                         props.activeCategory === null
-                            ? 'bg-green-900 text-white'
-                            : 'bg-slate-100 text-slate-700 hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-300',
+                            ? 'bg-brand text-white'
+                            : 'bg-[#f5f5f5] text-slate-700 hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-300',
                     ]"
                 >
                     {{ t('common.all') }}
@@ -106,8 +106,8 @@ function favorite(product: Product): void {
                     :class="[
                         'inline-flex h-9 items-center gap-1.5 rounded-full px-4 text-sm font-medium transition-colors',
                         props.activeCategory?.id === category.id
-                            ? 'bg-green-900 text-white'
-                            : 'bg-slate-100 text-slate-700 hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-300',
+                            ? 'bg-brand text-white'
+                            : 'bg-[#f5f5f5] text-slate-700 hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-300',
                     ]"
                 >
                     {{ category.name }}
@@ -131,7 +131,7 @@ function favorite(product: Product): void {
                     class="group flex flex-col"
                 >
                     <div
-                        class="relative aspect-square overflow-hidden rounded-xl bg-slate-100 dark:bg-slate-800"
+                        class="relative aspect-square overflow-hidden rounded-xl bg-[#f5f5f5] dark:bg-slate-800"
                     >
                         <Link :href="`/produto/${product.slug}`" class="block h-full">
                             <img
@@ -155,7 +155,7 @@ function favorite(product: Product): void {
                     <div class="mt-4 flex items-start justify-between gap-3">
                         <Link
                             :href="`/produto/${product.slug}`"
-                            class="text-[15px] leading-snug font-semibold text-slate-950 hover:text-green-800 dark:text-slate-50"
+                            class="text-[15px] leading-snug font-semibold text-slate-950 hover:text-brand dark:text-slate-50"
                         >
                             {{ product.name }}
                         </Link>
@@ -179,7 +179,7 @@ function favorite(product: Product): void {
 
                     <p
                         v-if="product.rating"
-                        class="mt-1 text-xs text-green-700 dark:text-green-400"
+                        class="mt-1 text-xs text-brand dark:text-green-400"
                         :aria-label="`${product.rating} / 5`"
                     >
                         <span aria-hidden="true">
@@ -197,8 +197,8 @@ function favorite(product: Product): void {
                         :class="[
                             'mt-4 inline-flex h-10 w-full items-center justify-center gap-2 rounded-full border text-sm font-medium transition-colors',
                             added[product.id]
-                                ? 'border-green-900 bg-green-900 text-white'
-                                : 'border-green-900/30 text-green-950 hover:border-green-900 hover:bg-green-900 hover:text-white dark:border-slate-700 dark:text-slate-200',
+                                ? 'border-brand bg-brand text-white'
+                                : 'border-brand/30 text-brand-deep hover:border-brand hover:bg-brand hover:text-white dark:border-slate-700 dark:text-slate-200',
                         ]"
                         :aria-label="`${t('catalog.addToCart')}: ${product.name}`"
                         @click="add(product)"
@@ -233,7 +233,7 @@ function favorite(product: Product): void {
                 <Link
                     v-if="props.products.prev_page_url"
                     :href="props.products.prev_page_url"
-                    class="text-green-800 hover:underline dark:text-green-400"
+                    class="text-brand hover:underline dark:text-green-400"
                 >
                     {{ t('common.previous') }}
                 </Link>
@@ -255,7 +255,7 @@ function favorite(product: Product): void {
                 <Link
                     v-if="props.products.next_page_url"
                     :href="props.products.next_page_url"
-                    class="text-green-800 hover:underline dark:text-green-400"
+                    class="text-brand hover:underline dark:text-green-400"
                 >
                     {{ t('common.next') }}
                 </Link>

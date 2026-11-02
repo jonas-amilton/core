@@ -30,7 +30,7 @@ defineProps<{
                 <li v-for="item in block.items ?? []" :key="item.title">
                     <a
                         :href="item.url ?? '#'"
-                        class="group flex h-full items-start gap-4 rounded-lg border border-slate-200 bg-white p-5 transition-colors hover:border-green-300 dark:border-slate-800 dark:bg-slate-900 dark:hover:border-green-600/40"
+                        class="group flex h-full items-start gap-4 rounded-lg border border-slate-200 bg-white p-5 transition-colors hover:border-green-300 dark:border-slate-800 dark:bg-slate-900 dark:hover:border-brand/40"
                     >
                         <img
                             v-if="item.icon"
@@ -40,7 +40,7 @@ defineProps<{
                         />
                         <span
                             v-else
-                            class="mt-1 size-2 shrink-0 rounded-sm bg-green-800"
+                            class="mt-1 size-2 shrink-0 rounded-sm bg-brand"
                             aria-hidden="true"
                         />
                         <span class="min-w-0 flex-1">
@@ -49,7 +49,7 @@ defineProps<{
                             >
                                 {{ item.title }}
                                 <ArrowUpRight
-                                    class="size-4 shrink-0 text-slate-400 transition-colors group-hover:text-green-900 dark:group-hover:text-green-400"
+                                    class="size-4 shrink-0 text-slate-400 transition-colors group-hover:text-brand dark:group-hover:text-green-400"
                                     aria-hidden="true"
                                 />
                             </span>

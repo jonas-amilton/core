@@ -71,8 +71,8 @@ const title = props.activeCategory
                     :class="[
                         'inline-flex h-9 items-center rounded-full px-4 text-sm font-medium transition-colors',
                         props.activeCategory === null
-                            ? 'bg-green-900 text-white'
-                            : 'bg-slate-100 text-slate-700 hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-300',
+                            ? 'bg-brand text-white'
+                            : 'bg-[#f5f5f5] text-slate-700 hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-300',
                     ]"
                 >
                     {{ t('blog.all') }}
@@ -84,8 +84,8 @@ const title = props.activeCategory
                     :class="[
                         'inline-flex h-9 items-center rounded-full px-4 text-sm font-medium transition-colors',
                         props.activeCategory?.id === category.id
-                            ? 'bg-green-900 text-white'
-                            : 'bg-slate-100 text-slate-700 hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-300',
+                            ? 'bg-brand text-white'
+                            : 'bg-[#f5f5f5] text-slate-700 hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-300',
                     ]"
                 >
                     {{ category.name }}
@@ -96,7 +96,7 @@ const title = props.activeCategory
                 <li
                     v-for="post in props.posts"
                     :key="post.id"
-                    class="overflow-hidden rounded-lg border border-slate-200 bg-white shadow-xs transition-colors hover:border-green-300 dark:border-slate-800 dark:bg-slate-900 dark:hover:border-green-600/40"
+                    class="overflow-hidden rounded-lg border border-slate-200 bg-white shadow-xs transition-colors hover:border-green-300 dark:border-slate-800 dark:bg-slate-900 dark:hover:border-brand/40"
                 >
                     <a :href="`/blog/${post.slug}`" class="group block">
                         <img
@@ -113,7 +113,7 @@ const title = props.activeCategory
                                 </template>
                             </p>
                             <h2
-                                class="mt-2 text-base font-semibold text-slate-950 group-hover:text-green-900 dark:text-slate-50 dark:group-hover:text-green-400"
+                                class="mt-2 text-base font-semibold text-slate-950 group-hover:text-brand dark:text-slate-50 dark:group-hover:text-green-400"
                             >
                                 {{ post.title }}
                             </h2>
@@ -124,7 +124,7 @@ const title = props.activeCategory
                                 {{ post.excerpt }}
                             </p>
                             <span
-                                class="mt-4 inline-flex items-center gap-1.5 text-xs font-medium text-green-900 dark:text-green-400"
+                                class="mt-4 inline-flex items-center gap-1.5 text-xs font-medium text-brand dark:text-green-400"
                             >
                                 {{ t('blog.read') }}
                                 <ArrowRight class="size-3.5" aria-hidden="true" />

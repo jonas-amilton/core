@@ -22,6 +22,9 @@ export default defineConfig({
                 bunny('Instrument Sans', {
                     weights: [400, 500, 600],
                 }),
+                bunny('Plus Jakarta Sans', {
+                    weights: [400, 500, 600, 700],
+                }),
                 bunny('Instrument Serif', {
                     weights: [400],
                 }),

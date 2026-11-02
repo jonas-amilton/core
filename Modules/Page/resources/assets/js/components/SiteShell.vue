@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Link, usePage } from '@inertiajs/vue3';
-import { Clock, Mail, Menu, Phone, Search, ShoppingBag } from '@lucide/vue';
+import { Clock, Mail, Menu, Phone, Search, ShoppingBag, UserRound } from '@lucide/vue';
 import { computed } from 'vue';
 import CookieConsent from '@/components/CookieConsent.vue';
 import { switchLocale, useI18n } from '@/i18n';
@@ -28,6 +28,19 @@ const cartCount = computed(
 const authUser = computed(
     () => (page.props.auth as Auth | undefined)?.user ?? null,
 );
+const isStaff = computed(
+    () => authUser.value?.role === 'admin' || authUser.value?.role === 'editor',
+);
+const accountHref = computed(() => {
+    if (!authUser.value) {
+        return '/login';
+    }
+
+    return isStaff.value ? '/admin' : '/minha-conta';
+});
+const accountLabel = computed(() =>
+    isStaff.value ? t('nav.panel') : t('nav.account'),
+);
 
 const socials = computed(() =>
     [
@@ -44,17 +57,17 @@ const navLink = (active: boolean): string =>
     [
         'rounded-md px-3 py-2 text-sm font-medium transition-colors focus-visible:ring-2 focus-visible:ring-green-800 focus-visible:outline-none',
         active
-            ? 'text-green-900 dark:text-green-400'
-            : 'text-slate-600 hover:bg-slate-100 hover:text-slate-950 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-slate-100',
+            ? 'text-brand dark:text-green-400'
+            : 'text-slate-600 hover:bg-[#f5f5f5] hover:text-slate-950 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-slate-100',
     ].join(' ');
 </script>
 
 <template>
-    <div class="flex min-h-screen flex-col bg-white text-slate-900">
+    <div class="shop flex min-h-screen flex-col bg-white text-slate-900">
         <header class="sticky top-0 z-40">
             <div
                 v-if="site.phone || site.email || site.hours"
-                class="hidden bg-green-950 text-green-100/80 md:block"
+                class="hidden bg-brand text-white/80 md:block"
             >
                 <div
                     class="mx-auto flex h-9 w-full max-w-6xl items-center justify-between gap-4 px-4 text-xs sm:px-6"
@@ -98,7 +111,7 @@ const navLink = (active: boolean): string =>
                         class="flex items-center gap-2.5 text-slate-950 dark:text-slate-50"
                     >
                         <span
-                            class="flex size-9 items-center justify-center rounded-lg bg-green-900 text-sm font-semibold text-white"
+                            class="flex size-9 items-center justify-center rounded-lg bg-brand text-sm font-semibold text-white"
                             aria-hidden="true"
                         >
                             {{ initial }}
@@ -107,12 +120,35 @@ const navLink = (active: boolean): string =>
                             {{ siteName }}
                         </span>
                     </Link>
+                    <nav
+                        :aria-label="t('nav.pages')"
+                        class="hidden shrink-0 items-center gap-1 lg:flex"
+                    >
+                        <a
+                            v-for="item in props.navigation"
+                            :key="item.slug"
+                            :href="item.url"
+                            :aria-current="isCurrent(item) ? 'page' : undefined"
+                            :class="navLink(isCurrent(item))"
+                        >
+                            {{ item.title }}
+                        </a>
+                        <a
+                            href="/blog"
+                            :aria-current="
+                                page.url.startsWith('/blog') ? 'page' : undefined
+                            "
+                            :class="navLink(page.url.startsWith('/blog'))"
+                        >
+                            {{ t('nav.blog') }}
+                        </a>
+                    </nav>
 
                     <form
                         action="/busca"
                         method="get"
                         role="search"
-                        class="hidden min-w-0 max-w-md flex-1 items-center gap-1 md:flex"
+                        class="hidden min-w-0 max-w-xs flex-1 items-center gap-1 2xl:flex"
                     >
                         <label class="sr-only" for="site-search">
                             {{ t('search.placeholder') }}
@@ -122,11 +158,11 @@ const navLink = (active: boolean): string =>
                             type="search"
                             name="q"
                             :placeholder="t('search.placeholder')"
-                            class="h-10 w-full rounded-full border border-slate-200 bg-slate-50 px-4 text-sm text-slate-900 placeholder:text-slate-400 focus-visible:border-green-800 focus-visible:bg-white focus-visible:ring-2 focus-visible:ring-green-800/20 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-100"
+                            class="h-10 w-full rounded-full border border-slate-200 bg-white px-4 text-sm text-slate-900 placeholder:text-slate-400 focus-visible:border-brand focus-visible:bg-white focus-visible:ring-2 focus-visible:ring-brand/20 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-100"
                         />
                         <button
                             type="submit"
-                            class="flex size-9 shrink-0 items-center justify-center rounded-md border border-slate-200 text-slate-600 hover:border-green-300 hover:text-green-900 dark:border-slate-800 dark:text-slate-400"
+                            class="flex size-9 shrink-0 items-center justify-center rounded-md border border-slate-200 text-slate-600 hover:border-green-300 hover:text-brand dark:border-slate-800 dark:text-slate-400"
                             :aria-label="t('search.submit')"
                         >
                             <Search class="size-4" aria-hidden="true" />
@@ -135,6 +171,13 @@ const navLink = (active: boolean): string =>
 
 
                     <div class="flex items-center gap-3">
+                        <a
+                            href="/busca"
+                            class="flex size-10 shrink-0 items-center justify-center rounded-full border border-slate-200 text-slate-600 hover:border-green-300 hover:text-brand 2xl:hidden dark:border-slate-800 dark:text-slate-400"
+                            :aria-label="t('search.submit')"
+                        >
+                            <Search class="size-4" aria-hidden="true" />
+                        </a>
                         <div
                             class="hidden items-center gap-1 sm:flex"
                             role="group"
@@ -148,7 +191,7 @@ const navLink = (active: boolean): string =>
                                 :class="[
                                     'rounded px-1 py-1 text-[11px] font-semibold tracking-wide uppercase transition-colors focus-visible:ring-2 focus-visible:ring-green-800 focus-visible:outline-none',
                                     locale === option.value
-                                        ? 'text-green-900 dark:text-green-400'
+                                        ? 'text-brand dark:text-green-400'
                                         : 'text-slate-400 hover:text-slate-700 dark:text-slate-500 dark:hover:text-slate-300',
                                 ]"
                                 @click="switchLocale(option.value as Locale)"
@@ -163,23 +206,16 @@ const navLink = (active: boolean): string =>
                         />
 
                         <a
-                            :href="
-                                authUser?.role === 'customer'
-                                    ? '/minha-conta'
-                                    : '/admin'
-                            "
-                            class="hidden text-xs font-medium text-slate-500 transition-colors hover:text-green-900 md:inline dark:text-slate-400 dark:hover:text-green-400"
+                            :href="accountHref"
+                            class="hidden items-center gap-1.5 text-sm font-medium text-slate-700 transition-colors hover:text-brand md:inline-flex dark:text-slate-300 dark:hover:text-green-400"
                         >
-                            {{
-                                authUser?.role === 'customer'
-                                    ? t('nav.account')
-                                    : t('nav.panel')
-                            }}
+                            <UserRound class="size-4" aria-hidden="true" />
+                            {{ accountLabel }}
                         </a>
 
                         <a
                             href="/orcamento"
-                            class="inline-flex h-10 items-center gap-2 rounded-full bg-green-900 px-3 text-sm font-medium text-white transition-colors hover:bg-green-950 sm:px-5"
+                            class="inline-flex h-10 items-center gap-2 rounded-full bg-brand px-3 text-sm font-medium text-white transition-colors hover:bg-brand-deep sm:px-5"
                         >
                             <ShoppingBag class="size-4" aria-hidden="true" />
                             <span class="hidden sm:inline">
@@ -195,7 +231,7 @@ const navLink = (active: boolean): string =>
 
                         <details class="relative lg:hidden">
                             <summary
-                                class="flex size-10 cursor-pointer items-center justify-center rounded-full border border-slate-200 text-slate-600 marker:content-none hover:bg-slate-50 dark:border-slate-800 dark:text-slate-400 dark:hover:bg-slate-900"
+                                class="flex size-10 cursor-pointer items-center justify-center rounded-full border border-slate-200 text-slate-600 marker:content-none hover:bg-white dark:border-slate-800 dark:text-slate-400 dark:hover:bg-slate-900"
                                 :aria-label="t('nav.pages')"
                             >
                                 <Menu class="size-4" aria-hidden="true" />
@@ -208,13 +244,13 @@ const navLink = (active: boolean): string =>
                                     v-for="item in props.navigation"
                                     :key="item.slug"
                                     :href="item.url"
-                                    class="rounded-md px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800"
+                                    class="rounded-md px-3 py-2 text-sm font-medium text-slate-700 hover:bg-[#f5f5f5] dark:text-slate-300 dark:hover:bg-slate-800"
                                 >
                                     {{ item.title }}
                                 </a>
                                 <a
                                     href="/blog"
-                                    class="rounded-md px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800"
+                                    class="rounded-md px-3 py-2 text-sm font-medium text-slate-700 hover:bg-[#f5f5f5] dark:text-slate-300 dark:hover:bg-slate-800"
                                 >
                                     {{ t('nav.blog') }}
                                 </a>
@@ -244,7 +280,7 @@ const navLink = (active: boolean): string =>
                                 </form>
                                 <a
                                     href="/orcamento"
-                                    class="mt-1 flex items-center justify-center gap-2 rounded-md bg-green-900 px-3 py-2 text-sm font-medium text-white"
+                                    class="mt-1 flex items-center justify-center gap-2 rounded-md bg-brand px-3 py-2 text-sm font-medium text-white"
                                 >
                                     {{ t('nav.quote') }}
                                     <span
@@ -265,35 +301,6 @@ const navLink = (active: boolean): string =>
                     </div>
                 </div>
 
-                <div class="hidden border-t border-slate-200 lg:block dark:border-slate-800">
-                    <div
-                        class="mx-auto flex h-11 w-full max-w-6xl items-center px-4 sm:px-6"
-                    >
-                    <nav
-                        :aria-label="t('nav.pages')"
-                        class="hidden items-center gap-0.5 lg:flex"
-                    >
-                        <a
-                            v-for="item in props.navigation"
-                            :key="item.slug"
-                            :href="item.url"
-                            :aria-current="isCurrent(item) ? 'page' : undefined"
-                            :class="navLink(isCurrent(item))"
-                        >
-                            {{ item.title }}
-                        </a>
-                        <a
-                            href="/blog"
-                            :aria-current="
-                                page.url.startsWith('/blog') ? 'page' : undefined
-                            "
-                            :class="navLink(page.url.startsWith('/blog'))"
-                        >
-                            {{ t('nav.blog') }}
-                        </a>
-                    </nav>
-                    </div>
-                </div>
             </div>
         </header>
 
@@ -312,7 +319,7 @@ const navLink = (active: boolean): string =>
                         class="flex items-center gap-2 text-base font-semibold text-slate-950 dark:text-slate-50"
                     >
                         <span
-                            class="flex size-7 items-center justify-center rounded-md bg-green-900 text-xs font-semibold text-white"
+                            class="flex size-7 items-center justify-center rounded-md bg-brand text-xs font-semibold text-white"
                             aria-hidden="true"
                         >
                             {{ initial }}
@@ -335,13 +342,13 @@ const navLink = (active: boolean): string =>
                         v-for="item in props.navigation"
                         :key="item.slug"
                         :href="item.url"
-                        class="hover:text-green-900 dark:hover:text-green-400"
+                        class="hover:text-brand dark:hover:text-green-400"
                     >
                         {{ item.title }}
                     </a>
                     <a
                         href="/blog"
-                        class="hover:text-green-900 dark:hover:text-green-400"
+                        class="hover:text-brand dark:hover:text-green-400"
                     >
                         {{ t('nav.blog') }}
                     </a>
@@ -356,14 +363,14 @@ const navLink = (active: boolean): string =>
                     <a
                         v-if="site.phone"
                         :href="`tel:${site.phone}`"
-                        class="hover:text-green-900 dark:hover:text-green-400"
+                        class="hover:text-brand dark:hover:text-green-400"
                     >
                         {{ site.phone }}
                     </a>
                     <a
                         v-if="site.email"
                         :href="`mailto:${site.email}`"
-                        class="hover:text-green-900 dark:hover:text-green-400"
+                        class="hover:text-brand dark:hover:text-green-400"
                     >
                         {{ site.email }}
                     </a>
@@ -372,7 +379,7 @@ const navLink = (active: boolean): string =>
                         :href="`https://api.whatsapp.com/send?phone=55${site.whatsapp}`"
                         target="_blank"
                         rel="noopener"
-                        class="hover:text-green-900 dark:hover:text-green-400"
+                        class="hover:text-brand dark:hover:text-green-400"
                     >
                         WhatsApp
                     </a>
@@ -393,13 +400,13 @@ const navLink = (active: boolean): string =>
                         :href="social.url"
                         target="_blank"
                         rel="noopener"
-                        class="hover:text-green-900 dark:hover:text-green-400"
+                        class="hover:text-brand dark:hover:text-green-400"
                     >
                         {{ social.label }}
                     </a>
                     <a
                         href="/orcamento"
-                        class="mt-2 inline-flex h-9 w-fit items-center gap-2 rounded-md bg-green-900 px-3 text-xs font-medium text-white hover:bg-green-950"
+                        class="mt-2 inline-flex h-9 w-fit items-center gap-2 rounded-md bg-brand px-3 text-xs font-medium text-white hover:bg-brand-deep"
                     >
                         <ShoppingBag class="size-3.5" aria-hidden="true" />
                         {{ t('nav.quote') }}
@@ -414,7 +421,7 @@ const navLink = (active: boolean): string =>
                     <p>© {{ currentYear }} {{ siteName }}</p>
                     <a
                         href="/politica-de-cookies"
-                        class="hover:text-green-900 dark:hover:text-green-400"
+                        class="hover:text-brand dark:hover:text-green-400"
                     >
                         {{ t('cookie.policy') }}
                     </a>

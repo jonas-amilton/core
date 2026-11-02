@@ -25,11 +25,11 @@ defineProps<{
                     class="group"
                 >
                     <summary
-                        class="flex cursor-pointer list-none items-center justify-between gap-4 px-5 py-4 text-[15px] font-medium text-slate-950 marker:content-none hover:bg-slate-50 dark:text-slate-50 dark:hover:bg-slate-800/60"
+                        class="flex cursor-pointer list-none items-center justify-between gap-4 px-5 py-4 text-[15px] font-medium text-slate-950 marker:content-none hover:bg-white dark:text-slate-50 dark:hover:bg-slate-800/60"
                     >
                         {{ item.title }}
                         <span
-                            class="text-lg leading-none text-green-800 transition-transform group-open:rotate-45 dark:text-green-400"
+                            class="text-lg leading-none text-brand transition-transform group-open:rotate-45 dark:text-green-400"
                             aria-hidden="true"
                         >
                             +

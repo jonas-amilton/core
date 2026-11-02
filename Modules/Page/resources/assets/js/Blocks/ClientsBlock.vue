@@ -23,7 +23,7 @@ defineProps<{
                 <li
                     v-for="(item, index) in block.items ?? []"
                     :key="index"
-                    class="flex items-center gap-3 rounded-xl bg-slate-50 p-4 dark:bg-slate-900"
+                    class="flex items-center gap-3 rounded-xl bg-white p-4 dark:bg-slate-900"
                 >
                     <span
                         class="flex size-11 shrink-0 items-center justify-center rounded-full bg-white dark:bg-slate-800"

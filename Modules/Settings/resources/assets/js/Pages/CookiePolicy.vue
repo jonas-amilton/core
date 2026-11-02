@@ -59,7 +59,7 @@ const optional = [
             >
                 <table class="w-full text-left text-sm">
                     <thead
-                        class="border-b border-slate-200 bg-slate-50 text-xs text-slate-500 uppercase dark:border-slate-800 dark:bg-slate-950/60 dark:text-slate-400"
+                        class="border-b border-slate-200 bg-white text-xs text-slate-500 uppercase dark:border-slate-800 dark:bg-slate-950/60 dark:text-slate-400"
                     >
                         <tr>
                             <th scope="col" class="px-4 py-2.5 font-medium">
@@ -112,7 +112,7 @@ const optional = [
             >
                 <table class="w-full text-left text-sm">
                     <thead
-                        class="border-b border-slate-200 bg-slate-50 text-xs text-slate-500 uppercase dark:border-slate-800 dark:bg-slate-950/60 dark:text-slate-400"
+                        class="border-b border-slate-200 bg-white text-xs text-slate-500 uppercase dark:border-slate-800 dark:bg-slate-950/60 dark:text-slate-400"
                     >
                         <tr>
                             <th scope="col" class="px-4 py-2.5 font-medium">
