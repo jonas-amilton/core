@@ -7,12 +7,17 @@ use Modules\Contact\Http\Controllers\Admin\DestroyContactMessageController;
 use Modules\Contact\Http\Controllers\Admin\DestroySubscriberController;
 use Modules\Contact\Http\Controllers\Admin\ExportSubscribersController;
 use Modules\Contact\Http\Controllers\Admin\IndexContactController;
+use Modules\Contact\Http\Controllers\Site\StoreCareerMessageController;
 use Modules\Contact\Http\Controllers\Site\StoreContactMessageController;
 use Modules\Contact\Http\Controllers\Site\StoreSubscriberController;
 
 Route::post('contato', StoreContactMessageController::class)
     ->middleware('throttle:5,1')
     ->name('contact.store');
+
+Route::post('trabalhe-conosco', StoreCareerMessageController::class)
+    ->middleware('throttle:5,1')
+    ->name('contact.career.store');
 
 Route::post('newsletter', StoreSubscriberController::class)
     ->middleware('throttle:5,1')

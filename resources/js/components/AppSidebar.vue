@@ -2,6 +2,7 @@
 import { Link } from '@inertiajs/vue3';
 import {
     Building2,
+    ClipboardList,
     ExternalLink,
     FileText,
     HelpCircle,
@@ -10,7 +11,9 @@ import {
     LayoutGrid,
     MessageSquareQuote,
     Newspaper,
+    Package,
     Settings2,
+    Store,
     Users,
 } from '@lucide/vue';
 import AppLogo from '@/components/AppLogo.vue';
@@ -33,7 +36,10 @@ import { index as messages } from '@/routes/contact/message';
 import { index as faq } from '@/routes/faq';
 import { index as pages } from '@/routes/page';
 import { index as media } from '@/routes/media';
+import { index as products } from '@/routes/catalog/product';
+import { index as quotes } from '@/routes/quote';
 import { index as settings } from '@/routes/settings';
+import { index as stores } from '@/routes/stores';
 import { index as testimonials } from '@/routes/testimonial';
 import { index as users } from '@/routes/user';
 import type { NavItem } from '@/types';
@@ -55,6 +61,11 @@ const mainNavItems: NavItem[] = [
         icon: Image,
     },
     {
+        title: 'Produtos',
+        href: products(),
+        icon: Package,
+    },
+    {
         title: 'Blog',
         href: blog(),
         icon: Newspaper,
@@ -73,6 +84,16 @@ const mainNavItems: NavItem[] = [
         title: 'Clientes',
         href: clients(),
         icon: Building2,
+    },
+    {
+        title: 'Orçamentos',
+        href: quotes(),
+        icon: ClipboardList,
+    },
+    {
+        title: 'Lojas',
+        href: stores(),
+        icon: Store,
     },
     {
         title: 'Mensagens',

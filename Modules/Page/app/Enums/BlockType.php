@@ -16,7 +16,9 @@ enum BlockType: string
     case Faq = 'faq';
     case Clients = 'clients';
     case Posts = 'posts';
+    case Products = 'products';
     case Contact = 'contact';
+    case Career = 'career';
     case Newsletter = 'newsletter';
 
     /**

@@ -16,6 +16,7 @@ type Message = {
     email: string;
     phone: string | null;
     message: string;
+    kind: string;
     created_at: string | null;
 };
 

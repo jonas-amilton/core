@@ -5,5 +5,8 @@
     "Settings": true,
     "Content": true,
     "Blog": true,
-    "Contact": true
+    "Contact": true,
+    "Catalog": true,
+    "Quote": true,
+    "Store": true
 }

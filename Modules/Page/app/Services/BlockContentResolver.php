@@ -6,6 +6,8 @@ namespace Modules\Page\Services;
 
 use Modules\Blog\Models\Post;
 use Modules\Blog\Services\BlogService;
+use Modules\Catalog\Models\Product;
+use Modules\Catalog\Services\CatalogService;
 use Modules\Content\Models\Client;
 use Modules\Content\Models\Faq;
 use Modules\Content\Models\Testimonial;
@@ -23,6 +25,7 @@ final class BlockContentResolver
         private PageRepository $pages,
         private ContentService $content,
         private BlogService $blog,
+        private CatalogService $catalog,
     ) {}
 
     /**
@@ -38,6 +41,7 @@ final class BlockContentResolver
                 'faq' => $this->faqs(),
                 'clients' => $this->clients(),
                 'posts' => $this->posts((int) ($block['limit'] ?? 3)),
+                'products' => $this->products((int) ($block['limit'] ?? 3)),
                 default => null,
             };
 
@@ -106,6 +110,17 @@ final class BlockContentResolver
 
         return $this->blog->publishedPosts($limit)
             ->map(fn (Post $post): array => $post->toCardArray())
+            ->values()
+            ->all();
+    }
+
+    /**
+     * @return array<int, array<string, mixed>>
+     */
+    private function products(int $limit): array
+    {
+        return $this->catalog->featured($limit)
+            ->map(fn (Product $product): array => $product->toCardArray())
             ->values()
             ->all();
     }

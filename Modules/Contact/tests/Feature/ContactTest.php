@@ -48,6 +48,23 @@ class ContactTest extends TestCase
         $this->assertSame(0, ContactMessage::query()->count());
     }
 
+    public function test_career_messages_are_stored_with_their_kind(): void
+    {
+        $this->from('/trabalhe-conosco')
+            ->post(route('contact.career.store'), [
+                'name' => 'Maria',
+                'email' => 'maria@example.com',
+                'message' => 'Tenho experiência em vendas.',
+                'website' => '',
+            ])
+            ->assertRedirect('/trabalhe-conosco');
+
+        $message = ContactMessage::query()->firstOrFail();
+
+        $this->assertSame('career', $message->kind);
+        $this->assertSame('maria@example.com', $message->email);
+    }
+
     public function test_subscriptions_are_unique(): void
     {
         $this->post(route('newsletter.store'), ['email' => 'ana@example.com']);

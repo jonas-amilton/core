@@ -33,6 +33,17 @@ class SettingsManagementTest extends TestCase
             );
     }
 
+    public function test_the_cookie_policy_page_is_public(): void
+    {
+        $this->get(route('settings.cookie-policy'))
+            ->assertOk()
+            ->assertInertia(fn (Assert $inertia) => $inertia
+                ->component('Settings::CookiePolicy', false)
+                ->has('navigation')
+                ->where('cookieText', fn (string $text): bool => $text !== '')
+            );
+    }
+
     public function test_settings_are_saved_and_unknown_keys_are_dropped(): void
     {
         $this->actingAs(User::factory()->create());

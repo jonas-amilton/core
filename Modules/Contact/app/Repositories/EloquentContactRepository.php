@@ -20,7 +20,7 @@ final class EloquentContactRepository implements ContactRepository
     }
 
     /**
-     * @param  array{name: string, email: string, phone: string|null, message: string}  $data
+     * @param  array{name: string, email: string, phone: string|null, message: string, kind: string}  $data
      */
     public function createMessage(array $data): ContactMessage
     {

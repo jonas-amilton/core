@@ -9,7 +9,9 @@ export type BlockType =
     | 'faq'
     | 'clients'
     | 'posts'
+    | 'products'
     | 'contact'
+    | 'career'
     | 'newsletter';
 
 export type GridItem = {

@@ -12,6 +12,9 @@ parameters:
         - Modules/Content/
         - Modules/Blog/
         - Modules/Contact/
+        - Modules/Catalog/
+        - Modules/Quote/
+        - Modules/Store/
         - bootstrap/app.php
         - config/
         - database/

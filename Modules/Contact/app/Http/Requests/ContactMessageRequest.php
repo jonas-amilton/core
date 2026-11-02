@@ -42,7 +42,7 @@ final class ContactMessageRequest extends FormRequest
     }
 
     /**
-     * @return array{name: string, email: string, phone: string|null, message: string}
+     * @return array{name: string, email: string, phone: string|null, message: string, kind: string}
      */
     public function toData(): array
     {
@@ -51,6 +51,7 @@ final class ContactMessageRequest extends FormRequest
             'email' => mb_strtolower(trim((string) $this->input('email'))),
             'phone' => ($phone = trim((string) $this->input('phone', ''))) !== '' ? $phone : null,
             'message' => trim((string) $this->input('message')),
+            'kind' => 'contact',
         ];
     }
 }

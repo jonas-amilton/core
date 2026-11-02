@@ -2,6 +2,7 @@
 import { Head } from '@inertiajs/vue3';
 import { computed } from 'vue';
 import ClientsBlock from '../Blocks/ClientsBlock.vue';
+import CareerBlock from '../Blocks/CareerBlock.vue';
 import ContactBlock from '../Blocks/ContactBlock.vue';
 import CtaBlock from '../Blocks/CtaBlock.vue';
 import FaqBlock from '../Blocks/FaqBlock.vue';
@@ -10,6 +11,7 @@ import HeroBlock from '../Blocks/HeroBlock.vue';
 import ImageBlock from '../Blocks/ImageBlock.vue';
 import NewsletterBlock from '../Blocks/NewsletterBlock.vue';
 import PostsBlock from '../Blocks/PostsBlock.vue';
+import ProductsBlock from '../Blocks/ProductsBlock.vue';
 import ServicesBlock from '../Blocks/ServicesBlock.vue';
 import TestimonialsBlock from '../Blocks/TestimonialsBlock.vue';
 import TextBlock from '../Blocks/TextBlock.vue';
@@ -32,7 +34,9 @@ const renderers = {
     faq: FaqBlock,
     clients: ClientsBlock,
     posts: PostsBlock,
+    products: ProductsBlock,
     contact: ContactBlock,
+    career: CareerBlock,
     newsletter: NewsletterBlock,
 };
 

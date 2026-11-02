@@ -15,6 +15,9 @@ const site = computed(
 
 const siteName = computed(() => site.value.site_name || 'CoreCMS');
 const currentYear = new Date().getFullYear();
+const cartCount = computed(
+    () => (page.props.cart_count as number | undefined) ?? 0,
+);
 
 const socials = computed(() =>
     [
@@ -68,6 +71,15 @@ const isCurrent = (item: NavigationItem): boolean =>
                         class="rounded-md px-3 py-1.5 text-sm text-slate-600 transition-colors hover:bg-slate-100 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-slate-100"
                     >
                         Blog
+                    </a>
+                    <a
+                        href="/orcamento"
+                        class="rounded-md px-3 py-1.5 text-sm text-slate-600 transition-colors hover:bg-slate-100 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-slate-100"
+                    >
+                        Orçamento
+                        <span v-if="cartCount > 0" class="text-xs text-indigo-600 dark:text-indigo-400">
+                            ({{ cartCount }})
+                        </span>
                     </a>
                 </nav>
 

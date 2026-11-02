@@ -13,6 +13,7 @@ use Illuminate\Support\Carbon;
  * @property string $email
  * @property string|null $phone
  * @property string $message
+ * @property string $kind
  * @property Carbon|null $created_at
  */
 class ContactMessage extends Model
@@ -22,6 +23,7 @@ class ContactMessage extends Model
         'email',
         'phone',
         'message',
+        'kind',
     ];
 
     /**
@@ -35,6 +37,7 @@ class ContactMessage extends Model
             'email' => $this->email,
             'phone' => $this->phone,
             'message' => $this->message,
+            'kind' => $this->kind,
             'created_at' => $this->created_at?->toIso8601String(),
         ];
     }
