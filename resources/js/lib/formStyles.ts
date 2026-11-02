@@ -3,7 +3,7 @@
  * paper/ink language as the site: hairline borders, flat surfaces, one accent.
  */
 export const fieldClasses =
-    'h-11 rounded-sm border-stone-300 bg-background px-3.5 text-sm text-stone-900 placeholder:text-stone-500 hover:border-stone-400 focus-visible:border-orange-700 focus-visible:ring-1 focus-visible:ring-orange-700/40 dark:border-stone-700 dark:bg-stone-900 dark:text-stone-100 dark:placeholder:text-stone-400 dark:hover:border-stone-600';
+    'h-11 rounded-sm border border-stone-300 bg-background px-3.5 text-sm text-stone-900 placeholder:text-stone-500 hover:border-stone-400 focus-visible:border-orange-700 focus-visible:ring-1 focus-visible:ring-orange-700/40 dark:border-stone-700 dark:bg-stone-900 dark:text-stone-100 dark:placeholder:text-stone-400 dark:hover:border-stone-600';
 
 export const labelClasses = 'text-stone-700 dark:text-stone-300';
 

@@ -17,7 +17,7 @@ defineProps<{
             </h2>
 
             <ul
-                class="mt-10 grid grid-cols-2 border-t border-l border-stone-200 sm:grid-cols-3 lg:grid-cols-4 dark:border-stone-800"
+                class="mt-10 grid grid-cols-2 border-t border-l border-stone-200 sm:grid-cols-3 dark:border-stone-800"
             >
                 <li
                     v-for="(item, index) in block.items ?? []"

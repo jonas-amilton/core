@@ -114,7 +114,7 @@ function addProduct(): void {
 
                     <div
                         v-if="props.product.description"
-                        class="mt-6 text-sm leading-relaxed whitespace-pre-line text-stone-700 dark:text-stone-300"
+                        class="mt-6 text-[15px] leading-[1.75] whitespace-pre-line text-stone-700 dark:text-stone-300"
                     >
                         {{ props.product.description }}
                     </div>
