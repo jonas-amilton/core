@@ -6,7 +6,8 @@ import SiteShell from '@modules/Page/resources/assets/js/components/SiteShell.vu
 import type { NavigationItem } from '@modules/Page/resources/assets/js/types';
 import { destroy } from '@/routes/quote/item';
 import { store } from '@/routes/quote';
-import { fieldClasses } from '@/lib/formStyles';
+import { formatPrice } from '@/lib/format';
+import { siteFieldClasses } from '@/lib/formStyles';
 import { useI18n } from '@/i18n';
 
 type CartItem = {
@@ -14,6 +15,7 @@ type CartItem = {
     name: string;
     slug: string;
     sku: string | null;
+    price: string | null;
     cover: string | null;
     quantity: number;
 };
@@ -24,6 +26,16 @@ const props = defineProps<{
     items: CartItem[];
     navigation: NavigationItem[];
 }>();
+
+const total = computed(() =>
+    props.items.reduce(
+        (sum, item) => sum + (Number(item.price) || 0) * item.quantity,
+        0,
+    ),
+);
+
+const lineTotal = (item: CartItem): string | null =>
+    formatPrice((Number(item.price) || 0) * item.quantity);
 
 const cartError = computed(
     () => (form.errors as Record<string, string | undefined>).cart,
@@ -55,11 +67,11 @@ function submit(): void {
     <SiteShell :navigation="props.navigation">
         <section class="px-4 py-12 sm:px-6 sm:py-16">
             <h1
-                class="font-display text-4xl tracking-tight text-stone-950 sm:text-5xl dark:text-stone-50"
+                class="text-3xl font-semibold tracking-tight text-slate-950 sm:text-4xl dark:text-slate-50"
             >
                 {{ t('quote.title') }}
             </h1>
-            <p class="mt-1 text-sm text-stone-600 dark:text-stone-400">
+            <p class="mt-1 text-sm text-slate-600 dark:text-slate-400">
                 {{ t('quote.subtitle') }}
             </p>
 
@@ -86,31 +98,36 @@ function submit(): void {
                     <li
                         v-for="item in props.items"
                         :key="item.id"
-                        class="flex items-center gap-3 rounded-sm border border-stone-200 p-3 dark:border-stone-800"
+                        class="flex items-center gap-3 rounded-lg border border-slate-200 bg-white p-3 shadow-xs dark:border-slate-800 dark:bg-slate-900"
                     >
                         <img
                             v-if="item.cover"
                             :src="item.cover"
                             alt=""
-                            class="size-16 rounded-sm bg-white object-contain p-1"
+                            class="size-16 rounded-md bg-white object-contain p-1"
                         />
                         <div class="min-w-0 flex-1">
                             <Link
                                 :href="`/produto/${item.slug}`"
-                                class="text-sm font-medium text-stone-900 hover:text-orange-700 dark:text-stone-100 dark:hover:text-orange-400"
+                                class="text-sm font-medium text-slate-900 hover:text-blue-700 dark:text-slate-100 dark:hover:text-blue-400"
                             >
                                 {{ item.name }}
                             </Link>
-                            <p class="text-xs text-stone-500">
+                            <p class="text-xs text-slate-500">
                                 <template v-if="item.sku"
                                     >{{ t('catalog.sku') }} {{ item.sku }} ·
                                 </template>
                                 {{ t('quote.quantity') }} {{ item.quantity }}
                             </p>
                         </div>
+                        <p
+                            class="text-sm font-medium text-slate-950 tabular-nums dark:text-slate-50"
+                        >
+                            {{ lineTotal(item) ?? '—' }}
+                        </p>
                         <button
                             type="button"
-                            class="rounded-sm p-1 text-stone-400 hover:bg-red-50 hover:text-red-600 dark:hover:bg-red-500/10"
+                            class="rounded-sm p-1 text-slate-400 hover:bg-red-50 hover:text-red-600 dark:hover:bg-red-500/10"
                             :aria-label="`${t('quote.remove')} ${item.name}`"
                             @click="remove(item)"
                         >
@@ -120,19 +137,19 @@ function submit(): void {
                 </ul>
 
                 <form
-                    class="grid content-start gap-3 rounded-sm border border-stone-200 p-4 dark:border-stone-800"
+                    class="grid content-start gap-3 rounded-lg border border-slate-200 bg-white p-4 shadow-xs dark:border-slate-800 dark:bg-slate-900"
                     @submit.prevent="submit"
                 >
                     <label class="grid gap-1.5">
                         <span
-                            class="text-xs font-medium text-stone-600 dark:text-stone-400"
+                            class="text-sm font-medium text-slate-700 dark:text-slate-300"
                         >
                             {{ t('quote.name') }}
                         </span>
                         <input
                             v-model="form.name"
                             type="text"
-                            :class="fieldClasses"
+                            :class="siteFieldClasses"
                         />
                         <span
                             v-if="form.errors.name"
@@ -144,14 +161,14 @@ function submit(): void {
 
                     <label class="grid gap-1.5">
                         <span
-                            class="text-xs font-medium text-stone-600 dark:text-stone-400"
+                            class="text-sm font-medium text-slate-700 dark:text-slate-300"
                         >
                             {{ t('quote.email') }}
                         </span>
                         <input
                             v-model="form.email"
                             type="email"
-                            :class="fieldClasses"
+                            :class="siteFieldClasses"
                         />
                         <span
                             v-if="form.errors.email"
@@ -163,20 +180,20 @@ function submit(): void {
 
                     <label class="grid gap-1.5">
                         <span
-                            class="text-xs font-medium text-stone-600 dark:text-stone-400"
+                            class="text-sm font-medium text-slate-700 dark:text-slate-300"
                         >
                             {{ t('quote.phone') }}
                         </span>
                         <input
                             v-model="form.phone"
                             type="tel"
-                            :class="fieldClasses"
+                            :class="siteFieldClasses"
                         />
                     </label>
 
                     <label class="grid gap-1.5">
                         <span
-                            class="text-xs font-medium text-stone-600 dark:text-stone-400"
+                            class="text-sm font-medium text-slate-700 dark:text-slate-300"
                         >
                             {{ t('quote.message') }}
                         </span>
@@ -184,7 +201,7 @@ function submit(): void {
                             v-model="form.message"
                             :rows="4"
                             :class="[
-                                fieldClasses,
+                                siteFieldClasses,
                                 'h-auto py-2 leading-relaxed',
                             ]"
                         />
@@ -200,9 +217,24 @@ function submit(): void {
                         aria-hidden="true"
                     />
 
+                    <div
+                        class="flex items-center justify-between border-t border-slate-200 pt-3 dark:border-slate-800"
+                    >
+                        <span
+                            class="text-sm font-medium text-slate-700 dark:text-slate-300"
+                        >
+                            {{ t('quote.total') }}
+                        </span>
+                        <span
+                            class="text-xl font-semibold tracking-tight text-slate-950 tabular-nums dark:text-slate-50"
+                        >
+                            {{ formatPrice(total) }}
+                        </span>
+                    </div>
+
                     <button
                         type="submit"
-                        class="inline-flex h-10 items-center justify-center rounded-sm bg-stone-900 px-5 text-sm font-medium text-stone-50 hover:bg-stone-800 disabled:opacity-50 dark:bg-stone-100 dark:text-stone-900 dark:hover:bg-stone-200"
+                        class="inline-flex h-10 items-center justify-center rounded-md bg-blue-800 px-5 text-sm font-medium text-white hover:bg-blue-900 disabled:opacity-50"
                         :disabled="form.processing"
                     >
                         {{ t('quote.submit') }}
@@ -212,12 +244,12 @@ function submit(): void {
 
             <p
                 v-else
-                class="mt-8 rounded-sm border border-dashed border-stone-300 px-6 py-16 text-center text-sm text-stone-500 dark:border-stone-700 dark:text-stone-400"
+                class="mt-8 rounded-lg border border-dashed border-slate-300 bg-white px-6 py-16 text-center text-sm text-slate-500 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-400"
             >
                 {{ t('quote.empty') }}
                 <Link
                     href="/produtos"
-                    class="text-orange-700 hover:underline dark:text-orange-400"
+                    class="text-blue-700 hover:underline dark:text-blue-400"
                 >
                     {{ t('quote.viewProducts') }}
                 </Link>

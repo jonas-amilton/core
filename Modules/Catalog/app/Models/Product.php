@@ -15,6 +15,7 @@ use Modules\Media\Models\Media;
  * @property string $name
  * @property string $slug
  * @property string|null $sku
+ * @property string|null $price
  * @property string|null $description
  * @property array<string, array<string, mixed>>|null $translations
  * @property int $position
@@ -31,6 +32,7 @@ class Product extends Model
         'name',
         'slug',
         'sku',
+        'price',
         'description',
         'translations',
         'position',
@@ -43,6 +45,7 @@ class Product extends Model
     {
         return [
             'position' => 'integer',
+            'price' => 'decimal:2',
             'translations' => 'array',
         ];
     }
@@ -96,6 +99,7 @@ class Product extends Model
             'name' => $this->name,
             'slug' => $this->slug,
             'sku' => $this->sku,
+            'price' => $this->price,
             'position' => $this->position,
             'cover' => $this->cover(),
             'updated_at' => $this->updated_at?->toIso8601String(),
@@ -112,6 +116,7 @@ class Product extends Model
             'name' => $this->transString('name') ?? $this->name,
             'slug' => $this->slug,
             'sku' => $this->sku,
+            'price' => $this->price,
             'cover' => $this->cover(),
         ];
     }
@@ -149,6 +154,7 @@ class Product extends Model
             'name' => $this->transString('name') ?? $this->name,
             'slug' => $this->slug,
             'sku' => $this->sku,
+            'price' => $this->price,
             'description' => $this->transString('description') ?? $this->description,
             'images' => $this->imageUrls(),
             'categories' => $this->categories
@@ -169,6 +175,7 @@ class Product extends Model
         return [
             'title' => $this->transString('name') ?? $this->name,
             'description' => $this->sku,
+            'price' => $this->price,
             'url' => '/produto/'.$this->slug,
             'cover' => $this->cover(),
         ];

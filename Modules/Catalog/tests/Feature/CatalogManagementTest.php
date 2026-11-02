@@ -26,6 +26,7 @@ class CatalogManagementTest extends TestCase
             'name' => 'Resistência Cartucho',
             'slug' => null,
             'sku' => 'C-AB',
+            'price' => '189.90',
             'description' => 'Cartucho de alta carga.',
             'position' => 0,
             'category_ids' => [],
@@ -66,6 +67,7 @@ class CatalogManagementTest extends TestCase
         $product = Product::query()->firstOrFail();
 
         $this->assertSame('resistencia-cartucho', $product->slug);
+        $this->assertSame('189.90', $product->price);
         $this->assertTrue($product->categories->contains($category));
         $this->assertTrue($product->media->contains($media));
 
@@ -75,6 +77,7 @@ class CatalogManagementTest extends TestCase
                 ->component('Catalog::Index', false)
                 ->has('products.data', 1)
                 ->where('products.data.0.name', 'Resistência Cartucho')
+                ->where('products.data.0.price', '189.90')
             );
 
         $this->get(route('catalog.show', $product))
@@ -83,6 +86,7 @@ class CatalogManagementTest extends TestCase
                 ->component('Catalog::Show', false)
                 ->where('product.name', 'Resistência Cartucho')
                 ->where('product.sku', 'C-AB')
+                ->where('product.price', '189.90')
             );
     }
 

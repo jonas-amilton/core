@@ -7,34 +7,36 @@ defineProps<{
 </script>
 
 <template>
-    <section class="px-4 py-14 sm:px-6 sm:py-20">
+    <section class="bg-white px-4 py-12 sm:px-6 sm:py-16 dark:bg-slate-950">
         <div class="mx-auto max-w-3xl">
             <h2
                 v-if="block.title"
-                class="font-display text-3xl tracking-tight text-stone-950 sm:text-4xl dark:text-stone-50"
+                class="text-2xl font-semibold tracking-tight text-slate-950 sm:text-3xl dark:text-slate-50"
             >
                 {{ block.title }}
             </h2>
 
-            <div class="mt-8 border-t border-stone-200 dark:border-stone-800">
+            <div
+                class="mt-6 divide-y divide-slate-200 overflow-hidden rounded-lg border border-slate-200 bg-white dark:divide-slate-800 dark:border-slate-800 dark:bg-slate-900"
+            >
                 <details
                     v-for="(item, index) in block.items ?? []"
                     :key="index"
-                    class="group border-b border-stone-200 dark:border-stone-800"
+                    class="group"
                 >
                     <summary
-                        class="flex cursor-pointer list-none items-baseline justify-between gap-4 py-4 text-base font-medium text-stone-950 marker:content-none dark:text-stone-50"
+                        class="flex cursor-pointer list-none items-center justify-between gap-4 px-5 py-4 text-[15px] font-medium text-slate-950 marker:content-none hover:bg-slate-50 dark:text-slate-50 dark:hover:bg-slate-800/60"
                     >
                         {{ item.title }}
                         <span
-                            class="text-lg leading-none text-orange-700 transition-transform group-open:rotate-45 dark:text-orange-400"
+                            class="text-lg leading-none text-blue-700 transition-transform group-open:rotate-45 dark:text-blue-400"
                             aria-hidden="true"
                         >
                             +
                         </span>
                     </summary>
                     <p
-                        class="mt-1 mb-5 pr-8 text-sm leading-relaxed whitespace-pre-line text-stone-600 dark:text-stone-400"
+                        class="px-5 pb-5 text-sm leading-relaxed whitespace-pre-line text-slate-600 dark:text-slate-400"
                     >
                         {{ item.description }}
                     </p>

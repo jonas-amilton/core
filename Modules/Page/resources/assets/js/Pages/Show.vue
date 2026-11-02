@@ -55,7 +55,7 @@ const visibleBlocks = computed<Block[]>(() =>
 
         <p
             v-if="visibleBlocks.length === 0"
-            class="px-6 py-24 text-center text-sm text-stone-500 dark:text-stone-400"
+            class="px-6 py-24 text-center text-sm text-slate-500 dark:text-slate-400"
         >
             Esta página ainda não tem conteúdo.
         </p>

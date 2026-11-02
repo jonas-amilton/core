@@ -24,6 +24,7 @@ final class ProductRequest extends FormRequest
             'name' => ['required', 'string', 'max:200'],
             'slug' => ['nullable', 'string', 'max:200', 'alpha_dash'],
             'sku' => ['nullable', 'string', 'max:60'],
+            'price' => ['nullable', 'numeric', 'min:0', 'max:9999999'],
             'description' => ['nullable', 'string', 'max:50000'],
             'position' => ['nullable', 'integer', 'min:0', 'max:9999'],
             'category_ids' => ['nullable', 'array'],

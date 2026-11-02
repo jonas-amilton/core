@@ -23,6 +23,7 @@ export type GridItem = {
     url?: string | null;
     icon?: string | null;
     cover?: string | null;
+    price?: string | number | null;
     category?: string | null;
     date?: string | null;
 };

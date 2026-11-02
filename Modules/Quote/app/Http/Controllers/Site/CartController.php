@@ -19,6 +19,7 @@ final class CartController
                 'name' => $item['product']->name,
                 'slug' => $item['product']->slug,
                 'sku' => $item['product']->sku,
+                'price' => $item['product']->price,
                 'cover' => $item['product']->cover(),
                 'quantity' => $item['quantity'],
             ], $cart->items()),

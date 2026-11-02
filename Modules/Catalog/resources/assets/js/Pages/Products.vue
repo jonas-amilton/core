@@ -10,12 +10,14 @@ import {
 } from '@/routes/catalog/product';
 import { index as categoryIndex } from '@/routes/catalog/category';
 import { fieldClasses } from '@/lib/formStyles';
+import { formatPrice } from '@/lib/format';
 
 type Product = {
     id: number;
     name: string;
     slug: string;
     sku: string | null;
+    price: string | null;
     position: number;
     cover: string | null;
     updated_at: string | null;
@@ -155,6 +157,9 @@ function remove(item: Product): void {
                         <th scope="col" class="hidden px-4 py-2.5 font-medium sm:table-cell">
                             SKU
                         </th>
+                        <th scope="col" class="hidden px-4 py-2.5 text-right font-medium sm:table-cell">
+                            Preço
+                        </th>
                         <th scope="col" class="px-4 py-2.5 text-right font-medium">Ações</th>
                     </tr>
                 </thead>
@@ -175,6 +180,9 @@ function remove(item: Product): void {
                         </td>
                         <td class="hidden px-4 py-3 text-xs text-stone-500 sm:table-cell">
                             {{ item.sku || '—' }}
+                        </td>
+                        <td class="hidden px-4 py-3 text-right text-sm text-stone-700 tabular-nums sm:table-cell dark:text-stone-300">
+                            {{ formatPrice(item.price) ?? '—' }}
                         </td>
                         <td class="px-4 py-3 text-right">
                             <div class="inline-flex items-center gap-1">

@@ -1,40 +1,40 @@
 <script setup lang="ts">
+import { Check } from '@lucide/vue';
 import type { Block } from '../types';
 
 defineProps<{ block: Block }>();
 </script>
 
 <template>
-    <section class="px-4 py-14 sm:px-6 sm:py-20">
-        <div class="w-full">
+    <section class="px-4 py-12 sm:px-6 sm:py-16">
+        <div class="mx-auto max-w-5xl">
             <h2
                 v-if="block.title"
-                class="font-display text-3xl tracking-tight text-stone-950 sm:text-4xl dark:text-stone-50"
+                class="text-2xl font-semibold tracking-tight text-slate-950 sm:text-3xl dark:text-slate-50"
             >
                 {{ block.title }}
             </h2>
 
-            <ul
-                class="mt-10 grid border-t border-l border-stone-200 sm:grid-cols-2 lg:grid-cols-3 dark:border-stone-800"
-            >
+            <ul class="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
                 <li
                     v-for="(item, index) in block.items ?? []"
                     :key="index"
-                    class="border-r border-b border-stone-200 p-6 dark:border-stone-800"
+                    class="rounded-lg border border-slate-200 bg-white p-6 shadow-xs dark:border-slate-800 dark:bg-slate-900"
                 >
                     <span
-                        class="text-[11px] font-medium tracking-[0.16em] text-orange-800 tabular-nums dark:text-orange-400"
+                        class="flex size-9 items-center justify-center rounded-md bg-blue-50 text-blue-800 dark:bg-blue-500/10 dark:text-blue-400"
+                        aria-hidden="true"
                     >
-                        {{ String(index + 1).padStart(2, '0') }}
+                        <Check class="size-4" />
                     </span>
                     <p
-                        class="mt-3 text-base font-medium text-stone-950 dark:text-stone-50"
+                        class="mt-4 text-base font-semibold text-slate-950 dark:text-slate-50"
                     >
                         {{ item.title }}
                     </p>
                     <p
                         v-if="item.description"
-                        class="mt-2 text-sm leading-relaxed text-stone-600 dark:text-stone-400"
+                        class="mt-2 text-sm leading-relaxed text-slate-600 dark:text-slate-400"
                     >
                         {{ item.description }}
                     </p>

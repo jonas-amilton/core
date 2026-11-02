@@ -18,3 +18,10 @@ export const statusClasses =
 
 export const cardClasses =
     'rounded-sm border border-stone-200 bg-card p-6 dark:border-stone-800';
+
+/**
+ * Public-site fields. Slightly softer than the panel so the institutional site
+ * reads as a normal corporate form, not an editorial page.
+ */
+export const siteFieldClasses =
+    'w-full rounded-md border border-stone-300 bg-white px-3.5 text-sm text-stone-900 placeholder:text-stone-500 hover:border-stone-400 focus-visible:border-orange-700 focus-visible:ring-2 focus-visible:ring-orange-700/20 dark:border-stone-700 dark:bg-stone-900 dark:text-stone-100 dark:placeholder:text-stone-400 dark:hover:border-stone-600';

@@ -3,7 +3,7 @@ import { useForm } from '@inertiajs/vue3';
 import { Check } from '@lucide/vue';
 import type { Block } from '../types';
 import { store as contactStore } from '@/routes/contact';
-import { fieldClasses } from '@/lib/formStyles';
+import { siteFieldClasses } from '@/lib/formStyles';
 import { useI18n } from '@/i18n';
 
 const { t } = useI18n();
@@ -29,43 +29,42 @@ function submit(): void {
 </script>
 
 <template>
-    <section class="px-4 py-14 sm:px-6 sm:py-20">
-        <div class="mx-auto max-w-2xl">
+    <section class="px-4 py-12 sm:px-6 sm:py-16">
+        <div
+            class="mx-auto max-w-3xl rounded-lg border border-slate-200 bg-white p-6 shadow-xs sm:p-8 dark:border-slate-800 dark:bg-slate-900"
+        >
             <h2
                 v-if="block.title"
-                class="font-display text-3xl tracking-tight text-stone-950 sm:text-4xl dark:text-stone-50"
+                class="text-2xl font-semibold tracking-tight text-slate-950 dark:text-slate-50"
             >
                 {{ block.title }}
             </h2>
             <p
                 v-if="block.subtitle"
-                class="mt-2 text-stone-600 dark:text-stone-400"
+                class="mt-2 text-sm leading-relaxed text-slate-600 dark:text-slate-400"
             >
                 {{ block.subtitle }}
             </p>
 
             <p
                 v-if="form.recentlySuccessful"
-                class="mt-5 inline-flex items-center gap-2 text-sm text-emerald-700 dark:text-emerald-400"
+                class="mt-5 inline-flex items-center gap-2 rounded-md bg-emerald-50 px-3 py-2 text-sm text-emerald-800 dark:bg-emerald-500/10 dark:text-emerald-300"
             >
                 <Check class="size-4" aria-hidden="true" />
                 {{ t('contact.success') }}
             </p>
 
-            <form
-                class="mt-8 grid gap-4 sm:grid-cols-2"
-                @submit.prevent="submit"
-            >
+            <form class="mt-6 grid gap-4 sm:grid-cols-2" @submit.prevent="submit">
                 <label class="grid gap-1.5">
                     <span
-                        class="text-xs font-medium text-stone-600 dark:text-stone-400"
+                        class="text-sm font-medium text-slate-700 dark:text-slate-300"
                     >
                         {{ t('contact.name') }}
                     </span>
                     <input
                         v-model="form.name"
                         type="text"
-                        :class="fieldClasses"
+                        :class="[siteFieldClasses, 'h-11']"
                     />
                     <span v-if="form.errors.name" class="text-xs text-red-600">
                         {{ form.errors.name }}
@@ -74,14 +73,14 @@ function submit(): void {
 
                 <label class="grid gap-1.5">
                     <span
-                        class="text-xs font-medium text-stone-600 dark:text-stone-400"
+                        class="text-sm font-medium text-slate-700 dark:text-slate-300"
                     >
                         {{ t('contact.email') }}
                     </span>
                     <input
                         v-model="form.email"
                         type="email"
-                        :class="fieldClasses"
+                        :class="[siteFieldClasses, 'h-11']"
                     />
                     <span v-if="form.errors.email" class="text-xs text-red-600">
                         {{ form.errors.email }}
@@ -90,27 +89,27 @@ function submit(): void {
 
                 <label class="grid gap-1.5 sm:col-span-2">
                     <span
-                        class="text-xs font-medium text-stone-600 dark:text-stone-400"
+                        class="text-sm font-medium text-slate-700 dark:text-slate-300"
                     >
                         {{ t('contact.phone') }}
                     </span>
                     <input
                         v-model="form.phone"
                         type="tel"
-                        :class="fieldClasses"
+                        :class="[siteFieldClasses, 'h-11']"
                     />
                 </label>
 
                 <label class="grid gap-1.5 sm:col-span-2">
                     <span
-                        class="text-xs font-medium text-stone-600 dark:text-stone-400"
+                        class="text-sm font-medium text-slate-700 dark:text-slate-300"
                     >
                         {{ t('contact.message') }}
                     </span>
                     <textarea
                         v-model="form.message"
                         :rows="5"
-                        :class="[fieldClasses, 'h-auto py-2 leading-relaxed']"
+                        :class="[siteFieldClasses, 'py-2.5 leading-relaxed']"
                     />
                     <span
                         v-if="form.errors.message"
@@ -133,7 +132,7 @@ function submit(): void {
                 <div class="sm:col-span-2">
                     <button
                         type="submit"
-                        class="inline-flex h-11 items-center bg-stone-900 px-5 text-sm font-medium text-stone-50 transition-colors hover:bg-stone-800 disabled:opacity-50 dark:bg-stone-100 dark:text-stone-900 dark:hover:bg-stone-200"
+                        class="inline-flex h-11 items-center justify-center rounded-md bg-blue-800 px-5 text-sm font-medium text-white transition-colors hover:bg-blue-900 disabled:opacity-50"
                         :disabled="form.processing"
                     >
                         {{ t('contact.submit') }}

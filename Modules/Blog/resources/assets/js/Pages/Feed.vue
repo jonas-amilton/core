@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { Head } from '@inertiajs/vue3';
+import { ArrowRight } from '@lucide/vue';
 import SiteShell from '@modules/Page/resources/assets/js/components/SiteShell.vue';
 import type { NavigationItem } from '@modules/Page/resources/assets/js/types';
 import { useI18n } from '@/i18n';
@@ -51,7 +52,7 @@ const title = props.activeCategory
     <SiteShell :navigation="props.navigation">
         <section class="px-4 py-12 sm:px-6 sm:py-16">
             <h1
-                class="font-display text-4xl tracking-tight text-stone-950 sm:text-5xl dark:text-stone-50"
+                class="text-3xl font-semibold tracking-tight text-slate-950 sm:text-4xl dark:text-slate-50"
             >
                 {{
                     props.activeCategory
@@ -68,10 +69,10 @@ const title = props.activeCategory
                 <a
                     href="/blog"
                     :class="[
-                        'border px-3 py-1.5 text-[11px] font-medium tracking-[0.1em] uppercase',
+                        'rounded-full border px-3.5 py-1.5 text-xs font-medium',
                         props.activeCategory === null
-                            ? 'border-orange-200 bg-orange-50 text-orange-800 dark:border-stone-700 dark:bg-orange-600/10 dark:text-orange-300'
-                            : 'border-stone-200 text-stone-600 hover:border-orange-300 dark:border-stone-800 dark:text-stone-400',
+                            ? 'border-blue-200 bg-blue-50 text-blue-800 dark:border-slate-700 dark:bg-blue-600/10 dark:text-blue-300'
+                            : 'border-slate-200 text-slate-600 hover:border-blue-300 dark:border-slate-800 dark:text-slate-400',
                     ]"
                 >
                     {{ t('blog.all') }}
@@ -81,10 +82,10 @@ const title = props.activeCategory
                     :key="category.id"
                     :href="`/blog/categoria/${category.slug}`"
                     :class="[
-                        'border px-3 py-1.5 text-[11px] font-medium tracking-[0.1em] uppercase',
+                        'rounded-full border px-3.5 py-1.5 text-xs font-medium',
                         props.activeCategory?.id === category.id
-                            ? 'border-orange-200 bg-orange-50 text-orange-800 dark:border-stone-700 dark:bg-orange-600/10 dark:text-orange-300'
-                            : 'border-stone-200 text-stone-600 hover:border-orange-300 dark:border-stone-800 dark:text-stone-400',
+                            ? 'border-blue-200 bg-blue-50 text-blue-800 dark:border-slate-700 dark:bg-blue-600/10 dark:text-blue-300'
+                            : 'border-slate-200 text-slate-600 hover:border-blue-300 dark:border-slate-800 dark:text-slate-400',
                     ]"
                 >
                     {{ category.name }}
@@ -95,9 +96,9 @@ const title = props.activeCategory
                 <li
                     v-for="post in props.posts"
                     :key="post.id"
-                    class="overflow-hidden rounded-sm border border-stone-200 transition-colors hover:border-orange-300 dark:border-stone-800 dark:hover:border-orange-600/40"
+                    class="overflow-hidden rounded-lg border border-slate-200 bg-white shadow-xs transition-colors hover:border-blue-300 dark:border-slate-800 dark:bg-slate-900 dark:hover:border-blue-500/40"
                 >
-                    <a :href="`/blog/${post.slug}`" class="block">
+                    <a :href="`/blog/${post.slug}`" class="group block">
                         <img
                             v-if="post.cover"
                             :src="post.cover"
@@ -105,23 +106,29 @@ const title = props.activeCategory
                             class="aspect-video w-full object-cover"
                         />
                         <div class="p-5">
-                            <p class="text-xs text-stone-400">
+                            <p class="text-[11px] font-medium tracking-[0.1em] text-slate-500 uppercase dark:text-slate-400">
                                 {{ formatDate(post.published_at) }}
                                 <template v-if="post.category">
                                     · {{ post.category }}
                                 </template>
                             </p>
                             <h2
-                                class="mt-1 text-lg font-semibold text-stone-900 dark:text-stone-100"
+                                class="mt-2 text-base font-semibold text-slate-950 group-hover:text-blue-800 dark:text-slate-50 dark:group-hover:text-blue-400"
                             >
                                 {{ post.title }}
                             </h2>
                             <p
                                 v-if="post.excerpt"
-                                class="mt-2 line-clamp-3 text-sm text-stone-600 dark:text-stone-400"
+                                class="mt-2 line-clamp-3 text-sm leading-relaxed text-slate-600 dark:text-slate-400"
                             >
                                 {{ post.excerpt }}
                             </p>
+                            <span
+                                class="mt-4 inline-flex items-center gap-1.5 text-xs font-medium text-blue-800 dark:text-blue-400"
+                            >
+                                {{ t('blog.read') }}
+                                <ArrowRight class="size-3.5" aria-hidden="true" />
+                            </span>
                         </div>
                     </a>
                 </li>
@@ -129,7 +136,7 @@ const title = props.activeCategory
 
             <p
                 v-if="props.posts.length === 0"
-                class="mt-10 rounded-sm border border-dashed border-stone-300 px-6 py-16 text-center text-sm text-stone-500 dark:border-stone-700 dark:text-stone-400"
+                class="mt-10 rounded-lg border border-dashed border-slate-300 bg-white px-6 py-16 text-center text-sm text-slate-500 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-400"
             >
                 {{ t('blog.empty') }}
             </p>

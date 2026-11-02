@@ -21,6 +21,7 @@ class QuoteTest extends TestCase
             'name' => 'Resistência Cartucho',
             'slug' => 'resistencia-cartucho',
             'sku' => 'C-AB',
+            'price' => '189.90',
         ]);
     }
 
@@ -40,6 +41,7 @@ class QuoteTest extends TestCase
                 ->has('items', 1)
                 ->where('items.0.name', 'Resistência Cartucho')
                 ->where('items.0.quantity', 2)
+                ->where('items.0.price', '189.90')
             );
     }
 

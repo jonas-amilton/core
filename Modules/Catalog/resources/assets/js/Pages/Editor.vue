@@ -25,6 +25,7 @@ type Product = {
     name: string;
     slug: string;
     sku: string | null;
+    price: string | null;
     description: string | null;
     position: number;
     cover: string | null;
@@ -72,6 +73,7 @@ const form = useForm({
     name: props.product?.name ?? '',
     slug: props.product?.slug ?? '',
     sku: props.product?.sku ?? '',
+    price: props.product?.price ?? '',
     description: props.product?.description ?? '',
     position: props.product?.position ?? 0,
     category_ids: props.product?.category_ids ?? [],
@@ -258,6 +260,23 @@ function removeMedia(id: number): void {
                 <div
                     class="grid gap-3 rounded-sm border border-stone-200 bg-white p-4 dark:border-stone-800 dark:bg-stone-900"
                 >
+                    <label class="grid gap-1.5">
+                        <span class="text-xs font-medium text-stone-600 dark:text-stone-400">
+                            Preço (R$)
+                        </span>
+                        <input
+                            v-model="form.price"
+                            type="number"
+                            min="0"
+                            step="0.01"
+                            placeholder="0.00"
+                            :class="fieldClasses"
+                        />
+                        <span v-if="form.errors.price" class="text-xs text-red-600">
+                            {{ form.errors.price }}
+                        </span>
+                    </label>
+
                     <label class="grid gap-1.5">
                         <span class="text-xs font-medium text-stone-600 dark:text-stone-400">
                             SKU / código

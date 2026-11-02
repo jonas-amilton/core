@@ -11,57 +11,61 @@ defineProps<{
 </script>
 
 <template>
-    <section class="px-4 py-14 sm:px-6 sm:py-20">
-        <div class="w-full">
+    <section class="bg-white px-4 py-12 sm:px-6 sm:py-16 dark:bg-slate-950">
+        <div class="mx-auto max-w-5xl">
             <h2
                 v-if="block.title"
-                class="font-display text-3xl tracking-tight text-stone-950 sm:text-4xl dark:text-stone-50"
+                class="text-2xl font-semibold tracking-tight text-slate-950 sm:text-3xl dark:text-slate-50"
             >
                 {{ block.title }}
             </h2>
             <p
                 v-if="block.subtitle"
-                class="mt-2 max-w-2xl text-stone-600 dark:text-stone-400"
+                class="mt-2 max-w-2xl text-slate-600 dark:text-slate-400"
             >
                 {{ block.subtitle }}
             </p>
 
-            <ul
-                class="mt-8 grid border-t border-stone-200 sm:grid-cols-2 sm:gap-x-10 dark:border-stone-800"
-            >
-                <li
-                    v-for="item in block.items ?? []"
-                    :key="item.title"
-                    class="border-b border-stone-200 dark:border-stone-800"
-                >
+            <ul class="mt-8 grid gap-4 sm:grid-cols-2">
+                <li v-for="item in block.items ?? []" :key="item.title">
                     <a
                         :href="item.url ?? '#'"
-                        class="group flex items-center justify-between gap-4 py-5"
+                        class="group flex h-full items-start gap-4 rounded-lg border border-slate-200 bg-white p-5 transition-colors hover:border-blue-300 dark:border-slate-800 dark:bg-slate-900 dark:hover:border-blue-500/40"
                     >
-                        <span class="flex items-center gap-3">
-                            <img
-                                v-if="item.icon"
-                                :src="item.icon"
-                                alt=""
-                                class="size-6 shrink-0 object-contain"
-                            />
-                            <span
-                                class="text-base text-stone-900 dark:text-stone-100"
-                            >
-                                {{ item.title }}
-                            </span>
-                        </span>
-                        <ArrowUpRight
-                            class="size-4 shrink-0 text-stone-400 transition-colors group-hover:text-orange-700 dark:group-hover:text-orange-400"
+                        <img
+                            v-if="item.icon"
+                            :src="item.icon"
+                            alt=""
+                            class="size-8 shrink-0 object-contain"
+                        />
+                        <span
+                            v-else
+                            class="mt-1 size-2 shrink-0 rounded-sm bg-blue-700"
                             aria-hidden="true"
                         />
+                        <span class="min-w-0 flex-1">
+                            <span
+                                class="flex items-center justify-between gap-3 text-base font-semibold text-slate-950 dark:text-slate-50"
+                            >
+                                {{ item.title }}
+                                <ArrowUpRight
+                                    class="size-4 shrink-0 text-slate-400 transition-colors group-hover:text-blue-800 dark:group-hover:text-blue-400"
+                                    aria-hidden="true"
+                                />
+                            </span>
+                            <span
+                                class="mt-1 block text-sm leading-relaxed text-slate-600 dark:text-slate-400"
+                            >
+                                {{ item.description }}
+                            </span>
+                        </span>
                     </a>
                 </li>
             </ul>
 
             <p
                 v-if="(block.items ?? []).length === 0"
-                class="mt-4 text-sm text-stone-500 dark:text-stone-400"
+                class="mt-4 text-sm text-slate-500 dark:text-slate-400"
             >
                 {{ t('services.empty') }}
             </p>

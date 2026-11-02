@@ -28,14 +28,14 @@ const props = defineProps<{
     <SiteShell :navigation="props.navigation">
         <section class="px-4 py-12 sm:px-6 sm:py-16">
             <h1
-                class="font-display text-4xl tracking-tight text-stone-950 sm:text-5xl dark:text-stone-50"
+                class="text-3xl font-semibold tracking-tight text-slate-950 sm:text-4xl dark:text-slate-50"
             >
                 {{ t('stores.title') }}
             </h1>
 
             <h2
                 v-if="props.physical.length > 0"
-                class="mt-10 font-display text-2xl tracking-tight text-stone-950 dark:text-stone-50"
+                class="mt-10 text-xl font-semibold tracking-tight text-slate-950 dark:text-slate-50"
             >
                 {{ t('stores.physical') }}
             </h2>
@@ -43,23 +43,23 @@ const props = defineProps<{
                 <li
                     v-for="store in props.physical"
                     :key="store.id"
-                    class="rounded-sm border border-stone-200 p-4 dark:border-stone-800"
+                    class="rounded-lg border border-slate-200 bg-white p-4 shadow-xs dark:border-slate-800 dark:bg-slate-900"
                 >
                     <p
-                        class="text-sm font-medium text-stone-900 dark:text-stone-100"
+                        class="text-sm font-medium text-slate-900 dark:text-slate-100"
                     >
                         {{ store.name }}
                     </p>
                     <p
                         v-if="store.address"
-                        class="mt-1 text-sm text-stone-600 dark:text-stone-400"
+                        class="mt-1 text-sm text-slate-600 dark:text-slate-400"
                     >
                         {{ store.address }}
                     </p>
                     <a
                         v-if="store.phone"
                         :href="`tel:${store.phone}`"
-                        class="mt-1 block text-sm text-orange-700 dark:text-orange-400"
+                        class="mt-1 block text-sm text-blue-700 dark:text-blue-400"
                     >
                         {{ store.phone }}
                     </a>
@@ -68,7 +68,7 @@ const props = defineProps<{
 
             <h2
                 v-if="props.online.length > 0"
-                class="mt-12 font-display text-2xl tracking-tight text-stone-950 dark:text-stone-50"
+                class="mt-12 text-xl font-semibold tracking-tight text-slate-950 dark:text-slate-50"
             >
                 {{ t('stores.online') }}
             </h2>
@@ -76,26 +76,26 @@ const props = defineProps<{
                 <li
                     v-for="store in props.online"
                     :key="store.id"
-                    class="rounded-sm border border-stone-200 p-4 dark:border-stone-800"
+                    class="rounded-lg border border-slate-200 bg-white p-4 shadow-xs dark:border-slate-800 dark:bg-slate-900"
                 >
                     <a
                         v-if="store.url"
                         :href="store.url"
                         target="_blank"
                         rel="noopener"
-                        class="text-sm font-medium text-orange-700 hover:underline dark:text-orange-400"
+                        class="text-sm font-medium text-blue-700 hover:underline dark:text-blue-400"
                     >
                         {{ store.name }}
                     </a>
                     <p
                         v-else
-                        class="text-sm font-medium text-stone-900 dark:text-stone-100"
+                        class="text-sm font-medium text-slate-900 dark:text-slate-100"
                     >
                         {{ store.name }}
                     </p>
                     <p
                         v-if="store.address"
-                        class="mt-1 text-sm text-stone-600 dark:text-stone-400"
+                        class="mt-1 text-sm text-slate-600 dark:text-slate-400"
                     >
                         {{ store.address }}
                     </p>
@@ -104,7 +104,7 @@ const props = defineProps<{
 
             <p
                 v-if="props.physical.length === 0 && props.online.length === 0"
-                class="mt-8 rounded-sm border border-dashed border-stone-300 px-6 py-16 text-center text-sm text-stone-500 dark:border-stone-700 dark:text-stone-400"
+                class="mt-8 rounded-lg border border-dashed border-slate-300 bg-white px-6 py-16 text-center text-sm text-slate-500 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-400"
             >
                 {{ t('stores.empty') }}
             </p>

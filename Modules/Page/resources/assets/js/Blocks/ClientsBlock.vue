@@ -7,22 +7,22 @@ defineProps<{
 </script>
 
 <template>
-    <section class="px-4 py-14 sm:px-6 sm:py-20">
-        <div class="w-full">
+    <section class="px-4 py-12 sm:px-6 sm:py-16">
+        <div class="mx-auto max-w-5xl">
             <h2
                 v-if="block.title"
-                class="font-display text-3xl tracking-tight text-stone-950 sm:text-4xl dark:text-stone-50"
+                class="text-center text-2xl font-semibold tracking-tight text-slate-950 sm:text-3xl dark:text-slate-50"
             >
                 {{ block.title }}
             </h2>
 
             <ul
-                class="mt-10 grid grid-cols-2 border-t border-l border-stone-200 sm:grid-cols-3 dark:border-stone-800"
+                class="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-3"
             >
                 <li
                     v-for="(item, index) in block.items ?? []"
                     :key="index"
-                    class="flex h-24 items-center justify-center border-r border-b border-stone-200 p-6 dark:border-stone-800"
+                    class="flex h-20 items-center justify-center rounded-lg border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900"
                 >
                     <a
                         v-if="item.url"
@@ -35,11 +35,11 @@ defineProps<{
                             v-if="item.logo"
                             :src="item.logo"
                             :alt="item.title"
-                            class="max-h-10 max-w-full object-contain opacity-60 grayscale transition-opacity hover:opacity-100"
+                            class="max-h-9 max-w-full object-contain opacity-70 transition-opacity hover:opacity-100"
                         />
                         <span
                             v-else
-                            class="text-sm text-stone-600 dark:text-stone-400"
+                            class="text-center text-sm font-medium text-slate-500 dark:text-slate-400"
                         >
                             {{ item.title }}
                         </span>
@@ -48,11 +48,11 @@ defineProps<{
                         v-else-if="item.logo"
                         :src="item.logo"
                         :alt="item.title"
-                        class="max-h-10 max-w-full object-contain opacity-60 grayscale"
+                        class="max-h-9 max-w-full object-contain opacity-70"
                     />
                     <span
                         v-else
-                        class="text-sm text-stone-600 dark:text-stone-400"
+                        class="text-center text-sm font-medium text-slate-500 dark:text-slate-400"
                     >
                         {{ item.title }}
                     </span>
