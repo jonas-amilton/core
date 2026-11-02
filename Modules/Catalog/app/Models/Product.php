@@ -6,10 +6,12 @@ namespace Modules\Catalog\Models;
 
 use App\Support\Searchable;
 use App\Support\Translatable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Carbon;
+use Modules\Catalog\Database\Factories\ProductFactory;
 use Modules\Media\Models\Media;
 
 /**
@@ -29,7 +31,9 @@ use Modules\Media\Models\Media;
  */
 class Product extends Model
 {
-    use Searchable;
+    /** @use HasFactory<ProductFactory> */
+    use HasFactory, Searchable;
+
     use Translatable;
 
     protected $table = 'catalog_products';
@@ -205,5 +209,10 @@ class Product extends Model
             'url' => '/produto/'.$this->slug,
             'cover' => $this->cover(),
         ];
+    }
+
+    protected static function newFactory(): ProductFactory
+    {
+        return ProductFactory::new();
     }
 }

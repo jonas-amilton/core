@@ -5,11 +5,13 @@ declare(strict_types=1);
 namespace Modules\Catalog\Models;
 
 use App\Support\Translatable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Carbon;
+use Modules\Catalog\Database\Factories\CategoryFactory;
 
 /**
  * @property int $id
@@ -22,7 +24,8 @@ use Illuminate\Support\Carbon;
  */
 class Category extends Model
 {
-    use Translatable;
+    /** @use HasFactory<CategoryFactory> */
+    use HasFactory, Translatable;
 
     protected $table = 'catalog_categories';
 
@@ -97,5 +100,10 @@ class Category extends Model
             'slug' => $this->slug,
             'products_count' => $this->products_count ?? null,
         ];
+    }
+
+    protected static function newFactory(): CategoryFactory
+    {
+        return CategoryFactory::new();
     }
 }

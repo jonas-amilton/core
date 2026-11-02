@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" width="1200" height="900" role="img" aria-label="Curva de aquecimento">
+  <rect width="1200" height="900" fill="#faf8f4"/>
+  <g fill="none" stroke="#1c1917" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+
+    <line x1="140" y1="760" x2="1060" y2="760"/>
+    <line x1="140" y1="760" x2="140" y2="140"/>
+    <path d="M140 700 C300 690 380 520 520 460 C660 400 760 300 900 220 L1040 190"/>
+    <path d="M140 720 C320 715 420 640 560 600 C700 560 820 520 1040 470"/>
+    <line x1="140" y1="620" x2="1060" y2="620" stroke-dasharray="14 14"/>
+
+  </g>
+  <g fill="none" stroke="#b4451f" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+
+    <circle cx="520" cy="460" r="12" />
+    <line x1="520" y1="460" x2="520" y2="760" stroke-dasharray="10 14"/>
+
+  </g>
+</svg>

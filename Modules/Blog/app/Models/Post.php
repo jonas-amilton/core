@@ -6,9 +6,11 @@ namespace Modules\Blog\Models;
 
 use App\Support\Searchable;
 use App\Support\Translatable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Carbon;
+use Modules\Blog\Database\Factories\PostFactory;
 
 /**
  * @property int $id
@@ -25,7 +27,9 @@ use Illuminate\Support\Carbon;
  */
 class Post extends Model
 {
-    use Searchable;
+    /** @use HasFactory<PostFactory> */
+    use HasFactory, Searchable;
+
     use Translatable;
 
     protected $table = 'blog_posts';
@@ -134,5 +138,10 @@ class Post extends Model
                 : null,
             'date' => $this->published_at?->format('d/m'),
         ];
+    }
+
+    protected static function newFactory(): PostFactory
+    {
+        return PostFactory::new();
     }
 }

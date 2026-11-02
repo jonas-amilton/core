@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" width="800" height="800" role="img" aria-label="Painel controlador de temperatura">
+  <rect width="800" height="800" fill="#faf8f4"/>
+  <g fill="none" stroke="#1c1917" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+
+    <rect x="220" y="180" width="360" height="440" rx="14"/>
+    <rect x="260" y="220" width="280" height="150"/>
+    <circle cx="330" cy="295" r="42"/>
+    <line x1="330" y1="295" x2="330" y2="268"/>
+    <line x1="380" y1="260" x2="500" y2="260"/>
+    <line x1="380" y1="300" x2="500" y2="300"/>
+    <line x1="380" y1="340" x2="460" y2="340"/>
+    <rect x="260" y="410" width="80" height="60"/>
+    <rect x="360" y="410" width="80" height="60"/>
+    <rect x="460" y="410" width="80" height="60"/>
+    <circle cx="400" cy="540" r="26"/>
+
+  </g>
+  <g fill="none" stroke="#b4451f" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+
+    <path d="M350 295 A20 20 0 0 1 370 275" />
+    <line x1="300" y1="540" x2="330" y2="540" />
+    <line x1="470" y1="540" x2="500" y2="540" />
+
+  </g>
+</svg>

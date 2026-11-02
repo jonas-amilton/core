@@ -6,9 +6,11 @@ namespace Modules\Page\Models;
 
 use App\Support\Searchable;
 use App\Support\Translatable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Carbon;
+use Modules\Page\Database\Factories\PageFactory;
 use Modules\Page\Enums\PageStatus;
 
 /**
@@ -26,7 +28,9 @@ use Modules\Page\Enums\PageStatus;
  */
 class Page extends Model
 {
-    use Searchable;
+    /** @use HasFactory<PageFactory> */
+    use HasFactory, Searchable;
+
     use Translatable;
 
     public const HOME_SLUG = 'home';
@@ -219,5 +223,10 @@ class Page extends Model
                 fn (array $block): bool => empty($block['hidden']),
             )),
         ];
+    }
+
+    protected static function newFactory(): PageFactory
+    {
+        return PageFactory::new();
     }
 }
