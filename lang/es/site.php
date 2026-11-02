@@ -16,4 +16,7 @@ return [
         'empty_cart' => 'Añade al menos un producto al presupuesto.',
         'insufficient_stock' => 'Stock insuficiente para :product.',
     ],
+    'coupon' => [
+        'invalid' => 'Cupón inválido o vencido.',
+    ],
 ];

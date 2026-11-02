@@ -16,4 +16,7 @@ return [
         'empty_cart' => 'Add at least one product to the quote.',
         'insufficient_stock' => 'Not enough stock for :product.',
     ],
+    'coupon' => [
+        'invalid' => 'Invalid or expired coupon.',
+    ],
 ];
