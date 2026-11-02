@@ -42,6 +42,31 @@ final class BlockSchema
             'button_href' => ['nullable', 'string', 'max:255'],
         ],
         'grid' => [],
+        'services' => [
+            'title' => ['nullable', 'string', 'max:120'],
+            'subtitle' => ['nullable', 'string', 'max:240'],
+        ],
+        'testimonials' => [
+            'title' => ['nullable', 'string', 'max:120'],
+        ],
+        'faq' => [
+            'title' => ['nullable', 'string', 'max:120'],
+        ],
+        'clients' => [
+            'title' => ['nullable', 'string', 'max:120'],
+        ],
+        'posts' => [
+            'title' => ['nullable', 'string', 'max:120'],
+            'limit' => ['nullable', 'integer', 'min:1', 'max:12'],
+        ],
+        'contact' => [
+            'title' => ['nullable', 'string', 'max:120'],
+            'subtitle' => ['nullable', 'string', 'max:240'],
+        ],
+        'newsletter' => [
+            'title' => ['nullable', 'string', 'max:120'],
+            'description' => ['nullable', 'string', 'max:300'],
+        ],
     ];
 
     /**
@@ -103,7 +128,9 @@ final class BlockSchema
             }
 
             foreach (array_keys(self::RULES[$type]) as $field) {
-                $normalized[$field] = $block[$field] ?? null;
+                $normalized[$field] = $field === 'limit'
+                    ? (int) ($block[$field] ?? 3)
+                    : ($block[$field] ?? null);
             }
 
             if ($type === BlockType::Grid->value) {

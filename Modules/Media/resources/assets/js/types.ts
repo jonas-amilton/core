@@ -14,6 +14,13 @@ export type MediaItem = {
     created_at: string | null;
 };
 
+export type PickedMedia = {
+    id: number;
+    url: string;
+    alt: string | null;
+    original_name: string;
+};
+
 export type MediaFilters = {
     search: string;
     kind: MediaKindValue | null;

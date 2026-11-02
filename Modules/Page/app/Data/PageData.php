@@ -13,6 +13,8 @@ final readonly class PageData
         public string $title,
         public ?string $slug,
         public array $blocks,
+        public ?string $icon = null,
+        public bool $isService = false,
     ) {}
 
     /**
@@ -27,12 +29,14 @@ final readonly class PageData
                 fn (array $block): BlockData => BlockData::fromArray($block),
                 is_array($data['blocks'] ?? null) ? $data['blocks'] : [],
             ),
+            icon: isset($data['icon']) && $data['icon'] !== '' ? (string) $data['icon'] : null,
+            isService: (bool) ($data['is_service'] ?? false),
         );
     }
 
     public function withSlug(string $slug): self
     {
-        return new self($this->title, $slug, $this->blocks);
+        return new self($this->title, $slug, $this->blocks, $this->icon, $this->isService);
     }
 
     /**

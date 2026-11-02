@@ -1,5 +1,9 @@
 {
     "User": true,
     "Media": true,
-    "Page": true
+    "Page": true,
+    "Settings": true,
+    "Content": true,
+    "Blog": true,
+    "Contact": true
 }

@@ -21,6 +21,8 @@ final class ReservedSlugs
         'logout',
         'media',
         'pages',
+        'painel',
+        'blog',
         'register',
         'settings',
         'storage',

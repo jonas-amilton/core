@@ -46,6 +46,11 @@ interface PageRepository
      */
     public function publishedForNavigation(): Collection;
 
+    /**
+     * @return Collection<int, Page>
+     */
+    public function publishedServices(): Collection;
+
     public function slugExists(string $slug, ?Page $ignore = null): bool;
 
     public function countPublished(): int;

@@ -55,6 +55,8 @@ final class EloquentPageRepository implements PageRepository
         return Page::query()->create([
             'title' => $data->title,
             'slug' => (string) $data->slug,
+            'icon' => $data->icon,
+            'is_service' => $data->isService,
             'blocks' => $data->blocksAsArray(),
             'status' => $status,
             'published_at' => $publishedAt,
@@ -66,6 +68,8 @@ final class EloquentPageRepository implements PageRepository
         $page->update([
             'title' => $data->title,
             'slug' => $data->slug ?? $page->slug,
+            'icon' => $data->icon,
+            'is_service' => $data->isService,
             'blocks' => $data->blocksAsArray(),
         ]);
 
@@ -134,6 +138,20 @@ final class EloquentPageRepository implements PageRepository
             ->whereNotNull('published_at')
             ->where('published_at', '<=', now())
             ->count();
+    }
+
+    /**
+     * @return Collection<int, Page>
+     */
+    public function publishedServices(): Collection
+    {
+        return Page::query()
+            ->where('is_service', true)
+            ->where('status', '!=', PageStatus::Draft->value)
+            ->whereNotNull('published_at')
+            ->where('published_at', '<=', now())
+            ->orderBy('created_at')
+            ->get(['id', 'title', 'slug', 'icon']);
     }
 
     public function countUsingMedia(int $mediaId): int

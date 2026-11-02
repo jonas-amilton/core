@@ -66,7 +66,7 @@ final class PageService
 
         return $this->pages->update(
             $page,
-            new PageData($revision->title, $page->slug, $blocks),
+            new PageData($revision->title, $page->slug, $blocks, $page->icon, $page->is_service),
         );
     }
 

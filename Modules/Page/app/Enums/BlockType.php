@@ -11,6 +11,13 @@ enum BlockType: string
     case Grid = 'grid';
     case Image = 'image';
     case Cta = 'cta';
+    case Services = 'services';
+    case Testimonials = 'testimonials';
+    case Faq = 'faq';
+    case Clients = 'clients';
+    case Posts = 'posts';
+    case Contact = 'contact';
+    case Newsletter = 'newsletter';
 
     /**
      * @return array<int, string>

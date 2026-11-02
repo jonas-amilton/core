@@ -24,6 +24,8 @@ abstract class PageRequest extends FormRequest
             'title' => ['required', 'string', 'max:200'],
             'slug' => ['nullable', 'string', 'max:200', 'alpha_dash'],
             'blocks' => ['present', 'array'],
+            'icon' => ['nullable', 'string', 'max:2048'],
+            'is_service' => ['boolean'],
         ];
     }
 
@@ -36,6 +38,8 @@ abstract class PageRequest extends FormRequest
             'title' => (string) $this->input('title'),
             'slug' => $this->input('slug'),
             'blocks' => BlockSchema::validate($blocks),
+            'icon' => $this->input('icon'),
+            'is_service' => $this->boolean('is_service'),
         ]);
     }
 }

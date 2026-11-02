@@ -7,6 +7,7 @@ namespace Modules\Page\Http\Controllers\Site;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Modules\Page\Contracts\PageRepository;
+use Modules\Page\Services\BlockContentResolver;
 use Modules\Page\Services\SiteNavigation;
 use Modules\Page\Services\SystemPageProvisioner;
 use Symfony\Component\HttpFoundation\Response as SymfonyResponse;
@@ -19,6 +20,7 @@ final class PageController
         PageRepository $pages,
         SiteNavigation $navigation,
         SystemPageProvisioner $system,
+        BlockContentResolver $content,
     ): SymfonyResponse {
         $page = $pages->findPublishedBySlug($slug);
         $status = 200;
@@ -30,8 +32,14 @@ final class PageController
             $status = 404;
         }
 
+        $data = $page->toPublicArray();
+
+        /** @var array<int, array<string, mixed>> $blocks */
+        $blocks = is_array($data['blocks'] ?? null) ? $data['blocks'] : [];
+        $data['blocks'] = $content->resolve($blocks);
+
         return Inertia::render('Page::Show', [
-            'page' => $page->toPublicArray(),
+            'page' => $data,
             'navigation' => $navigation->items(),
         ])->toResponse($request)->setStatusCode($status);
     }

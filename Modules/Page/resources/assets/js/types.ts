@@ -1,8 +1,28 @@
-export type BlockType = 'hero' | 'text' | 'grid' | 'image' | 'cta';
+export type BlockType =
+    | 'hero'
+    | 'text'
+    | 'grid'
+    | 'image'
+    | 'cta'
+    | 'services'
+    | 'testimonials'
+    | 'faq'
+    | 'clients'
+    | 'posts'
+    | 'contact'
+    | 'newsletter';
 
 export type GridItem = {
     title: string;
     description?: string | null;
+    role?: string | null;
+    avatar?: string | null;
+    logo?: string | null;
+    url?: string | null;
+    icon?: string | null;
+    cover?: string | null;
+    category?: string | null;
+    date?: string | null;
 };
 
 /**
@@ -23,6 +43,7 @@ export type Block = {
     description?: string | null;
     button_label?: string | null;
     button_href?: string | null;
+    limit?: number | null;
     items?: GridItem[];
 };
 
@@ -32,6 +53,8 @@ export type PageSummary = {
     id: number;
     title: string;
     slug: string;
+    icon: string | null;
+    is_service: boolean;
     status: PageStatus;
     published_at: string | null;
     updated_at: string | null;

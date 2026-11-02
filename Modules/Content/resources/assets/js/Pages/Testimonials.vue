@@ -1,0 +1,295 @@
+<script setup lang="ts">
+import { Head, router, useForm } from '@inertiajs/vue3';
+import { Check, Pencil, Plus, Trash2, X } from '@lucide/vue';
+import { ref } from 'vue';
+import MediaPicker from '@modules/Media/resources/assets/js/components/MediaPicker.vue';
+import type { PickedMedia } from '@modules/Media/resources/assets/js/types';
+import {
+    destroy,
+    index as testimonialIndex,
+    store,
+    update,
+} from '@/routes/testimonial';
+import { fieldClasses } from '@/lib/formStyles';
+
+type Testimonial = {
+    id: number;
+    author: string;
+    role: string | null;
+    quote: string;
+    avatar: string | null;
+    sort_order: number;
+};
+
+const props = defineProps<{
+    testimonials: Testimonial[];
+}>();
+
+defineOptions({
+    layout: {
+        breadcrumbs: [
+            {
+                title: 'Depoimentos',
+                href: testimonialIndex(),
+            },
+        ],
+    },
+});
+
+const editing = ref<Testimonial | null>(null);
+const pickerOpen = ref(false);
+
+const form = useForm({
+    author: '',
+    role: '',
+    quote: '',
+    avatar: '',
+    sort_order: 0,
+});
+
+function reset(): void {
+    editing.value = null;
+    form.reset();
+    form.clearErrors();
+}
+
+function edit(item: Testimonial): void {
+    editing.value = item;
+    form.author = item.author;
+    form.role = item.role ?? '';
+    form.quote = item.quote;
+    form.avatar = item.avatar ?? '';
+    form.sort_order = item.sort_order;
+    form.clearErrors();
+}
+
+function submit(): void {
+    if (editing.value) {
+        form.patch(update.url(editing.value.id), {
+            preserveScroll: true,
+            onSuccess: reset,
+        });
+
+        return;
+    }
+
+    form.post(store.url(), { preserveScroll: true, onSuccess: reset });
+}
+
+function remove(item: Testimonial): void {
+    if (!window.confirm(`Excluir o depoimento de "${item.author}"?`)) {
+        return;
+    }
+
+    router.delete(destroy.url(item.id));
+}
+
+function pickAvatar(media: PickedMedia): void {
+    form.avatar = media.url;
+}
+</script>
+
+<template>
+    <Head title="Depoimentos" />
+
+    <div class="flex flex-1 flex-col gap-6 p-4 sm:p-6">
+        <header>
+            <h1
+                class="text-2xl font-semibold tracking-tight text-slate-900 dark:text-slate-100"
+            >
+                Depoimentos
+            </h1>
+            <p class="mt-1 text-sm text-slate-600 dark:text-slate-400">
+                Aparecem no bloco "Depoimentos" das páginas.
+            </p>
+        </header>
+
+        <form
+            class="grid gap-3 rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900"
+            @submit.prevent="submit"
+        >
+            <div class="flex items-center justify-between">
+                <h2
+                    class="text-sm font-semibold text-slate-900 dark:text-slate-100"
+                >
+                    {{ editing ? 'Editar depoimento' : 'Novo depoimento' }}
+                </h2>
+                <button
+                    v-if="editing"
+                    type="button"
+                    class="inline-flex items-center gap-1 text-xs text-slate-500 hover:text-slate-700 dark:text-slate-400"
+                    @click="reset"
+                >
+                    <X class="size-3.5" aria-hidden="true" />
+                    Cancelar edição
+                </button>
+            </div>
+
+            <div class="grid gap-3 sm:grid-cols-2">
+                <label class="grid gap-1.5">
+                    <span
+                        class="text-xs font-medium text-slate-600 dark:text-slate-400"
+                    >
+                        Autor
+                    </span>
+                    <input
+                        v-model="form.author"
+                        type="text"
+                        :class="fieldClasses"
+                    />
+                    <span
+                        v-if="form.errors.author"
+                        class="text-xs text-red-600"
+                    >
+                        {{ form.errors.author }}
+                    </span>
+                </label>
+
+                <label class="grid gap-1.5">
+                    <span
+                        class="text-xs font-medium text-slate-600 dark:text-slate-400"
+                    >
+                        Cargo
+                    </span>
+                    <input
+                        v-model="form.role"
+                        type="text"
+                        :class="fieldClasses"
+                    />
+                </label>
+
+                <label class="grid gap-1.5 sm:col-span-2">
+                    <span
+                        class="text-xs font-medium text-slate-600 dark:text-slate-400"
+                    >
+                        Depoimento
+                    </span>
+                    <textarea
+                        v-model="form.quote"
+                        :rows="4"
+                        :class="[fieldClasses, 'h-auto py-2 leading-relaxed']"
+                    />
+                    <span v-if="form.errors.quote" class="text-xs text-red-600">
+                        {{ form.errors.quote }}
+                    </span>
+                </label>
+
+                <div class="grid gap-1.5">
+                    <span
+                        class="text-xs font-medium text-slate-600 dark:text-slate-400"
+                    >
+                        Foto
+                    </span>
+                    <div class="flex items-center gap-2">
+                        <img
+                            v-if="form.avatar"
+                            :src="form.avatar"
+                            alt=""
+                            class="size-10 rounded-full object-cover"
+                        />
+                        <button
+                            type="button"
+                            class="h-10 rounded-lg border border-slate-200 px-3 text-sm font-medium text-slate-700 hover:bg-slate-50 dark:border-slate-800 dark:text-slate-200"
+                            @click="pickerOpen = true"
+                        >
+                            Escolher imagem
+                        </button>
+                    </div>
+                </div>
+
+                <label class="grid gap-1.5">
+                    <span
+                        class="text-xs font-medium text-slate-600 dark:text-slate-400"
+                    >
+                        Ordem
+                    </span>
+                    <input
+                        v-model.number="form.sort_order"
+                        type="number"
+                        min="0"
+                        :class="fieldClasses"
+                    />
+                </label>
+            </div>
+
+            <div class="flex items-center gap-3">
+                <button
+                    type="submit"
+                    class="inline-flex h-10 items-center gap-2 rounded-lg bg-indigo-600 px-4 text-sm font-medium text-white hover:bg-indigo-500 disabled:opacity-50"
+                    :disabled="form.processing"
+                >
+                    <component
+                        :is="editing ? Check : Plus"
+                        class="size-4"
+                        aria-hidden="true"
+                    />
+                    {{ editing ? 'Salvar alterações' : 'Adicionar' }}
+                </button>
+            </div>
+        </form>
+
+        <ul class="grid gap-3">
+            <li
+                v-for="item in props.testimonials"
+                :key="item.id"
+                class="flex gap-3 rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900"
+            >
+                <img
+                    v-if="item.avatar"
+                    :src="item.avatar"
+                    alt=""
+                    class="size-12 shrink-0 rounded-full object-cover"
+                />
+                <div class="min-w-0 flex-1">
+                    <p
+                        class="text-sm font-medium text-slate-900 dark:text-slate-100"
+                    >
+                        {{ item.author }}
+                        <span
+                            v-if="item.role"
+                            class="font-normal text-slate-500"
+                        >
+                            · {{ item.role }}
+                        </span>
+                    </p>
+                    <p
+                        class="mt-1 line-clamp-3 text-sm text-slate-600 dark:text-slate-400"
+                    >
+                        {{ item.quote }}
+                    </p>
+                </div>
+                <div class="flex shrink-0 items-start gap-1">
+                    <button
+                        type="button"
+                        class="rounded-md p-1 text-slate-400 hover:bg-slate-100 hover:text-slate-700 dark:hover:bg-slate-800"
+                        aria-label="Editar depoimento"
+                        @click="edit(item)"
+                    >
+                        <Pencil class="size-3.5" aria-hidden="true" />
+                    </button>
+                    <button
+                        type="button"
+                        class="rounded-md p-1 text-slate-400 hover:bg-red-50 hover:text-red-600 dark:hover:bg-red-500/10"
+                        aria-label="Excluir depoimento"
+                        @click="remove(item)"
+                    >
+                        <Trash2 class="size-3.5" aria-hidden="true" />
+                    </button>
+                </div>
+            </li>
+        </ul>
+
+        <p
+            v-if="props.testimonials.length === 0"
+            class="rounded-xl border border-dashed border-slate-300 px-6 py-12 text-center text-sm text-slate-500 dark:border-slate-700 dark:text-slate-400"
+        >
+            Nenhum depoimento cadastrado.
+        </p>
+
+        <MediaPicker
+            :open="pickerOpen"
+            @close="pickerOpen = false"
+            @pick="pickAvatar"
+        />
+    </div>
+</template>

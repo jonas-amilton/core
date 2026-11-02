@@ -29,6 +29,7 @@ final readonly class BlockData
         public ?string $description = null,
         public ?string $buttonLabel = null,
         public ?string $buttonHref = null,
+        public ?int $limit = null,
         public array $items = [],
     ) {}
 
@@ -56,6 +57,7 @@ final readonly class BlockData
             description: self::string($data['description'] ?? null),
             buttonLabel: self::string($data['button_label'] ?? null),
             buttonHref: self::string($data['button_href'] ?? null),
+            limit: isset($data['limit']) ? (int) $data['limit'] : null,
             items: array_values($items),
         );
     }
@@ -94,6 +96,10 @@ final readonly class BlockData
 
         if ($this->mediaId !== null) {
             $data['media_id'] = $this->mediaId;
+        }
+
+        if ($this->limit !== null) {
+            $data['limit'] = $this->limit;
         }
 
         if ($this->items !== []) {

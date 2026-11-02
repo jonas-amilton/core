@@ -23,10 +23,18 @@ import {
     watch,
 } from 'vue';
 import CtaBlock from '../Blocks/CtaBlock.vue';
+import ClientsBlock from '../Blocks/ClientsBlock.vue';
+import ContactBlock from '../Blocks/ContactBlock.vue';
+import FaqBlock from '../Blocks/FaqBlock.vue';
 import GridBlock from '../Blocks/GridBlock.vue';
 import HeroBlock from '../Blocks/HeroBlock.vue';
 import ImageBlock from '../Blocks/ImageBlock.vue';
+import NewsletterBlock from '../Blocks/NewsletterBlock.vue';
+import PostsBlock from '../Blocks/PostsBlock.vue';
+import ServicesBlock from '../Blocks/ServicesBlock.vue';
+import TestimonialsBlock from '../Blocks/TestimonialsBlock.vue';
 import TextBlock from '../Blocks/TextBlock.vue';
+import MediaPicker from '@modules/Media/resources/assets/js/components/MediaPicker.vue';
 import {
     blockLabels,
     blockSummary,
@@ -36,7 +44,6 @@ import {
     statusLabels,
     templates,
 } from '../blocks';
-import MediaPicker from '../components/MediaPicker.vue';
 import TextField from '../components/TextField.vue';
 import type {
     Block,
@@ -71,6 +78,13 @@ const renderers = {
     grid: GridBlock,
     image: ImageBlock,
     cta: CtaBlock,
+    services: ServicesBlock,
+    testimonials: TestimonialsBlock,
+    faq: FaqBlock,
+    clients: ClientsBlock,
+    posts: PostsBlock,
+    contact: ContactBlock,
+    newsletter: NewsletterBlock,
 };
 
 const blockTypes = Object.keys(blockLabels) as BlockType[];
@@ -79,6 +93,8 @@ const pageId = ref<number | null>(props.page?.id ?? null);
 const title = ref(props.page?.title ?? 'Nova página');
 const blocks = ref<Block[]>(props.page?.blocks ?? []);
 const selectedId = ref<string | null>(blocks.value[0]?.id ?? null);
+const pageIcon = ref(props.page?.icon ?? '');
+const isService = ref(props.page?.is_service ?? false);
 
 const dirty = ref(false);
 const saving = ref(false);
@@ -88,6 +104,7 @@ const scheduleOpen = ref(false);
 const pickerOpen = ref(false);
 const scheduleAt = ref('');
 const draggingId = ref<string | null>(null);
+const pickerTarget = ref<'block' | 'page'>('block');
 
 const selected = computed(
     () => blocks.value.find((block) => block.id === selectedId.value) ?? null,
@@ -145,6 +162,8 @@ function save(): void {
     const payload = {
         title: title.value.trim() || 'Nova página',
         slug: props.page?.slug ?? null,
+        icon: pageIcon.value || null,
+        is_service: isService.value,
         blocks: blocks.value,
     };
 
@@ -185,7 +204,7 @@ function save(): void {
 }
 
 watch(
-    [title, blocks],
+    [title, blocks, pageIcon, isService],
     () => {
         dirty.value = true;
         errorMessage.value = null;
@@ -263,6 +282,12 @@ function onDrop(targetId: string): void {
 }
 
 function pickMedia(media: PickedMedia): void {
+    if (pickerTarget.value === 'page') {
+        pageIcon.value = media.url;
+
+        return;
+    }
+
     const block = selected.value;
 
     if (!block) {
@@ -610,6 +635,47 @@ onBeforeUnmount(() => {
                         </button>
                     </div>
                 </details>
+
+                <div
+                    class="mt-4 grid gap-2 rounded-lg border border-slate-200 p-3 dark:border-slate-800"
+                >
+                    <label
+                        class="flex items-center gap-2 text-xs font-medium text-slate-700 dark:text-slate-300"
+                    >
+                        <input v-model="isService" type="checkbox" />
+                        Área de atuação
+                    </label>
+                    <p class="text-[11px] text-slate-400 dark:text-slate-500">
+                        Aparece no bloco "Áreas de atuação" e no menu do site.
+                    </p>
+                    <div class="flex items-center gap-2">
+                        <img
+                            v-if="pageIcon"
+                            :src="pageIcon"
+                            alt=""
+                            class="size-8 object-contain"
+                        />
+                        <button
+                            type="button"
+                            class="rounded-md border border-slate-200 px-2 py-1 text-xs font-medium text-slate-600 hover:border-indigo-400 hover:text-indigo-600 dark:border-slate-800 dark:text-slate-300"
+                            @click="
+                                pickerTarget = 'page';
+                                pickerOpen = true;
+                            "
+                        >
+                            {{ pageIcon ? 'Trocar ícone' : 'Ícone da área' }}
+                        </button>
+                        <button
+                            v-if="pageIcon"
+                            type="button"
+                            class="rounded-md p-1 text-slate-400 hover:text-red-600"
+                            aria-label="Remover ícone"
+                            @click="pageIcon = ''"
+                        >
+                            <Trash2 class="size-3.5" aria-hidden="true" />
+                        </button>
+                    </div>
+                </div>
             </aside>
 
             <!-- Canvas -->
@@ -768,7 +834,10 @@ onBeforeUnmount(() => {
                             <button
                                 type="button"
                                 class="inline-flex w-full items-center justify-center gap-1.5 rounded-lg border border-slate-200 px-3 py-2 text-sm font-medium text-slate-700 hover:border-indigo-400 hover:text-indigo-600 dark:border-slate-800 dark:text-slate-200"
-                                @click="pickerOpen = true"
+                                @click="
+                                    pickerTarget = 'block';
+                                    pickerOpen = true;
+                                "
                             >
                                 <ImageIcon class="size-4" aria-hidden="true" />
                                 Escolher da biblioteca
@@ -805,6 +874,69 @@ onBeforeUnmount(() => {
                             <TextField
                                 v-model="selected.button_href"
                                 label="Link do botão"
+                            />
+                        </template>
+
+                        <template
+                            v-else-if="
+                                [
+                                    'services',
+                                    'testimonials',
+                                    'faq',
+                                    'clients',
+                                ].includes(selected.type)
+                            "
+                        >
+                            <TextField
+                                v-model="selected.title"
+                                label="Título da seção"
+                            />
+                            <p
+                                class="text-xs text-slate-500 dark:text-slate-400"
+                            >
+                                O conteúdo desta seção vem do cadastro no
+                                painel, não do editor.
+                            </p>
+                        </template>
+
+                        <template v-else-if="selected.type === 'posts'">
+                            <TextField
+                                v-model="selected.title"
+                                label="Título da seção"
+                            />
+                            <TextField
+                                label="Quantidade de artigos"
+                                type="number"
+                                :model-value="String(selected.limit ?? 3)"
+                                @update:model-value="
+                                    selected.limit = Number($event) || 3
+                                "
+                            />
+                        </template>
+
+                        <template v-else-if="selected.type === 'contact'">
+                            <TextField
+                                v-model="selected.title"
+                                label="Título"
+                            />
+                            <TextField
+                                v-model="selected.subtitle"
+                                label="Descrição"
+                                multiline
+                                :rows="2"
+                            />
+                        </template>
+
+                        <template v-else-if="selected.type === 'newsletter'">
+                            <TextField
+                                v-model="selected.title"
+                                label="Título"
+                            />
+                            <TextField
+                                v-model="selected.description"
+                                label="Descrição"
+                                multiline
+                                :rows="2"
                             />
                         </template>
 

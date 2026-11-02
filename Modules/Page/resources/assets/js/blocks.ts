@@ -6,6 +6,13 @@ export const blockLabels: Record<BlockType, string> = {
     grid: 'Grid',
     image: 'Imagem',
     cta: 'CTA',
+    services: 'Áreas de atuação',
+    testimonials: 'Depoimentos',
+    faq: 'FAQ',
+    clients: 'Clientes',
+    posts: 'Últimos artigos',
+    contact: 'Contato',
+    newsletter: 'Newsletter',
 };
 
 const uid = (): string =>
@@ -47,6 +54,20 @@ export function createBlock(type: BlockType): Block {
                 button_label: 'Começar',
                 button_href: '#',
             };
+        case 'services':
+            return { ...base, title: 'Áreas de atuação' };
+        case 'testimonials':
+            return { ...base, title: 'Depoimentos' };
+        case 'faq':
+            return { ...base, title: 'Perguntas frequentes' };
+        case 'clients':
+            return { ...base, title: 'Clientes' };
+        case 'posts':
+            return { ...base, title: 'Últimas notícias', limit: 3 };
+        case 'contact':
+            return { ...base, title: 'Fale com a gente' };
+        case 'newsletter':
+            return { ...base, title: 'Inscreva-se e acompanhe as novidades' };
     }
 }
 
@@ -89,6 +110,10 @@ export const templates: Template[] = [
 export function blockSummary(block: Block): string {
     if (block.type === 'grid') {
         return `${block.items?.length ?? 0} item(ns)`;
+    }
+
+    if (block.type === 'posts') {
+        return `${block.limit ?? 3} artigo(s)`;
     }
 
     const text = block.title || block.body || block.alt || '';

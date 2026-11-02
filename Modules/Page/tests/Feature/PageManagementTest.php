@@ -246,6 +246,22 @@ class PageManagementTest extends TestCase
             );
     }
 
+    public function test_a_page_stores_the_service_area_fields(): void
+    {
+        $this->actingAs(User::factory()->create());
+
+        $this->post(route('page.store'), $this->payload([
+            'title' => 'Contábil',
+            'icon' => '/storage/media/icone.png',
+            'is_service' => true,
+        ]))->assertRedirect();
+
+        $page = Page::query()->where('slug', 'contabil')->firstOrFail();
+
+        $this->assertSame('/storage/media/icone.png', $page->icon);
+        $this->assertTrue($page->is_service);
+    }
+
     public function test_a_page_can_be_deleted(): void
     {
         $this->actingAs(User::factory()->create());

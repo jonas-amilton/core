@@ -1,10 +1,17 @@
 <script setup lang="ts">
 import { Head, Link } from '@inertiajs/vue3';
 import { ArrowLeft } from '@lucide/vue';
+import ClientsBlock from '../Blocks/ClientsBlock.vue';
+import ContactBlock from '../Blocks/ContactBlock.vue';
 import CtaBlock from '../Blocks/CtaBlock.vue';
+import FaqBlock from '../Blocks/FaqBlock.vue';
 import GridBlock from '../Blocks/GridBlock.vue';
 import HeroBlock from '../Blocks/HeroBlock.vue';
 import ImageBlock from '../Blocks/ImageBlock.vue';
+import NewsletterBlock from '../Blocks/NewsletterBlock.vue';
+import PostsBlock from '../Blocks/PostsBlock.vue';
+import ServicesBlock from '../Blocks/ServicesBlock.vue';
+import TestimonialsBlock from '../Blocks/TestimonialsBlock.vue';
 import TextBlock from '../Blocks/TextBlock.vue';
 import { statusLabels } from '../blocks';
 import type { Block, PageRecord } from '../types';
@@ -20,6 +27,13 @@ const renderers = {
     grid: GridBlock,
     image: ImageBlock,
     cta: CtaBlock,
+    services: ServicesBlock,
+    testimonials: TestimonialsBlock,
+    faq: FaqBlock,
+    clients: ClientsBlock,
+    posts: PostsBlock,
+    contact: ContactBlock,
+    newsletter: NewsletterBlock,
 };
 
 const visibleBlocks = (blocks: Block[]): Block[] =>
@@ -60,7 +74,7 @@ const visibleBlocks = (blocks: Block[]): Block[] =>
                 v-if="visibleBlocks(page.blocks).length === 0"
                 class="px-6 py-20 text-center text-sm text-slate-500 dark:text-slate-400"
             >
-                Esta página ainda não tem blocos visíveis.
+                Esta página não tem blocos visíveis.
             </p>
         </main>
     </div>

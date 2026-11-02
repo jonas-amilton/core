@@ -5,6 +5,7 @@ import { picker } from '@/routes/media';
 import type { PickedMedia } from '../types';
 
 type ApiItem = PickedMedia;
+export type { PickedMedia };
 
 const props = defineProps<{
     open: boolean;

@@ -8,6 +8,10 @@ parameters:
         - Modules/Page/
         - Modules/Media/
         - Modules/User/
+        - Modules/Settings/
+        - Modules/Content/
+        - Modules/Blog/
+        - Modules/Contact/
         - bootstrap/app.php
         - config/
         - database/

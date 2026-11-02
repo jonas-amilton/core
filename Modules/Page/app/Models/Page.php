@@ -13,6 +13,8 @@ use Modules\Page\Enums\PageStatus;
  * @property int $id
  * @property string $title
  * @property string $slug
+ * @property string|null $icon
+ * @property bool $is_service
  * @property array<int, array<string, mixed>> $blocks
  * @property PageStatus $status
  * @property Carbon|null $published_at
@@ -32,9 +34,18 @@ class Page extends Model
      */
     public const SYSTEM_SLUGS = [self::HOME_SLUG, self::NOT_FOUND_SLUG];
 
+    /**
+     * @var array<string, mixed>
+     */
+    protected $attributes = [
+        'is_service' => false,
+    ];
+
     protected $fillable = [
         'title',
         'slug',
+        'icon',
+        'is_service',
         'blocks',
         'status',
         'published_at',
@@ -47,6 +58,7 @@ class Page extends Model
     {
         return [
             'blocks' => 'array',
+            'is_service' => 'boolean',
             'status' => PageStatus::class,
             'published_at' => 'datetime',
         ];
@@ -96,6 +108,8 @@ class Page extends Model
             'id' => $this->id,
             'title' => $this->title,
             'slug' => $this->slug,
+            'icon' => $this->icon,
+            'is_service' => $this->is_service,
             'status' => $this->status->value,
             'published_at' => $this->published_at?->toIso8601String(),
             'updated_at' => $this->updated_at?->toIso8601String(),
