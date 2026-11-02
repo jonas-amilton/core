@@ -36,11 +36,12 @@ const accountLabel = computed(() =>
     authUser.value ? t('nav.account') : t('nav.login'),
 );
 
-const { resolvedAppearance, updateAppearance } = useAppearance();
-const isDark = computed(() => resolvedAppearance.value === 'dark');
+const { updateAppearance } = useAppearance();
 
 function toggleTheme(): void {
-    updateAppearance(isDark.value ? 'light' : 'dark');
+    const isDark = document.documentElement.classList.contains('dark');
+
+    updateAppearance(isDark ? 'light' : 'dark');
 }
 
 const socials = computed(() =>
@@ -214,11 +215,13 @@ const navLink = (active: boolean): string =>
                             @click="toggleTheme"
                         >
                             <Sun
-                                v-if="isDark"
-                                class="size-4"
+                                class="hidden size-4 dark:block"
                                 aria-hidden="true"
                             />
-                            <Moon v-else class="size-4" aria-hidden="true" />
+                            <Moon
+                                class="size-4 dark:hidden"
+                                aria-hidden="true"
+                            />
                         </button>
 
                         <a
