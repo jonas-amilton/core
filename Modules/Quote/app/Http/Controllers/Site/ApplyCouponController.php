@@ -18,7 +18,7 @@ final class ApplyCouponController
         $coupon = Coupon::query()->where('code', $code)->first();
 
         if ($coupon === null || ! $coupon->isValid()) {
-            return back()->withErrors(['coupon' => 'Cupom inválido ou expirado.']);
+            return back()->withErrors(['coupon' => __('site.coupon.invalid')]);
         }
 
         $cart->applyCoupon($coupon->code);
