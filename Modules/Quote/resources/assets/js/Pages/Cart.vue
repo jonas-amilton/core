@@ -101,7 +101,7 @@ function submit(): void {
             >
                 {{ t('quote.title') }}
             </h1>
-            <p class="mt-1 text-sm text-slate-600 dark:text-slate-400">
+            <p class="mt-1 text-sm text-slate-700 dark:text-slate-400">
                 {{ t('quote.subtitle') }}
             </p>
 
@@ -145,7 +145,7 @@ function submit(): void {
                                 {{ item.name }}
                             </Link>
                             <div
-                                class="mt-1 flex items-center gap-3 text-xs text-slate-500"
+                                class="mt-1 flex items-center gap-3 text-xs text-slate-600"
                             >
                                 <span v-if="item.sku">
                                     {{ t('catalog.sku') }} {{ item.sku }}
@@ -215,7 +215,7 @@ function submit(): void {
                             type="text"
                             :placeholder="t('quote.couponPlaceholder')"
                             :aria-label="t('quote.coupon')"
-                            class="h-10 min-w-0 flex-1 rounded-md border border-slate-300 bg-white px-3 text-sm uppercase text-slate-900 placeholder:normal-case placeholder:text-slate-500 focus-visible:border-brand focus-visible:ring-2 focus-visible:ring-brand/20 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100"
+                            class="h-10 min-w-0 flex-1 rounded-md border border-slate-300 bg-white px-3 text-sm uppercase text-slate-900 placeholder:normal-case placeholder:text-slate-600 focus-visible:border-brand focus-visible:ring-2 focus-visible:ring-brand/20 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100"
                         />
                         <button
                             type="submit"
@@ -320,7 +320,7 @@ function submit(): void {
                         class="grid gap-1 border-t border-slate-200 pt-3 text-sm dark:border-slate-800"
                     >
                         <p class="flex items-center justify-between">
-                            <span class="text-slate-600 dark:text-slate-400">
+                            <span class="text-slate-700 dark:text-slate-400">
                                 {{ t('quote.subtotal') }}
                             </span>
                             <span class="text-slate-950 tabular-nums dark:text-slate-50">
@@ -362,7 +362,7 @@ function submit(): void {
 
             <p
                 v-else
-                class="mt-8 rounded-lg border border-dashed border-slate-300 bg-white px-6 py-16 text-center text-sm text-slate-500 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-400"
+                class="mt-8 rounded-lg border border-dashed border-slate-300 bg-white px-6 py-16 text-center text-sm text-slate-600 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-400"
             >
                 {{ t('quote.empty') }}
                 <Link

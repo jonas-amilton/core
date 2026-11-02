@@ -77,7 +77,7 @@ const seoImage = computed<string | null>(
 
         <p
             v-if="visibleBlocks.length === 0"
-            class="px-6 py-24 text-center text-sm text-slate-500 dark:text-slate-400"
+            class="px-6 py-24 text-center text-sm text-slate-600 dark:text-slate-400"
         >
             Esta página ainda não tem conteúdo.
         </p>

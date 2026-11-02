@@ -106,7 +106,7 @@ const title = props.activeCategory
                             class="aspect-video w-full object-cover"
                         />
                         <div class="p-5">
-                            <p class="text-[11px] font-medium tracking-[0.1em] text-slate-500 uppercase dark:text-slate-400">
+                            <p class="text-[11px] font-medium tracking-[0.1em] text-slate-600 uppercase dark:text-slate-400">
                                 {{ formatDate(post.published_at) }}
                                 <template v-if="post.category">
                                     · {{ post.category }}
@@ -119,7 +119,7 @@ const title = props.activeCategory
                             </h2>
                             <p
                                 v-if="post.excerpt"
-                                class="mt-2 line-clamp-3 text-sm leading-relaxed text-slate-600 dark:text-slate-400"
+                                class="mt-2 line-clamp-3 text-sm leading-relaxed text-slate-700 dark:text-slate-400"
                             >
                                 {{ post.excerpt }}
                             </p>
@@ -136,7 +136,7 @@ const title = props.activeCategory
 
             <p
                 v-if="props.posts.length === 0"
-                class="mt-10 rounded-lg border border-dashed border-slate-300 bg-white px-6 py-16 text-center text-sm text-slate-500 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-400"
+                class="mt-10 rounded-lg border border-dashed border-slate-300 bg-white px-6 py-16 text-center text-sm text-slate-600 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-400"
             >
                 {{ t('blog.empty') }}
             </p>

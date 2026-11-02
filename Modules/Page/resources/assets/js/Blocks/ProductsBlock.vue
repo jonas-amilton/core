@@ -41,7 +41,7 @@ defineProps<{
                         class="flex h-full flex-col"
                     >
                         <div
-                            class="aspect-square overflow-hidden rounded-xl bg-[#f5f5f5] dark:bg-slate-800"
+                            class="aspect-square overflow-hidden rounded-xl bg-[#f5f5f5] dark:bg-[#ececec]"
                         >
                             <img
                                 v-if="item.cover"
@@ -69,7 +69,7 @@ defineProps<{
 
                         <p
                             v-if="item.description"
-                            class="mt-1 line-clamp-1 text-xs text-slate-500 dark:text-slate-400"
+                            class="mt-1 line-clamp-1 text-xs text-slate-600 dark:text-slate-400"
                         >
                             {{ item.description }}
                         </p>

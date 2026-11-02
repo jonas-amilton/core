@@ -58,12 +58,12 @@ const navLink = (active: boolean): string =>
         'rounded-md px-3 py-2 text-sm font-medium transition-colors focus-visible:ring-2 focus-visible:ring-green-800 focus-visible:outline-none',
         active
             ? 'text-brand dark:text-green-400'
-            : 'text-slate-600 hover:bg-[#f5f5f5] hover:text-slate-950 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-slate-100',
+            : 'text-slate-700 hover:bg-[#f5f5f5] hover:text-slate-950 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-slate-100',
     ].join(' ');
 </script>
 
 <template>
-    <div class="shop flex min-h-screen flex-col bg-white text-slate-900">
+    <div class="shop flex min-h-screen flex-col bg-white text-slate-900 dark:bg-slate-950 dark:text-slate-100">
         <header class="sticky top-0 z-40">
             <div
                 v-if="site.phone || site.email || site.hours"
@@ -162,7 +162,7 @@ const navLink = (active: boolean): string =>
                         />
                         <button
                             type="submit"
-                            class="flex size-9 shrink-0 items-center justify-center rounded-md border border-slate-200 text-slate-600 hover:border-green-300 hover:text-brand dark:border-slate-800 dark:text-slate-400"
+                            class="flex size-9 shrink-0 items-center justify-center rounded-md border border-slate-200 text-slate-700 hover:border-green-300 hover:text-brand dark:border-slate-800 dark:text-slate-400"
                             :aria-label="t('search.submit')"
                         >
                             <Search class="size-4" aria-hidden="true" />
@@ -173,7 +173,7 @@ const navLink = (active: boolean): string =>
                     <div class="flex items-center gap-3">
                         <a
                             href="/busca"
-                            class="flex size-10 shrink-0 items-center justify-center rounded-full border border-slate-200 text-slate-600 hover:border-green-300 hover:text-brand 2xl:hidden dark:border-slate-800 dark:text-slate-400"
+                            class="flex size-10 shrink-0 items-center justify-center rounded-full border border-slate-200 text-slate-700 hover:border-green-300 hover:text-brand 2xl:hidden dark:border-slate-800 dark:text-slate-400"
                             :aria-label="t('search.submit')"
                         >
                             <Search class="size-4" aria-hidden="true" />
@@ -192,7 +192,7 @@ const navLink = (active: boolean): string =>
                                     'rounded px-1 py-1 text-[11px] font-semibold tracking-wide uppercase transition-colors focus-visible:ring-2 focus-visible:ring-green-800 focus-visible:outline-none',
                                     locale === option.value
                                         ? 'text-brand dark:text-green-400'
-                                        : 'text-slate-400 hover:text-slate-700 dark:text-slate-500 dark:hover:text-slate-300',
+                                        : 'text-slate-400 hover:text-slate-700 dark:text-slate-600 dark:hover:text-slate-300',
                                 ]"
                                 @click="switchLocale(option.value as Locale)"
                             >
@@ -231,7 +231,7 @@ const navLink = (active: boolean): string =>
 
                         <details class="relative lg:hidden">
                             <summary
-                                class="flex size-10 cursor-pointer items-center justify-center rounded-full border border-slate-200 text-slate-600 marker:content-none hover:bg-white dark:border-slate-800 dark:text-slate-400 dark:hover:bg-slate-900"
+                                class="flex size-10 cursor-pointer items-center justify-center rounded-full border border-slate-200 text-slate-700 marker:content-none hover:bg-white dark:border-slate-800 dark:text-slate-400 dark:hover:bg-slate-900"
                                 :aria-label="t('nav.pages')"
                             >
                                 <Menu class="size-4" aria-hidden="true" />
@@ -272,7 +272,7 @@ const navLink = (active: boolean): string =>
                                     />
                                     <button
                                         type="submit"
-                                        class="flex size-9 shrink-0 items-center justify-center rounded-md border border-slate-200 text-slate-600 dark:border-slate-800 dark:text-slate-400"
+                                        class="flex size-9 shrink-0 items-center justify-center rounded-md border border-slate-200 text-slate-700 dark:border-slate-800 dark:text-slate-400"
                                         :aria-label="t('search.submit')"
                                     >
                                         <Search class="size-4" aria-hidden="true" />
@@ -292,7 +292,7 @@ const navLink = (active: boolean): string =>
                                 </a>
                                 <a
                                     href="/admin"
-                                    class="rounded-md px-3 py-2 text-xs font-medium text-slate-500 dark:text-slate-400"
+                                    class="rounded-md px-3 py-2 text-xs font-medium text-slate-600 dark:text-slate-400"
                                 >
                                     {{ t('nav.panel') }}
                                 </a>
@@ -312,7 +312,7 @@ const navLink = (active: boolean): string =>
             class="mt-16 border-t border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-950"
         >
             <div
-                class="mx-auto grid w-full max-w-6xl gap-10 px-4 py-12 text-sm text-slate-600 sm:grid-cols-2 sm:px-6 lg:grid-cols-5 dark:text-slate-400"
+                class="mx-auto grid w-full max-w-6xl gap-10 px-4 py-12 text-sm text-slate-700 sm:grid-cols-2 sm:px-6 lg:grid-cols-5 dark:text-slate-400"
             >
                 <div class="grid content-start gap-3">
                     <p
@@ -326,7 +326,7 @@ const navLink = (active: boolean): string =>
                         </span>
                         {{ siteName }}
                     </p>
-                    <p v-if="site.tagline" class="text-slate-500">
+                    <p v-if="site.tagline" class="text-slate-600">
                         {{ site.tagline }}
                     </p>
                     <p v-if="site.address">{{ site.address }}</p>
@@ -334,7 +334,7 @@ const navLink = (active: boolean): string =>
 
                 <div class="grid content-start gap-2">
                     <p
-                        class="mb-1 text-[11px] font-semibold tracking-[0.12em] text-slate-500 uppercase dark:text-slate-400"
+                        class="mb-1 text-[11px] font-semibold tracking-[0.12em] text-slate-600 uppercase dark:text-slate-400"
                     >
                         {{ t('footer.navigation') }}
                     </p>
@@ -356,7 +356,7 @@ const navLink = (active: boolean): string =>
 
                 <div class="grid content-start gap-2">
                     <p
-                        class="mb-1 text-[11px] font-semibold tracking-[0.12em] text-slate-500 uppercase dark:text-slate-400"
+                        class="mb-1 text-[11px] font-semibold tracking-[0.12em] text-slate-600 uppercase dark:text-slate-400"
                     >
                         {{ t('footer.contact') }}
                     </p>
@@ -383,14 +383,14 @@ const navLink = (active: boolean): string =>
                     >
                         WhatsApp
                     </a>
-                    <p v-if="site.hours" class="text-slate-500 dark:text-slate-500">
+                    <p v-if="site.hours" class="text-slate-600 dark:text-slate-600">
                         {{ site.hours }}
                     </p>
                 </div>
 
                 <div class="grid content-start gap-2">
                     <p
-                        class="mb-1 text-[11px] font-semibold tracking-[0.12em] text-slate-500 uppercase dark:text-slate-400"
+                        class="mb-1 text-[11px] font-semibold tracking-[0.12em] text-slate-600 uppercase dark:text-slate-400"
                     >
                         {{ t('footer.help') }}
                     </p>
@@ -413,7 +413,7 @@ const navLink = (active: boolean): string =>
 
                 <div class="grid content-start gap-2">
                     <p
-                        class="mb-1 text-[11px] font-semibold tracking-[0.12em] text-slate-500 uppercase dark:text-slate-400"
+                        class="mb-1 text-[11px] font-semibold tracking-[0.12em] text-slate-600 uppercase dark:text-slate-400"
                     >
                         {{ t('footer.social') }}
                     </p>
@@ -439,7 +439,7 @@ const navLink = (active: boolean): string =>
 
             <div class="border-t border-slate-200 dark:border-slate-800">
                 <div
-                    class="mx-auto flex w-full max-w-6xl flex-col items-start justify-between gap-2 px-4 py-4 text-xs text-slate-500 sm:flex-row sm:items-center sm:px-6 dark:text-slate-500"
+                    class="mx-auto flex w-full max-w-6xl flex-col items-start justify-between gap-2 px-4 py-4 text-xs text-slate-600 sm:flex-row sm:items-center sm:px-6 dark:text-slate-600"
                 >
                     <p>© {{ currentYear }} {{ siteName }}</p>
                     <a

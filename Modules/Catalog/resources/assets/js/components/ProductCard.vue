@@ -42,7 +42,7 @@ function favorite(): void {
 <template>
     <article class="group flex h-full flex-col">
         <div
-            class="relative aspect-square overflow-hidden rounded-xl bg-[#f5f5f5] dark:bg-slate-800"
+            class="relative aspect-square overflow-hidden rounded-xl bg-[#f5f5f5] dark:bg-[#ececec]"
         >
             <Link :href="`/produto/${product.slug}`" class="block h-full">
                 <img
@@ -55,7 +55,7 @@ function favorite(): void {
 
             <button
                 type="button"
-                class="absolute top-3 right-3 flex size-9 items-center justify-center rounded-full bg-white text-slate-500 shadow-sm transition-colors hover:text-red-500"
+                class="absolute top-3 right-3 flex size-9 items-center justify-center rounded-full bg-white text-slate-600 shadow-sm transition-colors hover:text-red-500"
                 :aria-label="`${t('catalog.favorite')}: ${product.name}`"
                 @click="favorite"
             >
@@ -80,7 +80,7 @@ function favorite(): void {
         <div class="flex-1">
             <p
                 v-if="product.sku"
-                class="mt-1 text-xs text-slate-500 dark:text-slate-400"
+                class="mt-1 text-xs text-slate-600 dark:text-slate-400"
             >
                 {{ t('catalog.sku') }}: {{ product.sku }}
             </p>
@@ -93,7 +93,7 @@ function favorite(): void {
                 <span aria-hidden="true">
                     {{ '★'.repeat(Math.round(product.rating)) }}
                 </span>
-                <span class="ml-1 text-slate-500 dark:text-slate-400">
+                <span class="ml-1 text-slate-600 dark:text-slate-400">
                     ({{ product.review_count ?? 0 }})
                 </span>
             </p>
@@ -115,7 +115,7 @@ function favorite(): void {
         </button>
         <p
             v-else
-            class="mt-4 inline-flex h-10 items-center justify-center rounded-full border border-slate-200 text-sm font-medium text-slate-500 dark:border-slate-700 dark:text-slate-400"
+            class="mt-4 inline-flex h-10 items-center justify-center rounded-full border border-slate-200 text-sm font-medium text-slate-600 dark:border-slate-700 dark:text-slate-400"
         >
             {{ t('catalog.outOfStock') }}
         </p>

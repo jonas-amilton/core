@@ -53,7 +53,7 @@ const props = defineProps<{
                     </p>
                     <p
                         v-if="store.address"
-                        class="mt-1 text-sm text-slate-600 dark:text-slate-400"
+                        class="mt-1 text-sm text-slate-700 dark:text-slate-400"
                     >
                         {{ store.address }}
                     </p>
@@ -96,7 +96,7 @@ const props = defineProps<{
                     </p>
                     <p
                         v-if="store.address"
-                        class="mt-1 text-sm text-slate-600 dark:text-slate-400"
+                        class="mt-1 text-sm text-slate-700 dark:text-slate-400"
                     >
                         {{ store.address }}
                     </p>
@@ -105,7 +105,7 @@ const props = defineProps<{
 
             <p
                 v-if="props.physical.length === 0 && props.online.length === 0"
-                class="mt-8 rounded-lg border border-dashed border-slate-300 bg-white px-6 py-16 text-center text-sm text-slate-500 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-400"
+                class="mt-8 rounded-lg border border-dashed border-slate-300 bg-white px-6 py-16 text-center text-sm text-slate-600 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-400"
             >
                 {{ t('stores.empty') }}
             </p>

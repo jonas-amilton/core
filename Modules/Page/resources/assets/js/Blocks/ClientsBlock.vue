@@ -43,7 +43,7 @@ defineProps<{
                             />
                             <span
                                 v-else
-                                class="text-xs font-semibold text-slate-500"
+                                class="text-xs font-semibold text-slate-600"
                             >
                                 {{ item.title.charAt(0) }}
                             </span>
@@ -57,7 +57,7 @@ defineProps<{
                             />
                             <span
                                 v-else
-                                class="text-xs font-semibold text-slate-500"
+                                class="text-xs font-semibold text-slate-600"
                             >
                                 {{ item.title.charAt(0) }}
                             </span>
@@ -70,7 +70,7 @@ defineProps<{
                         >
                             {{ item.title }}
                         </span>
-                        <span class="block text-xs text-slate-500 dark:text-slate-400">
+                        <span class="block text-xs text-slate-600 dark:text-slate-400">
                             {{ t('clients.supply') }}
                         </span>
                     </span>

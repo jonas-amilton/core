@@ -20,13 +20,13 @@ defineProps<{ block: Block }>();
             </div>
             <div
                 v-else
-                class="flex aspect-video w-full items-center justify-center rounded-lg border border-dashed border-slate-300 text-slate-400 dark:border-slate-700 dark:text-slate-500"
+                class="flex aspect-video w-full items-center justify-center rounded-lg border border-dashed border-slate-300 text-slate-400 dark:border-slate-700 dark:text-slate-600"
             >
                 <ImageIcon class="size-8" aria-hidden="true" />
             </div>
             <figcaption
                 v-if="block.caption"
-                class="mt-3 text-center text-xs text-slate-500 dark:text-slate-400"
+                class="mt-3 text-center text-xs text-slate-600 dark:text-slate-400"
             >
                 {{ block.caption }}
             </figcaption>

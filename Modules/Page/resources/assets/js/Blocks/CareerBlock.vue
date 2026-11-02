@@ -41,7 +41,7 @@ function submit(): void {
             </h2>
             <p
                 v-if="block.subtitle"
-                class="mt-2 text-sm leading-relaxed text-slate-600 dark:text-slate-400"
+                class="mt-2 text-sm leading-relaxed text-slate-700 dark:text-slate-400"
             >
                 {{ block.subtitle }}
             </p>

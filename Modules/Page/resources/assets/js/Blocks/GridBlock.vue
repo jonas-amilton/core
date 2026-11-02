@@ -34,7 +34,7 @@ defineProps<{ block: Block }>();
                     </p>
                     <p
                         v-if="item.description"
-                        class="mt-2 text-sm leading-relaxed text-slate-600 dark:text-slate-400"
+                        class="mt-2 text-sm leading-relaxed text-slate-700 dark:text-slate-400"
                     >
                         {{ item.description }}
                     </p>

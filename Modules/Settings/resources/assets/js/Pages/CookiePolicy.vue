@@ -41,7 +41,7 @@ const optional = [
                 {{ t('cookiesPage.title') }}
             </h1>
             <p
-                class="mt-2 max-w-2xl text-sm text-slate-600 dark:text-slate-400"
+                class="mt-2 max-w-2xl text-sm text-slate-700 dark:text-slate-400"
             >
                 {{ intro() }}
             </p>
@@ -51,7 +51,7 @@ const optional = [
             >
                 {{ t('cookiesPage.essentialHeading') }}
             </h2>
-            <p class="mt-1 text-sm text-slate-600 dark:text-slate-400">
+            <p class="mt-1 text-sm text-slate-700 dark:text-slate-400">
                 {{ t('cookiesPage.essentialIntro') }}
             </p>
             <div
@@ -59,7 +59,7 @@ const optional = [
             >
                 <table class="w-full text-left text-sm">
                     <thead
-                        class="border-b border-slate-200 bg-white text-xs text-slate-500 uppercase dark:border-slate-800 dark:bg-slate-950/60 dark:text-slate-400"
+                        class="border-b border-slate-200 bg-white text-xs text-slate-600 uppercase dark:border-slate-800 dark:bg-slate-950/60 dark:text-slate-400"
                     >
                         <tr>
                             <th scope="col" class="px-4 py-2.5 font-medium">
@@ -81,13 +81,13 @@ const optional = [
                                 {{ cookie.name }}
                             </td>
                             <td
-                                class="px-4 py-3 text-slate-600 dark:text-slate-400"
+                                class="px-4 py-3 text-slate-700 dark:text-slate-400"
                             >
                                 {{
                                     t(`cookiesPage.items.${cookie.key}.purpose`)
                                 }}
                             </td>
-                            <td class="px-4 py-3 text-xs text-slate-500">
+                            <td class="px-4 py-3 text-xs text-slate-600">
                                 {{
                                     t(
                                         `cookiesPage.items.${cookie.key}.duration`,
@@ -104,7 +104,7 @@ const optional = [
             >
                 {{ t('cookiesPage.optionalHeading') }}
             </h2>
-            <p class="mt-1 text-sm text-slate-600 dark:text-slate-400">
+            <p class="mt-1 text-sm text-slate-700 dark:text-slate-400">
                 {{ t('cookiesPage.optionalIntro') }}
             </p>
             <div
@@ -112,7 +112,7 @@ const optional = [
             >
                 <table class="w-full text-left text-sm">
                     <thead
-                        class="border-b border-slate-200 bg-white text-xs text-slate-500 uppercase dark:border-slate-800 dark:bg-slate-950/60 dark:text-slate-400"
+                        class="border-b border-slate-200 bg-white text-xs text-slate-600 uppercase dark:border-slate-800 dark:bg-slate-950/60 dark:text-slate-400"
                     >
                         <tr>
                             <th scope="col" class="px-4 py-2.5 font-medium">
@@ -134,13 +134,13 @@ const optional = [
                                 {{ cookie.name }}
                             </td>
                             <td
-                                class="px-4 py-3 text-slate-600 dark:text-slate-400"
+                                class="px-4 py-3 text-slate-700 dark:text-slate-400"
                             >
                                 {{
                                     t(`cookiesPage.items.${cookie.key}.purpose`)
                                 }}
                             </td>
-                            <td class="px-4 py-3 text-xs text-slate-500">
+                            <td class="px-4 py-3 text-xs text-slate-600">
                                 {{
                                     t(
                                         `cookiesPage.items.${cookie.key}.duration`,

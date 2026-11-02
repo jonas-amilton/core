@@ -30,7 +30,7 @@ const pastels = [
                     </h2>
                     <p
                         v-if="block.subtitle"
-                        class="mt-1 text-sm text-slate-600 dark:text-slate-400"
+                        class="mt-1 text-sm text-slate-700 dark:text-slate-400"
                     >
                         {{ block.subtitle }}
                     </p>
@@ -57,7 +57,7 @@ const pastels = [
                                 {{ item.title }}
                             </span>
                             <span
-                                class="mt-1 inline-flex items-center gap-1 text-xs font-medium text-brand-deep/70"
+                                class="mt-1 inline-flex items-center gap-1 text-xs font-medium text-brand-deep/80"
                             >
                                 {{
                                     t('catalog.itemsCount').replace(

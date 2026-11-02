@@ -47,7 +47,7 @@ defineProps<{
                             </p>
                             <p
                                 v-if="item.role"
-                                class="text-xs text-slate-500 dark:text-slate-400"
+                                class="text-xs text-slate-600 dark:text-slate-400"
                             >
                                 {{ item.role }}
                             </p>

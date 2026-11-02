@@ -69,7 +69,7 @@ const total = props.products.length + props.posts.length + props.pages.length;
                     name="q"
                     :value="props.term"
                     :placeholder="t('search.placeholder')"
-                    class="h-11 flex-1 rounded-md border border-slate-300 bg-white px-3.5 text-sm text-slate-900 placeholder:text-slate-500 focus-visible:border-brand focus-visible:ring-2 focus-visible:ring-brand/20 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100"
+                    class="h-11 flex-1 rounded-md border border-slate-300 bg-white px-3.5 text-sm text-slate-900 placeholder:text-slate-600 focus-visible:border-brand focus-visible:ring-2 focus-visible:ring-brand/20 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100"
                 />
                 <button
                     type="submit"
@@ -82,7 +82,7 @@ const total = props.products.length + props.posts.length + props.pages.length;
 
             <p
                 v-if="props.term"
-                class="mt-6 text-sm text-slate-600 dark:text-slate-400"
+                class="mt-6 text-sm text-slate-700 dark:text-slate-400"
             >
                 {{
                     t('search.resultsFor').replace(':term', props.term)
@@ -92,7 +92,7 @@ const total = props.products.length + props.posts.length + props.pages.length;
 
             <p
                 v-if="props.term && total === 0"
-                class="mt-8 rounded-lg border border-dashed border-slate-300 bg-white px-6 py-16 text-center text-sm text-slate-500 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-400"
+                class="mt-8 rounded-lg border border-dashed border-slate-300 bg-white px-6 py-16 text-center text-sm text-slate-600 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-400"
             >
                 {{ t('search.empty') }}
             </p>
@@ -159,7 +159,7 @@ const total = props.products.length + props.posts.length + props.pages.length;
                         </Link>
                         <p
                             v-if="post.excerpt"
-                            class="mt-1 line-clamp-2 text-sm text-slate-600 dark:text-slate-400"
+                            class="mt-1 line-clamp-2 text-sm text-slate-700 dark:text-slate-400"
                         >
                             {{ post.excerpt }}
                         </p>

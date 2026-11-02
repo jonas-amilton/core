@@ -124,7 +124,7 @@ function addProduct(): void {
         <article class="px-4 py-12 sm:px-6 sm:py-16">
             <nav
                 v-if="props.product.categories.length > 0"
-                class="flex flex-wrap gap-2 text-xs text-slate-500"
+                class="flex flex-wrap gap-2 text-xs text-slate-600"
                 :aria-label="t('catalog.categoriesAria')"
             >
                 <Link
@@ -139,12 +139,16 @@ function addProduct(): void {
 
             <div class="mt-4 grid gap-8 lg:grid-cols-2">
                 <div>
-                    <img
+                    <div
                         v-if="props.product.images.length > 0"
-                        :src="props.product.images[activeImage]"
-                        :alt="props.product.name"
-                        class="aspect-square w-full rounded-xl bg-[#f5f5f5] object-contain p-8 mix-blend-multiply dark:bg-slate-800 dark:mix-blend-normal"
-                    />
+                        class="aspect-square w-full overflow-hidden rounded-xl bg-[#f5f5f5] p-8 dark:bg-[#ececec]"
+                    >
+                        <img
+                            :src="props.product.images[activeImage]"
+                            :alt="props.product.name"
+                            class="h-full w-full object-contain"
+                        />
+                    </div>
                     <div
                         v-if="props.product.images.length > 1"
                         class="mt-2 flex flex-wrap gap-2"
@@ -180,7 +184,7 @@ function addProduct(): void {
                         <span aria-hidden="true">
                             {{ '★'.repeat(Math.round(averageRating)) }}
                         </span>
-                        <span class="text-slate-500 dark:text-slate-400">
+                        <span class="text-slate-600 dark:text-slate-400">
                             ({{ props.reviews.length }})
                         </span>
                     </p>
@@ -193,7 +197,7 @@ function addProduct(): void {
 
                     <p
                         v-if="props.product.sku"
-                        class="mt-2 text-sm text-slate-500"
+                        class="mt-2 text-sm text-slate-600"
                     >
                         {{ t('catalog.sku') }}: {{ props.product.sku }}
                     </p>
@@ -209,7 +213,7 @@ function addProduct(): void {
 
                     <p
                         v-if="installmentLabel"
-                        class="mt-1 text-sm text-slate-600 dark:text-slate-400"
+                        class="mt-1 text-sm text-slate-700 dark:text-slate-400"
                     >
                         {{ installmentLabel }}
                     </p>
@@ -247,7 +251,7 @@ function addProduct(): void {
                         >
                             <button
                                 type="button"
-                                class="flex size-11 items-center justify-center text-lg text-slate-600 hover:text-brand dark:text-slate-300"
+                                class="flex size-11 items-center justify-center text-lg text-slate-700 hover:text-brand dark:text-slate-300"
                                 aria-label="-"
                                 @click="stepQuantity(-1)"
                             >
@@ -263,7 +267,7 @@ function addProduct(): void {
                             />
                             <button
                                 type="button"
-                                class="flex size-11 items-center justify-center text-lg text-slate-600 hover:text-brand dark:text-slate-300"
+                                class="flex size-11 items-center justify-center text-lg text-slate-700 hover:text-brand dark:text-slate-300"
                                 aria-label="+"
                                 @click="stepQuantity(1)"
                             >
@@ -283,7 +287,7 @@ function addProduct(): void {
 
                         <button
                             type="button"
-                            class="inline-flex size-11 items-center justify-center rounded-full border border-slate-300 text-slate-600 transition-colors hover:border-red-300 hover:text-red-600 dark:border-slate-700 dark:text-slate-300"
+                            class="inline-flex size-11 items-center justify-center rounded-full border border-slate-300 text-slate-700 transition-colors hover:border-red-300 hover:text-red-600 dark:border-slate-700 dark:text-slate-300"
                             :aria-label="
                                 props.isFavorite
                                     ? t('catalog.favorited')
@@ -349,7 +353,7 @@ function addProduct(): void {
 
                 <p
                     v-if="props.reviews.length === 0"
-                    class="mt-3 text-sm text-slate-500 dark:text-slate-400"
+                    class="mt-3 text-sm text-slate-600 dark:text-slate-400"
                 >
                     {{ t('reviews.empty') }}
                 </p>
@@ -372,7 +376,7 @@ function addProduct(): void {
                             </span>
                         </p>
                         <p
-                            class="mt-2 text-sm leading-relaxed whitespace-pre-line text-slate-600 dark:text-slate-400"
+                            class="mt-2 text-sm leading-relaxed whitespace-pre-line text-slate-700 dark:text-slate-400"
                         >
                             {{ review.body }}
                         </p>

@@ -47,7 +47,7 @@ defineProps<{
                         </div>
                         <div class="flex flex-1 flex-col p-5">
                             <p
-                                class="text-[11px] font-medium tracking-[0.1em] text-slate-500 uppercase dark:text-slate-400"
+                                class="text-[11px] font-medium tracking-[0.1em] text-slate-600 uppercase dark:text-slate-400"
                             >
                                 <template v-if="item.date">{{ item.date }}</template>
                                 <template v-if="item.date && item.category">
@@ -64,7 +64,7 @@ defineProps<{
                             </h3>
                             <p
                                 v-if="item.description"
-                                class="mt-2 line-clamp-2 flex-1 text-sm leading-relaxed text-slate-600 dark:text-slate-400"
+                                class="mt-2 line-clamp-2 flex-1 text-sm leading-relaxed text-slate-700 dark:text-slate-400"
                             >
                                 {{ item.description }}
                             </p>

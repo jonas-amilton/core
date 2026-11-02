@@ -61,7 +61,7 @@ const formatDate = (value: string | null): string =>
                     >
                         {{ t('account.title') }}
                     </h1>
-                    <p class="mt-1 text-sm text-slate-600 dark:text-slate-400">
+                    <p class="mt-1 text-sm text-slate-700 dark:text-slate-400">
                         {{ t('account.greeting') }},
                         {{ user?.name ?? '' }}
                     </p>
@@ -93,7 +93,7 @@ const formatDate = (value: string | null): string =>
                     >
                         <p class="text-sm font-semibold text-slate-950 dark:text-slate-50">
                             {{ t('account.order') }} #{{ order.id }}
-                            <span class="font-normal text-slate-500">
+                            <span class="font-normal text-slate-600">
                                 · {{ formatDate(order.created_at) }}
                             </span>
                         </p>
@@ -102,7 +102,7 @@ const formatDate = (value: string | null): string =>
                             :class="
                                 order.answered
                                     ? 'border-emerald-200 bg-emerald-50 text-emerald-800 dark:border-emerald-500/30 dark:bg-emerald-500/10 dark:text-emerald-300'
-                                    : 'border-slate-200 bg-white text-slate-600 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300'
+                                    : 'border-slate-200 bg-white text-slate-700 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300'
                             "
                         >
                             {{
@@ -152,7 +152,7 @@ const formatDate = (value: string | null): string =>
 
             <p
                 v-else
-                class="mt-4 rounded-lg border border-dashed border-slate-300 bg-white px-6 py-16 text-center text-sm text-slate-500 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-400"
+                class="mt-4 rounded-lg border border-dashed border-slate-300 bg-white px-6 py-16 text-center text-sm text-slate-600 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-400"
             >
                 {{ t('account.empty') }}
                 <Link href="/produtos" class="text-brand hover:underline dark:text-green-400">
@@ -206,7 +206,7 @@ const formatDate = (value: string | null): string =>
 
             <p
                 v-else
-                class="mt-4 text-sm text-slate-500 dark:text-slate-400"
+                class="mt-4 text-sm text-slate-600 dark:text-slate-400"
             >
                 {{ t('account.emptyFavorites') }}
             </p>

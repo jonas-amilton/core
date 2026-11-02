@@ -58,7 +58,7 @@ const savePreferences = (): void =>
                 class="flex flex-col items-start gap-3 sm:flex-row sm:items-center sm:justify-between"
             >
                 <p
-                    class="line-clamp-2 flex items-start gap-2 text-xs text-slate-600 sm:line-clamp-none dark:text-slate-400"
+                    class="line-clamp-2 flex items-start gap-2 text-xs text-slate-700 sm:line-clamp-none dark:text-slate-400"
                 >
                     <Cookie class="mt-0.5 size-4 shrink-0" aria-hidden="true" />
                     <span>
@@ -105,7 +105,7 @@ const savePreferences = (): void =>
                 class="mt-3 grid gap-2 rounded-sm border border-slate-200 p-3 text-xs dark:border-slate-800"
             >
                 <label
-                    class="flex items-start gap-2 text-slate-600 dark:text-slate-400"
+                    class="flex items-start gap-2 text-slate-700 dark:text-slate-400"
                 >
                     <input type="checkbox" checked disabled />
                     <span>
@@ -116,7 +116,7 @@ const savePreferences = (): void =>
                     </span>
                 </label>
                 <label
-                    class="flex items-start gap-2 text-slate-600 dark:text-slate-400"
+                    class="flex items-start gap-2 text-slate-700 dark:text-slate-400"
                 >
                     <input v-model="analytics" type="checkbox" />
                     <span>
@@ -127,7 +127,7 @@ const savePreferences = (): void =>
                     </span>
                 </label>
                 <label
-                    class="flex items-start gap-2 text-slate-600 dark:text-slate-400"
+                    class="flex items-start gap-2 text-slate-700 dark:text-slate-400"
                 >
                     <input v-model="marketing" type="checkbox" />
                     <span>

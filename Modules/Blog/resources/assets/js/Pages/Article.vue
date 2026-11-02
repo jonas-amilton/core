@@ -48,7 +48,7 @@ const formatDate = (value: string | null): string =>
         <article class="px-4 py-12 sm:px-6 sm:py-16">
             <Link
                 href="/blog"
-                class="inline-flex items-center gap-1.5 text-sm text-slate-500 hover:text-brand dark:text-slate-400"
+                class="inline-flex items-center gap-1.5 text-sm text-slate-600 hover:text-brand dark:text-slate-400"
             >
                 <ArrowLeft class="size-4" aria-hidden="true" />
                 Blog
@@ -75,7 +75,7 @@ const formatDate = (value: string | null): string =>
 
             <p
                 v-if="props.post.excerpt"
-                class="mt-3 text-lg text-slate-600 dark:text-slate-400"
+                class="mt-3 text-lg text-slate-700 dark:text-slate-400"
             >
                 {{ props.post.excerpt }}
             </p>

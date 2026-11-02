@@ -18,7 +18,7 @@ const site = computed(
 <template>
     <section class="px-4 pt-6 pb-2 sm:px-6">
         <div
-            class="mx-auto grid w-full max-w-6xl items-center gap-10 overflow-hidden rounded-2xl bg-cream px-6 py-10 sm:px-10 sm:py-14 lg:grid-cols-[1.15fr_0.85fr] lg:gap-14"
+            class="mx-auto grid w-full max-w-6xl items-center gap-10 overflow-hidden rounded-2xl bg-cream px-6 py-10 sm:px-10 sm:py-14 lg:grid-cols-[1.15fr_0.85fr] lg:gap-14 dark:bg-slate-900"
         >
             <div>
                 <p
@@ -39,13 +39,13 @@ const site = computed(
 
                 <p
                     v-if="block.subtitle"
-                    class="mt-4 max-w-xl text-base leading-relaxed text-slate-600 sm:text-lg dark:text-slate-400"
+                    class="mt-4 max-w-xl text-base leading-relaxed text-slate-700 sm:text-lg dark:text-slate-400"
                 >
                     {{ block.subtitle }}
                 </p>
 
                 <ul
-                    class="mt-6 flex flex-wrap gap-x-5 gap-y-2 text-sm text-slate-600 dark:text-slate-400"
+                    class="mt-6 flex flex-wrap gap-x-5 gap-y-2 text-sm text-slate-700 dark:text-slate-400"
                 >
                     <li
                         v-for="benefit in [
@@ -75,7 +75,7 @@ const site = computed(
                     </a>
                     <a
                         href="/orcamento"
-                        class="inline-flex h-11 items-center rounded-full border border-brand/25 bg-transparent px-6 text-sm font-medium text-brand-deep transition-colors hover:bg-white/60 dark:border-slate-700 dark:text-slate-200"
+                        class="inline-flex h-11 items-center rounded-full border border-brand/25 bg-transparent px-6 text-sm font-medium text-brand-deep transition-colors hover:bg-white/60 dark:border-slate-700 dark:text-slate-100 dark:hover:bg-slate-800"
                     >
                         {{ t('hero.secondary') }}
                     </a>
@@ -83,7 +83,7 @@ const site = computed(
 
                 <dl
                     v-if="site.stat_years || site.stat_clients"
-                    class="mt-9 flex flex-wrap gap-x-10 gap-y-4 border-t border-slate-200 pt-6 dark:border-slate-800"
+                    class="mt-9 flex flex-wrap gap-x-10 gap-y-4 border-t border-brand/15 pt-6 dark:border-slate-800"
                 >
                     <div v-if="site.stat_years">
                         <dt
@@ -91,7 +91,7 @@ const site = computed(
                         >
                             {{ site.stat_years }}
                         </dt>
-                        <dd class="text-xs text-slate-500 dark:text-slate-400">
+                        <dd class="text-xs text-slate-600 dark:text-slate-400">
                             {{ t('hero.years') }}
                         </dd>
                     </div>
@@ -101,7 +101,7 @@ const site = computed(
                         >
                             {{ site.stat_clients }}
                         </dt>
-                        <dd class="text-xs text-slate-500 dark:text-slate-400">
+                        <dd class="text-xs text-slate-600 dark:text-slate-400">
                             {{ t('hero.clients') }}
                         </dd>
                     </div>
@@ -121,7 +121,7 @@ const site = computed(
                 >
                     {{ t('hero.supportTitle') }}
                 </h2>
-                <p class="mt-2 text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+                <p class="mt-2 text-sm leading-relaxed text-slate-700 dark:text-slate-400">
                     {{ t('hero.supportText') }}
                 </p>
 
@@ -146,7 +146,7 @@ const site = computed(
                     </li>
                     <li
                         v-if="site.hours"
-                        class="flex items-center gap-2.5 text-slate-600 dark:text-slate-400"
+                        class="flex items-center gap-2.5 text-slate-700 dark:text-slate-400"
                     >
                         <Clock class="size-4 text-slate-400" aria-hidden="true" />
                         {{ site.hours }}

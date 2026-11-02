@@ -103,8 +103,8 @@ function applyFilters(): void {
                         v-if="category.products_count"
                         :class="
                             props.activeCategory?.id === category.id
-                                ? 'text-white/60'
-                                : 'text-slate-400'
+                                ? 'text-white/70'
+                                : 'text-slate-500'
                         "
                     >
                         {{ category.products_count }}
@@ -117,7 +117,7 @@ function applyFilters(): void {
                 @submit.prevent="applyFilters"
             >
                 <div class="flex flex-wrap items-center gap-2 text-sm">
-                    <span class="text-slate-500 dark:text-slate-400">
+                    <span class="text-slate-600 dark:text-slate-400">
                         {{ t('catalog.price') }}
                     </span>
                     <label class="sr-only" for="filter-min">
@@ -131,7 +131,7 @@ function applyFilters(): void {
                         :placeholder="t('catalog.minPrice')"
                         class="h-9 w-24 rounded-full border border-slate-200 bg-white px-3 text-sm tabular-nums focus-visible:border-brand focus-visible:ring-2 focus-visible:ring-brand/20 dark:border-slate-800 dark:bg-slate-900"
                     />
-                    <span class="text-slate-400">–</span>
+                    <span class="text-slate-500">–</span>
                     <label class="sr-only" for="filter-max">
                         {{ t('catalog.maxPrice') }}
                     </label>
@@ -152,7 +152,7 @@ function applyFilters(): void {
                 </div>
 
                 <label
-                    class="flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400"
+                    class="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400"
                 >
                     {{ t('catalog.sort') }}
                     <select
@@ -185,7 +185,7 @@ function applyFilters(): void {
 
             <p
                 v-if="props.products.data.length === 0"
-                class="mt-10 rounded-xl border border-dashed border-slate-300 bg-white px-6 py-16 text-center text-sm text-slate-500 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-400"
+                class="mt-10 rounded-xl border border-dashed border-slate-300 bg-white px-6 py-16 text-center text-sm text-slate-600 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-400"
             >
                 {{ t('catalog.empty') }}
             </p>
@@ -202,11 +202,11 @@ function applyFilters(): void {
                 >
                     {{ t('common.previous') }}
                 </Link>
-                <span v-else class="text-slate-400">{{
+                <span v-else class="text-slate-500">{{
                     t('common.previous')
                 }}</span>
 
-                <span class="text-xs text-slate-500">
+                <span class="text-xs text-slate-600">
                     {{
                         t('common.pageOf')
                             .replace(
@@ -224,7 +224,7 @@ function applyFilters(): void {
                 >
                     {{ t('common.next') }}
                 </Link>
-                <span v-else class="text-slate-400">{{
+                <span v-else class="text-slate-500">{{
                     t('common.next')
                 }}</span>
             </nav>

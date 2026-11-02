@@ -38,7 +38,7 @@ function submit(): void {
             </h2>
             <p
                 v-if="block.description"
-                class="mx-auto mt-2 max-w-xl text-sm leading-relaxed text-slate-600 dark:text-slate-400"
+                class="mx-auto mt-2 max-w-xl text-sm leading-relaxed text-slate-700 dark:text-slate-400"
             >
                 {{ block.description }}
             </p>

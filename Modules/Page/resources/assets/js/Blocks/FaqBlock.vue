@@ -36,7 +36,7 @@ defineProps<{
                         </span>
                     </summary>
                     <p
-                        class="px-5 pb-5 text-sm leading-relaxed whitespace-pre-line text-slate-600 dark:text-slate-400"
+                        class="px-5 pb-5 text-sm leading-relaxed whitespace-pre-line text-slate-700 dark:text-slate-400"
                     >
                         {{ item.description }}
                     </p>

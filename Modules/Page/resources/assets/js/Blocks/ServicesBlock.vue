@@ -21,7 +21,7 @@ defineProps<{
             </h2>
             <p
                 v-if="block.subtitle"
-                class="mt-2 max-w-2xl text-slate-600 dark:text-slate-400"
+                class="mt-2 max-w-2xl text-slate-700 dark:text-slate-400"
             >
                 {{ block.subtitle }}
             </p>
@@ -54,7 +54,7 @@ defineProps<{
                                 />
                             </span>
                             <span
-                                class="mt-1 block text-sm leading-relaxed text-slate-600 dark:text-slate-400"
+                                class="mt-1 block text-sm leading-relaxed text-slate-700 dark:text-slate-400"
                             >
                                 {{ item.description }}
                             </span>
@@ -65,7 +65,7 @@ defineProps<{
 
             <p
                 v-if="(block.items ?? []).length === 0"
-                class="mt-4 text-sm text-slate-500 dark:text-slate-400"
+                class="mt-4 text-sm text-slate-600 dark:text-slate-400"
             >
                 {{ t('services.empty') }}
             </p>
