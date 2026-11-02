@@ -33,7 +33,7 @@ final class QuoteService
     }
 
     /**
-     * @param  array{name: string, email: string, phone: string|null, message: string|null}  $data
+     * @param  array{user_id?: int|null, name: string, email: string, phone: string|null, message: string|null}  $data
      */
     public function submit(array $data): Quote
     {

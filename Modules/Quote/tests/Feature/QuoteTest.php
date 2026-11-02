@@ -170,6 +170,25 @@ class QuoteTest extends TestCase
             ->assertInertia(fn (Assert $inertia) => $inertia->has('items', 0));
     }
 
+    public function test_a_logged_in_checkout_is_linked_to_the_account(): void
+    {
+        $customer = User::factory()->customer()->create();
+        $product = $this->product();
+
+        $this->post(route('quote.item.store'), [
+            'product_id' => $product->id,
+            'quantity' => 1,
+        ]);
+
+        $this->actingAs($customer)->post(route('quote.store'), [
+            'name' => 'João',
+            'email' => 'joao@example.com',
+            'website' => '',
+        ])->assertRedirect(route('quote.cart'));
+
+        $this->assertSame($customer->id, Quote::query()->firstOrFail()->user_id);
+    }
+
     public function test_the_honeypot_blocks_bots(): void
     {
         $this->post(route('quote.item.store'), [

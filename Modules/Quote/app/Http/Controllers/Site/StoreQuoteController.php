@@ -12,7 +12,10 @@ final class StoreQuoteController
 {
     public function __invoke(QuoteRequest $request, QuoteService $quotes): RedirectResponse
     {
-        $quotes->submit($request->toData());
+        $quotes->submit([
+            ...$request->toData(),
+            'user_id' => $request->user()?->id,
+        ]);
 
         return to_route('quote.cart')
             ->with('success', 'Orçamento enviado. Entraremos em contato em breve.');

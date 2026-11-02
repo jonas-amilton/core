@@ -16,7 +16,7 @@ final class AccountController
     {
         $orders = Quote::query()
             ->with('items')
-            ->where('email', $request->user()?->email)
+            ->where('user_id', $request->user()?->id)
             ->latest('id')
             ->get()
             ->map(function (Quote $quote): array {
