@@ -147,6 +147,7 @@ final class EloquentCatalogRepository implements CatalogRepository
             'slug' => $slug,
             'sku' => $data->sku,
             'price' => $data->price,
+            'stock' => $data->stock,
             'description' => $data->description,
             'position' => $data->position,
             'translations' => $data->translations !== [] ? $data->translations : null,

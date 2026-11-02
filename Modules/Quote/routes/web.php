@@ -10,11 +10,15 @@ use Modules\Quote\Http\Controllers\Site\CartController;
 use Modules\Quote\Http\Controllers\Site\DestroyCartItemController;
 use Modules\Quote\Http\Controllers\Site\StoreCartItemController;
 use Modules\Quote\Http\Controllers\Site\StoreQuoteController;
+use Modules\Quote\Http\Controllers\Site\UpdateCartItemController;
 
 Route::get('orcamento', CartController::class)->name('quote.cart');
 Route::post('orcamento/itens', StoreCartItemController::class)
     ->middleware('throttle:20,1')
     ->name('quote.item.store');
+Route::patch('orcamento/itens/{product}', UpdateCartItemController::class)
+    ->whereNumber('product')
+    ->name('quote.item.update');
 Route::delete('orcamento/itens/{product}', DestroyCartItemController::class)
     ->whereNumber('product')
     ->name('quote.item.destroy');

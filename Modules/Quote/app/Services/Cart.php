@@ -53,8 +53,33 @@ final class Cart
 
     public function add(int $productId, int $quantity = 1): void
     {
+        $this->setQuantity(
+            $productId,
+            ($this->quantities()[$productId] ?? 0) + max(1, $quantity),
+        );
+    }
+
+    /**
+     * Clamps to the available stock (null means no stock control).
+     */
+    public function setQuantity(int $productId, int $quantity): void
+    {
+        $product = $this->catalog->findProduct($productId);
+
+        if ($product === null) {
+            return;
+        }
+
+        $limit = $product->stock === null ? 999 : min(999, $product->stock);
+
+        if ($limit <= 0) {
+            $this->remove($productId);
+
+            return;
+        }
+
         $items = $this->quantities();
-        $items[$productId] = min(999, ($items[$productId] ?? 0) + max(1, $quantity));
+        $items[$productId] = max(1, min($limit, $quantity));
         session([self::KEY => $items]);
     }
 

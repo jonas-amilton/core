@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Modules\Page\Models;
 
+use App\Support\Searchable;
 use App\Support\Translatable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -25,6 +26,7 @@ use Modules\Page\Enums\PageStatus;
  */
 class Page extends Model
 {
+    use Searchable;
     use Translatable;
 
     public const HOME_SLUG = 'home';
@@ -76,6 +78,20 @@ class Page extends Model
     public function revisions(): HasMany
     {
         return $this->hasMany(PageRevision::class)->latest('id');
+    }
+
+    protected function searchableText(): string
+    {
+        $texts = [$this->title];
+        $blocks = $this->blocks ?? [];
+
+        array_walk_recursive($blocks, function (mixed $value) use (&$texts): void {
+            if (is_string($value)) {
+                $texts[] = $value;
+            }
+        });
+
+        return implode(' ', $texts);
     }
 
     public function isHome(): bool

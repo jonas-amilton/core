@@ -1,14 +1,15 @@
 <script setup lang="ts">
-import { Head, Link, router, useForm } from '@inertiajs/vue3';
+import { Link, router, useForm } from '@inertiajs/vue3';
 import { Check, Trash2 } from '@lucide/vue';
 import { computed } from 'vue';
 import SiteShell from '@modules/Page/resources/assets/js/components/SiteShell.vue';
 import type { NavigationItem } from '@modules/Page/resources/assets/js/types';
-import { destroy } from '@/routes/quote/item';
+import { destroy, update as updateItem } from '@/routes/quote/item';
 import { store } from '@/routes/quote';
 import { formatPrice } from '@/lib/format';
 import { siteFieldClasses } from '@/lib/formStyles';
 import { useI18n } from '@/i18n';
+import SiteHead from '@/components/SiteHead.vue';
 
 type CartItem = {
     id: number;
@@ -49,6 +50,20 @@ const form = useForm({
     website: '',
 });
 
+function changeQuantity(item: CartItem, event: Event): void {
+    const value = Number((event.target as HTMLInputElement).value);
+
+    if (!Number.isFinite(value) || value < 1) {
+        return;
+    }
+
+    router.patch(
+        updateItem.url(item.id),
+        { quantity: value },
+        { preserveScroll: true },
+    );
+}
+
 function remove(item: CartItem): void {
     router.delete(destroy.url(item.id), { preserveScroll: true });
 }
@@ -62,7 +77,7 @@ function submit(): void {
 </script>
 
 <template>
-    <Head title="Orçamento" />
+    <SiteHead :title="t('quote.title')" />
 
     <SiteShell :navigation="props.navigation">
         <section class="px-4 py-12 sm:px-6 sm:py-16">
@@ -113,12 +128,27 @@ function submit(): void {
                             >
                                 {{ item.name }}
                             </Link>
-                            <p class="text-xs text-slate-500">
-                                <template v-if="item.sku"
-                                    >{{ t('catalog.sku') }} {{ item.sku }} ·
-                                </template>
-                                {{ t('quote.quantity') }} {{ item.quantity }}
-                            </p>
+                            <div
+                                class="mt-1 flex items-center gap-3 text-xs text-slate-500"
+                            >
+                                <span v-if="item.sku">
+                                    {{ t('catalog.sku') }} {{ item.sku }}
+                                </span>
+                                <label class="inline-flex items-center gap-1.5">
+                                    <span class="sr-only">
+                                        {{ t('quote.quantity') }}
+                                    </span>
+                                    <input
+                                        type="number"
+                                        min="1"
+                                        max="999"
+                                        :value="item.quantity"
+                                        :aria-label="`${t('quote.quantity')} ${item.name}`"
+                                        class="h-8 w-16 rounded-md border border-slate-300 bg-white px-2 text-sm text-slate-900 tabular-nums focus-visible:border-blue-700 focus-visible:ring-2 focus-visible:ring-blue-700/20 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100"
+                                        @change="changeQuantity(item, $event)"
+                                    />
+                                </label>
+                            </div>
                         </div>
                         <p
                             class="text-sm font-medium text-slate-950 tabular-nums dark:text-slate-50"

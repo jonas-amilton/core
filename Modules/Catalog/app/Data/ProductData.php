@@ -19,6 +19,7 @@ final readonly class ProductData
         public ?string $description,
         public int $position,
         public ?float $price = null,
+        public ?int $stock = null,
         public array $categoryIds = [],
         public array $mediaIds = [],
         public array $relatedIds = [],
@@ -37,6 +38,7 @@ final readonly class ProductData
             description: self::string($data['description'] ?? null),
             position: (int) ($data['position'] ?? 0),
             price: self::decimal($data['price'] ?? null),
+            stock: self::integer($data['stock'] ?? null),
             categoryIds: self::integers($data['category_ids'] ?? []),
             mediaIds: self::integers($data['media_ids'] ?? []),
             relatedIds: self::integers($data['related_ids'] ?? []),
@@ -52,6 +54,11 @@ final readonly class ProductData
     private static function decimal(mixed $value): ?float
     {
         return is_numeric($value) ? (float) $value : null;
+    }
+
+    private static function integer(mixed $value): ?int
+    {
+        return is_numeric($value) ? max(0, (int) $value) : null;
     }
 
     /**

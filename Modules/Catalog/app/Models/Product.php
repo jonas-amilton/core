@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Modules\Catalog\Models;
 
+use App\Support\Searchable;
 use App\Support\Translatable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -16,6 +17,7 @@ use Modules\Media\Models\Media;
  * @property string $slug
  * @property string|null $sku
  * @property string|null $price
+ * @property int|null $stock
  * @property string|null $description
  * @property array<string, array<string, mixed>>|null $translations
  * @property int $position
@@ -24,6 +26,7 @@ use Modules\Media\Models\Media;
  */
 class Product extends Model
 {
+    use Searchable;
     use Translatable;
 
     protected $table = 'catalog_products';
@@ -33,6 +36,7 @@ class Product extends Model
         'slug',
         'sku',
         'price',
+        'stock',
         'description',
         'translations',
         'position',
@@ -46,6 +50,7 @@ class Product extends Model
         return [
             'position' => 'integer',
             'price' => 'decimal:2',
+            'stock' => 'integer',
             'translations' => 'array',
         ];
     }
@@ -76,6 +81,11 @@ class Product extends Model
         return $this->belongsToMany(self::class, 'catalog_related', 'product_id', 'related_id');
     }
 
+    protected function searchableText(): string
+    {
+        return implode(' ', array_filter([$this->name, $this->sku, $this->description]));
+    }
+
     public function cover(): ?string
     {
         return $this->media->first()?->url();
@@ -100,6 +110,7 @@ class Product extends Model
             'slug' => $this->slug,
             'sku' => $this->sku,
             'price' => $this->price,
+            'stock' => $this->stock,
             'position' => $this->position,
             'cover' => $this->cover(),
             'updated_at' => $this->updated_at?->toIso8601String(),
@@ -117,6 +128,7 @@ class Product extends Model
             'slug' => $this->slug,
             'sku' => $this->sku,
             'price' => $this->price,
+            'stock' => $this->stock,
             'cover' => $this->cover(),
         ];
     }
@@ -155,6 +167,7 @@ class Product extends Model
             'slug' => $this->slug,
             'sku' => $this->sku,
             'price' => $this->price,
+            'stock' => $this->stock,
             'description' => $this->transString('description') ?? $this->description,
             'images' => $this->imageUrls(),
             'categories' => $this->categories

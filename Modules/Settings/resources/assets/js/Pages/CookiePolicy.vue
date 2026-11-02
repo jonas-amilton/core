@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import { Head } from '@inertiajs/vue3';
+
 import SiteShell from '@modules/Page/resources/assets/js/components/SiteShell.vue';
 import type { NavigationItem } from '@modules/Page/resources/assets/js/types';
 import { useI18n } from '@/i18n';
+import SiteHead from '@/components/SiteHead.vue';
 
 const props = defineProps<{
     cookieText: string;
@@ -30,7 +31,7 @@ const optional = [
 </script>
 
 <template>
-    <Head :title="t('cookiesPage.title')" />
+    <SiteHead :title="t('cookiesPage.title')" />
 
     <SiteShell :navigation="navigation">
         <section class="px-4 py-12 sm:px-6 sm:py-16">

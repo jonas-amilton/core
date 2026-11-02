@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import { Head } from '@inertiajs/vue3';
+
 import SiteShell from '@modules/Page/resources/assets/js/components/SiteShell.vue';
 import type { NavigationItem } from '@modules/Page/resources/assets/js/types';
 import { useI18n } from '@/i18n';
+import SiteHead from '@/components/SiteHead.vue';
 
 type StoreItem = {
     id: number;
@@ -23,7 +24,7 @@ const props = defineProps<{
 </script>
 
 <template>
-    <Head :title="t('stores.title')" />
+    <SiteHead :title="t('stores.title')" />
 
     <SiteShell :navigation="props.navigation">
         <section class="px-4 py-12 sm:px-6 sm:py-16">

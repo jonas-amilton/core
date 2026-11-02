@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Link, usePage } from '@inertiajs/vue3';
-import { Clock, Mail, Menu, Phone, ShoppingBag } from '@lucide/vue';
+import { Clock, Mail, Menu, Phone, Search, ShoppingBag } from '@lucide/vue';
 import { computed } from 'vue';
 import CookieConsent from '@/components/CookieConsent.vue';
 import { switchLocale, useI18n } from '@/i18n';
@@ -104,29 +104,31 @@ const navLink = (active: boolean): string =>
                         </span>
                     </Link>
 
-                    <nav
-                        :aria-label="t('nav.pages')"
-                        class="hidden items-center gap-0.5 lg:flex"
+                    <form
+                        action="/busca"
+                        method="get"
+                        role="search"
+                        class="hidden min-w-0 max-w-md flex-1 items-center gap-1 md:flex"
                     >
-                        <a
-                            v-for="item in props.navigation"
-                            :key="item.slug"
-                            :href="item.url"
-                            :aria-current="isCurrent(item) ? 'page' : undefined"
-                            :class="navLink(isCurrent(item))"
+                        <label class="sr-only" for="site-search">
+                            {{ t('search.placeholder') }}
+                        </label>
+                        <input
+                            id="site-search"
+                            type="search"
+                            name="q"
+                            :placeholder="t('search.placeholder')"
+                            class="h-9 w-full rounded-md border border-slate-200 bg-slate-50 px-3 text-sm text-slate-900 placeholder:text-slate-400 focus-visible:border-blue-700 focus-visible:bg-white focus-visible:ring-2 focus-visible:ring-blue-700/20 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-100"
+                        />
+                        <button
+                            type="submit"
+                            class="flex size-9 shrink-0 items-center justify-center rounded-md border border-slate-200 text-slate-600 hover:border-blue-300 hover:text-blue-800 dark:border-slate-800 dark:text-slate-400"
+                            :aria-label="t('search.submit')"
                         >
-                            {{ item.title }}
-                        </a>
-                        <a
-                            href="/blog"
-                            :aria-current="
-                                page.url.startsWith('/blog') ? 'page' : undefined
-                            "
-                            :class="navLink(page.url.startsWith('/blog'))"
-                        >
-                            {{ t('nav.blog') }}
-                        </a>
-                    </nav>
+                            <Search class="size-4" aria-hidden="true" />
+                        </button>
+                    </form>
+
 
                     <div class="flex items-center gap-3">
                         <div
@@ -202,6 +204,30 @@ const navLink = (active: boolean): string =>
                                 >
                                     {{ t('nav.blog') }}
                                 </a>
+                                <form
+                                    action="/busca"
+                                    method="get"
+                                    role="search"
+                                    class="mt-1 flex items-center gap-1 border-t border-slate-200 px-1 pt-3 dark:border-slate-800"
+                                >
+                                    <label class="sr-only" for="site-search-mobile">
+                                        {{ t('search.placeholder') }}
+                                    </label>
+                                    <input
+                                        id="site-search-mobile"
+                                        type="search"
+                                        name="q"
+                                        :placeholder="t('search.placeholder')"
+                                        class="h-9 w-full rounded-md border border-slate-200 bg-white px-3 text-sm text-slate-900 placeholder:text-slate-400 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-100"
+                                    />
+                                    <button
+                                        type="submit"
+                                        class="flex size-9 shrink-0 items-center justify-center rounded-md border border-slate-200 text-slate-600 dark:border-slate-800 dark:text-slate-400"
+                                        :aria-label="t('search.submit')"
+                                    >
+                                        <Search class="size-4" aria-hidden="true" />
+                                    </button>
+                                </form>
                                 <a
                                     href="/orcamento"
                                     class="mt-1 flex items-center justify-center gap-2 rounded-md bg-blue-800 px-3 py-2 text-sm font-medium text-white"
@@ -222,6 +248,36 @@ const navLink = (active: boolean): string =>
                                 </a>
                             </nav>
                         </details>
+                    </div>
+                </div>
+
+                <div class="border-t border-slate-200 dark:border-slate-800">
+                    <div
+                        class="mx-auto flex h-11 w-full max-w-6xl items-center px-4 sm:px-6"
+                    >
+                    <nav
+                        :aria-label="t('nav.pages')"
+                        class="hidden items-center gap-0.5 lg:flex"
+                    >
+                        <a
+                            v-for="item in props.navigation"
+                            :key="item.slug"
+                            :href="item.url"
+                            :aria-current="isCurrent(item) ? 'page' : undefined"
+                            :class="navLink(isCurrent(item))"
+                        >
+                            {{ item.title }}
+                        </a>
+                        <a
+                            href="/blog"
+                            :aria-current="
+                                page.url.startsWith('/blog') ? 'page' : undefined
+                            "
+                            :class="navLink(page.url.startsWith('/blog'))"
+                        >
+                            {{ t('nav.blog') }}
+                        </a>
+                    </nav>
                     </div>
                 </div>
             </div>

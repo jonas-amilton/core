@@ -41,6 +41,7 @@ void createInertiaApp({
             case name === 'Quote::Cart':
             case name === 'Store::WhereToBuy':
             case name === 'Settings::CookiePolicy':
+            case name === 'Search':
                 return null;
             case name.startsWith('auth/'):
                 return AuthLayout;

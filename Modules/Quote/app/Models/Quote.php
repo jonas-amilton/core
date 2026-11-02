@@ -63,6 +63,7 @@ class Quote extends Model
                     'id' => $item->id,
                     'name' => $item->name,
                     'quantity' => $item->quantity,
+                    'unit_price' => $item->unit_price,
                 ])
                 ->values()
                 ->all(),

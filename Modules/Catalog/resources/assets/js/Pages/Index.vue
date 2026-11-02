@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Head, Link, router } from '@inertiajs/vue3';
+import { Link, router } from '@inertiajs/vue3';
 import { Check, Plus } from '@lucide/vue';
 import { ref } from 'vue';
 import { store as addToCart } from '@/routes/quote/item';
@@ -7,6 +7,7 @@ import SiteShell from '@modules/Page/resources/assets/js/components/SiteShell.vu
 import type { NavigationItem } from '@modules/Page/resources/assets/js/types';
 import { formatPrice } from '@/lib/format';
 import { useI18n } from '@/i18n';
+import SiteHead from '@/components/SiteHead.vue';
 
 type Product = {
     id: number;
@@ -14,6 +15,7 @@ type Product = {
     slug: string;
     sku: string | null;
     price: string | null;
+    stock: number | null;
     cover: string | null;
 };
 
@@ -61,7 +63,7 @@ function add(product: Product): void {
 </script>
 
 <template>
-    <Head :title="title" />
+    <SiteHead :title="title" />
 
     <SiteShell :navigation="props.navigation">
         <section class="px-4 py-12 sm:px-6 sm:py-16">
@@ -147,6 +149,7 @@ function add(product: Product): void {
                         </p>
 
                         <button
+                            v-if="product.stock !== 0"
                             type="button"
                             class="mt-3 inline-flex h-10 items-center justify-center gap-2 rounded-md bg-blue-800 px-4 text-sm font-medium text-white transition-colors hover:bg-blue-900 disabled:opacity-50"
                             :aria-label="`${t('catalog.addToCart')}: ${product.name}`"
@@ -164,6 +167,12 @@ function add(product: Product): void {
                                     : t('catalog.addToCart')
                             }}
                         </button>
+                        <p
+                            v-else
+                            class="mt-3 inline-flex h-10 items-center justify-center rounded-md border border-slate-200 text-sm font-medium text-slate-500 dark:border-slate-800 dark:text-slate-400"
+                        >
+                            {{ t('catalog.outOfStock') }}
+                        </p>
                     </div>
                 </li>
             </ul>

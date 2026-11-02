@@ -14,5 +14,6 @@ return [
         'email_required' => 'Please enter an email for the quote.',
         'email_email' => 'Please enter a valid email address.',
         'empty_cart' => 'Add at least one product to the quote.',
+        'insufficient_stock' => 'Not enough stock for :product.',
     ],
 ];

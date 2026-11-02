@@ -4,16 +4,23 @@ declare(strict_types=1);
 
 namespace Modules\Quote\Services;
 
+use App\Mail\OrderMail;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\ValidationException;
+use Modules\Catalog\Models\Product;
 use Modules\Quote\Contracts\QuoteRepository;
 use Modules\Quote\Models\Quote;
+use Modules\Settings\Services\SettingsService;
+use Throwable;
 
 final class QuoteService
 {
     public function __construct(
         private QuoteRepository $quotes,
         private Cart $cart,
+        private SettingsService $settings,
     ) {}
 
     /**
@@ -29,25 +36,65 @@ final class QuoteService
      */
     public function submit(array $data): Quote
     {
-        $items = array_map(
-            fn (array $item): array => [
-                'product_id' => $item['product']->id,
-                'name' => $item['product']->name,
-                'quantity' => $item['quantity'],
-            ],
-            $this->cart->items(),
-        );
+        $cartItems = $this->cart->items();
 
-        if ($items === []) {
+        if ($cartItems === []) {
             throw ValidationException::withMessages([
                 'cart' => __('site.quote.empty_cart'),
             ]);
         }
 
-        $quote = $this->quotes->create($data, $items);
-        $this->cart->clear();
+        $quote = DB::transaction(function () use ($data, $cartItems): Quote {
+            $items = [];
+
+            foreach ($cartItems as $item) {
+                /** @var Product $product */
+                $product = Product::query()->lockForUpdate()->findOrFail($item['product']->id);
+
+                if ($product->stock !== null) {
+                    if ($product->stock < $item['quantity']) {
+                        throw ValidationException::withMessages([
+                            'cart' => __('site.quote.insufficient_stock', [
+                                'product' => $product->name,
+                            ]),
+                        ]);
+                    }
+
+                    $product->decrement('stock', $item['quantity']);
+                }
+
+                $items[] = [
+                    'product_id' => $product->id,
+                    'name' => $product->name,
+                    'quantity' => $item['quantity'],
+                    'price' => $product->price,
+                ];
+            }
+
+            $quote = $this->quotes->create($data, $items);
+            $this->cart->clear();
+
+            return $quote;
+        });
+
+        $this->notify($quote);
 
         return $quote;
+    }
+
+    private function notify(Quote $quote): void
+    {
+        $adminEmail = $this->settings->get('email');
+
+        try {
+            Mail::to($quote->email)->send(new OrderMail($quote));
+
+            if ($adminEmail !== '' && $adminEmail !== $quote->email) {
+                Mail::to($adminEmail)->send(new OrderMail($quote, true));
+            }
+        } catch (Throwable $exception) {
+            report($exception);
+        }
     }
 
     public function markAnswered(Quote $quote, bool $answered): Quote

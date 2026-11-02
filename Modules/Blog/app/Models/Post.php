@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Modules\Blog\Models;
 
+use App\Support\Searchable;
 use App\Support\Translatable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -24,6 +25,7 @@ use Illuminate\Support\Carbon;
  */
 class Post extends Model
 {
+    use Searchable;
     use Translatable;
 
     protected $table = 'blog_posts';
@@ -56,6 +58,11 @@ class Post extends Model
     public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class, 'category_id');
+    }
+
+    protected function searchableText(): string
+    {
+        return implode(' ', array_filter([$this->title, $this->excerpt, $this->body]));
     }
 
     public function isPublished(): bool

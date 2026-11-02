@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import { Head, Link, router } from '@inertiajs/vue3';
+import { Link, router } from '@inertiajs/vue3';
 import { Check, Plus } from '@lucide/vue';
 import { ref } from 'vue';
 import { store as addToCart } from '@/routes/quote/item';
 import { formatPrice } from '@/lib/format';
 import { useI18n } from '@/i18n';
+import SiteHead from '@/components/SiteHead.vue';
 import SiteShell from '@modules/Page/resources/assets/js/components/SiteShell.vue';
 import type { NavigationItem } from '@modules/Page/resources/assets/js/types';
 
@@ -14,6 +15,7 @@ type Product = {
     slug: string;
     sku: string | null;
     price: string | null;
+    stock: number | null;
     description: string | null;
     images: string[];
     categories: { name: string; slug: string }[];
@@ -48,7 +50,12 @@ function addProduct(): void {
 </script>
 
 <template>
-    <Head :title="props.product.name" />
+    <SiteHead
+        :title="props.product.name"
+        :description="props.product.description"
+        :image="props.product.images[0] ?? null"
+        type="product"
+    />
 
     <SiteShell :navigation="props.navigation">
         <article class="px-4 py-12 sm:px-6 sm:py-16">
@@ -124,6 +131,25 @@ function addProduct(): void {
                         }}
                     </p>
 
+                    <p
+                        v-if="props.product.stock !== null"
+                        class="mt-1 text-sm"
+                        :class="
+                            props.product.stock > 0
+                                ? 'text-emerald-700 dark:text-emerald-400'
+                                : 'text-red-600 dark:text-red-400'
+                        "
+                    >
+                        {{
+                            props.product.stock > 0
+                                ? t('catalog.inStock').replace(
+                                      ':count',
+                                      String(props.product.stock),
+                                  )
+                                : t('catalog.outOfStock')
+                        }}
+                    </p>
+
                     <div
                         v-if="props.product.description"
                         class="mt-6 text-[15px] leading-[1.75] whitespace-pre-line text-slate-700 dark:text-slate-300"
@@ -133,6 +159,7 @@ function addProduct(): void {
 
                     <div class="mt-8 flex flex-wrap items-center gap-3">
                         <button
+                            v-if="props.product.stock !== 0"
                             type="button"
                             class="inline-flex h-10 items-center gap-2 rounded-md bg-blue-800 px-5 text-sm font-medium text-white hover:bg-blue-900"
                             @click="addProduct"

@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { Head } from '@inertiajs/vue3';
 import { computed } from 'vue';
 import ClientsBlock from '../Blocks/ClientsBlock.vue';
 import CareerBlock from '../Blocks/CareerBlock.vue';
@@ -16,6 +15,7 @@ import ServicesBlock from '../Blocks/ServicesBlock.vue';
 import TestimonialsBlock from '../Blocks/TestimonialsBlock.vue';
 import TextBlock from '../Blocks/TextBlock.vue';
 import SiteShell from '../components/SiteShell.vue';
+import SiteHead from '@/components/SiteHead.vue';
 import type { Block, NavigationItem, PageRecord } from '../types';
 
 const props = defineProps<{
@@ -43,10 +43,30 @@ const renderers = {
 const visibleBlocks = computed<Block[]>(() =>
     props.page.blocks.filter((block) => !block.hidden),
 );
+
+const seoDescription = computed<string | null>(() => {
+    for (const block of visibleBlocks.value) {
+        const text = block.subtitle ?? block.description ?? block.body;
+
+        if (text) {
+            return text;
+        }
+    }
+
+    return null;
+});
+
+const seoImage = computed<string | null>(
+    () => visibleBlocks.value.find((block) => block.src)?.src ?? null,
+);
 </script>
 
 <template>
-    <Head :title="page.title" />
+    <SiteHead
+        :title="page.title"
+        :description="seoDescription"
+        :image="seoImage"
+    />
 
     <SiteShell :navigation="navigation">
         <div v-for="block in visibleBlocks" :key="block.id">

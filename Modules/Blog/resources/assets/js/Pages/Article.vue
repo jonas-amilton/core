@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import { Head, Link } from '@inertiajs/vue3';
+import { Link } from '@inertiajs/vue3';
 import { ArrowLeft } from '@lucide/vue';
 import SiteShell from '@modules/Page/resources/assets/js/components/SiteShell.vue';
 import type { NavigationItem } from '@modules/Page/resources/assets/js/types';
 import { useI18n } from '@/i18n';
+import SiteHead from '@/components/SiteHead.vue';
 
 type Post = {
     id: number;
@@ -36,7 +37,12 @@ const formatDate = (value: string | null): string =>
 </script>
 
 <template>
-    <Head :title="props.post.title" />
+    <SiteHead
+        :title="props.post.title"
+        :description="props.post.excerpt"
+        :image="props.post.cover"
+        type="article"
+    />
 
     <SiteShell :navigation="props.navigation">
         <article class="px-4 py-12 sm:px-6 sm:py-16">

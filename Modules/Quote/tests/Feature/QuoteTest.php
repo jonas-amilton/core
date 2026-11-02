@@ -4,11 +4,14 @@ declare(strict_types=1);
 
 namespace Modules\Quote\Tests\Feature;
 
+use App\Mail\OrderMail;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Mail;
 use Inertia\Testing\AssertableInertia as Assert;
 use Modules\Catalog\Models\Product;
 use Modules\Quote\Models\Quote;
+use Modules\Settings\Models\Setting;
 use Tests\TestCase;
 
 class QuoteTest extends TestCase
@@ -43,6 +46,89 @@ class QuoteTest extends TestCase
                 ->where('items.0.quantity', 2)
                 ->where('items.0.price', '189.90')
             );
+    }
+
+    public function test_the_quantity_can_be_changed_in_the_cart(): void
+    {
+        $product = $this->product();
+
+        $this->post(route('quote.item.store'), [
+            'product_id' => $product->id,
+            'quantity' => 1,
+        ]);
+
+        $this->patch(route('quote.item.update', $product->id), [
+            'quantity' => 4,
+        ])->assertRedirect();
+
+        $this->get(route('quote.cart'))
+            ->assertOk()
+            ->assertInertia(fn (Assert $inertia) => $inertia
+                ->where('items.0.quantity', 4)
+            );
+    }
+
+    public function test_stock_is_decremented_when_the_order_is_placed(): void
+    {
+        $product = $this->product();
+        $product->update(['stock' => 5]);
+
+        $this->post(route('quote.item.store'), [
+            'product_id' => $product->id,
+            'quantity' => 2,
+        ]);
+
+        $this->post(route('quote.store'), [
+            'name' => 'João',
+            'email' => 'joao@example.com',
+            'website' => '',
+        ])->assertRedirect(route('quote.cart'));
+
+        $this->assertSame(3, $product->fresh()->stock);
+    }
+
+    public function test_a_cart_above_stock_cannot_be_submitted(): void
+    {
+        $product = $this->product();
+        $product->update(['stock' => 5]);
+
+        $this->post(route('quote.item.store'), [
+            'product_id' => $product->id,
+            'quantity' => 3,
+        ]);
+
+        $product->update(['stock' => 1]);
+
+        $this->post(route('quote.store'), [
+            'name' => 'João',
+            'email' => 'joao@example.com',
+            'website' => '',
+        ])->assertSessionHasErrors('cart');
+
+        $this->assertSame(1, $product->fresh()->stock);
+        $this->assertSame(0, Quote::query()->count());
+    }
+
+    public function test_the_order_notifies_the_customer_and_the_store(): void
+    {
+        Mail::fake();
+        Setting::query()->create(['key' => 'email', 'value' => 'loja@example.com']);
+
+        $product = $this->product();
+
+        $this->post(route('quote.item.store'), [
+            'product_id' => $product->id,
+            'quantity' => 1,
+        ]);
+
+        $this->post(route('quote.store'), [
+            'name' => 'João',
+            'email' => 'joao@example.com',
+            'website' => '',
+        ]);
+
+        Mail::assertSent(OrderMail::class, fn (OrderMail $mail): bool => $mail->hasTo('joao@example.com'));
+        Mail::assertSent(OrderMail::class, fn (OrderMail $mail): bool => $mail->hasTo('loja@example.com') && $mail->forAdmin);
     }
 
     public function test_an_empty_cart_cannot_be_submitted(): void

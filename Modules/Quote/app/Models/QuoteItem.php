@@ -14,6 +14,7 @@ use Modules\Catalog\Models\Product;
  * @property int|null $product_id
  * @property string $name
  * @property int $quantity
+ * @property string|null $unit_price
  */
 class QuoteItem extends Model
 {
@@ -22,6 +23,7 @@ class QuoteItem extends Model
         'product_id',
         'name',
         'quantity',
+        'unit_price',
     ];
 
     /**
@@ -31,6 +33,7 @@ class QuoteItem extends Model
     {
         return [
             'quantity' => 'integer',
+            'unit_price' => 'decimal:2',
         ];
     }
 

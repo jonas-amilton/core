@@ -26,6 +26,7 @@ type Product = {
     slug: string;
     sku: string | null;
     price: string | null;
+    stock: number | null;
     description: string | null;
     position: number;
     cover: string | null;
@@ -74,6 +75,7 @@ const form = useForm({
     slug: props.product?.slug ?? '',
     sku: props.product?.sku ?? '',
     price: props.product?.price ?? '',
+    stock: props.product?.stock ?? '',
     description: props.product?.description ?? '',
     position: props.product?.position ?? 0,
     category_ids: props.product?.category_ids ?? [],
@@ -274,6 +276,22 @@ function removeMedia(id: number): void {
                         />
                         <span v-if="form.errors.price" class="text-xs text-red-600">
                             {{ form.errors.price }}
+                        </span>
+                    </label>
+
+                    <label class="grid gap-1.5">
+                        <span class="text-xs font-medium text-stone-600 dark:text-stone-400">
+                            Estoque
+                        </span>
+                        <input
+                            v-model.number="form.stock"
+                            type="number"
+                            min="0"
+                            placeholder="Sem controle (vazio)"
+                            :class="fieldClasses"
+                        />
+                        <span v-if="form.errors.stock" class="text-xs text-red-600">
+                            {{ form.errors.stock }}
                         </span>
                     </label>
 

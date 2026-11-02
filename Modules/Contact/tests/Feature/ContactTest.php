@@ -4,11 +4,14 @@ declare(strict_types=1);
 
 namespace Modules\Contact\Tests\Feature;
 
+use App\Mail\ContactMessageMail;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Mail;
 use Inertia\Testing\AssertableInertia as Assert;
 use Modules\Contact\Models\ContactMessage;
 use Modules\Contact\Models\Subscriber;
+use Modules\Settings\Models\Setting;
 use Tests\TestCase;
 
 class ContactTest extends TestCase
@@ -34,6 +37,21 @@ class ContactTest extends TestCase
             'email' => 'invalido',
             'message' => '',
         ])->assertSessionHasErrors(['email', 'message']);
+    }
+
+    public function test_a_message_notifies_the_store(): void
+    {
+        Mail::fake();
+        Setting::query()->create(['key' => 'email', 'value' => 'loja@example.com']);
+
+        $this->post(route('contact.store'), [
+            'name' => 'João',
+            'email' => 'joao@example.com',
+            'message' => 'Preciso de ajuda.',
+            'website' => '',
+        ]);
+
+        Mail::assertSent(ContactMessageMail::class, fn (ContactMessageMail $mail): bool => $mail->hasTo('loja@example.com'));
     }
 
     public function test_the_honeypot_blocks_bots(): void

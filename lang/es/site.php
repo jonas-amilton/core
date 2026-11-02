@@ -14,5 +14,6 @@ return [
         'email_required' => 'Indica un correo para el presupuesto.',
         'email_email' => 'Indica un correo electrónico válido.',
         'empty_cart' => 'Añade al menos un producto al presupuesto.',
+        'insufficient_stock' => 'Stock insuficiente para :product.',
     ],
 ];
