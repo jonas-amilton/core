@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { Head, Link, router, useForm } from '@inertiajs/vue3';
 import { ArrowLeft, Check, Pencil, Plus, Trash2, X } from '@lucide/vue';
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import { index as productsIndex } from '@/routes/catalog/product';
 import {
     destroy,
@@ -18,6 +18,7 @@ type Category = {
     slug: string;
     position: number;
     products_count: number | null;
+    translations: Record<'en' | 'es', { name: string | null }>;
 };
 
 type CategoryOption = {
@@ -38,11 +39,41 @@ defineOptions({
 
 const editing = ref<Category | null>(null);
 
+type EditLocale = 'pt_BR' | 'en' | 'es';
+
+const locales: EditLocale[] = ['pt_BR', 'en', 'es'];
+const localeLabels: Record<EditLocale, string> = {
+    pt_BR: 'PT',
+    en: 'EN',
+    es: 'ES',
+};
+const editLocale = ref<EditLocale>('pt_BR');
+
 const form = useForm({
     name: '',
     slug: '',
     parent_id: '',
     position: 0,
+    translations: {
+        en: { name: '' },
+        es: { name: '' },
+    },
+});
+
+const name = computed({
+    get: () =>
+        editLocale.value === 'pt_BR'
+            ? form.name
+            : (form.translations[editLocale.value].name ?? ''),
+    set: (value: string) => {
+        if (editLocale.value === 'pt_BR') {
+            form.name = value;
+
+            return;
+        }
+
+        form.translations[editLocale.value].name = value;
+    },
 });
 
 function reset(): void {
@@ -53,10 +84,13 @@ function reset(): void {
 
 function edit(item: Category): void {
     editing.value = item;
+    editLocale.value = 'pt_BR';
     form.name = item.name;
     form.slug = item.slug;
     form.parent_id = item.parent_id ? String(item.parent_id) : '';
     form.position = item.position;
+    form.translations.en.name = item.translations?.en?.name ?? '';
+    form.translations.es.name = item.translations?.es?.name ?? '';
     form.clearErrors();
 }
 
@@ -109,10 +143,26 @@ function remove(item: Category): void {
             @submit.prevent="submit"
         >
             <label class="grid gap-1.5">
-                <span class="text-xs font-medium text-slate-600 dark:text-slate-400">
+                <span
+                    class="flex items-center gap-1 text-xs font-medium text-slate-600 dark:text-slate-400"
+                >
                     Nome
+                    <button
+                        v-for="loc in locales"
+                        :key="loc"
+                        type="button"
+                        class="rounded px-1 text-[10px]"
+                        :class="
+                            editLocale === loc
+                                ? 'bg-indigo-100 text-indigo-700 dark:bg-indigo-500/20 dark:text-indigo-300'
+                                : 'text-slate-400 hover:text-slate-600'
+                        "
+                        @click="editLocale = loc"
+                    >
+                        {{ localeLabels[loc] }}
+                    </button>
                 </span>
-                <input v-model="form.name" type="text" :class="fieldClasses" />
+                <input v-model="name" type="text" :class="fieldClasses" />
                 <span v-if="form.errors.name" class="text-xs text-red-600">
                     {{ form.errors.name }}
                 </span>

@@ -39,6 +39,7 @@ final class EloquentCatalogRepository implements CatalogRepository
             'name' => $data->name,
             'slug' => $slug,
             'position' => $data->position,
+            'translations' => $data->translations !== [] ? $data->translations : null,
         ]);
     }
 
@@ -49,6 +50,7 @@ final class EloquentCatalogRepository implements CatalogRepository
             'name' => $data->name,
             'slug' => $slug,
             'position' => $data->position,
+            'translations' => $data->translations !== [] ? $data->translations : null,
         ]);
 
         return $category->refresh();
@@ -146,6 +148,7 @@ final class EloquentCatalogRepository implements CatalogRepository
             'sku' => $data->sku,
             'description' => $data->description,
             'position' => $data->position,
+            'translations' => $data->translations !== [] ? $data->translations : null,
         ]);
 
         $this->sync($product, $data);
@@ -161,6 +164,7 @@ final class EloquentCatalogRepository implements CatalogRepository
             'sku' => $data->sku,
             'description' => $data->description,
             'position' => $data->position,
+            'translations' => $data->translations !== [] ? $data->translations : null,
         ]);
 
         $this->sync($product, $data);

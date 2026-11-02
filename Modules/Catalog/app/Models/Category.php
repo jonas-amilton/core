@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Modules\Catalog\Models;
 
+use App\Support\Translatable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -14,18 +15,22 @@ use Illuminate\Support\Carbon;
  * @property int $id
  * @property int|null $parent_id
  * @property string $name
+ * @property array<string, array<string, mixed>>|null $translations
  * @property string $slug
  * @property int $position
  * @property Carbon|null $created_at
  */
 class Category extends Model
 {
+    use Translatable;
+
     protected $table = 'catalog_categories';
 
     protected $fillable = [
         'parent_id',
         'name',
         'slug',
+        'translations',
         'position',
     ];
 
@@ -36,6 +41,7 @@ class Category extends Model
     {
         return [
             'position' => 'integer',
+            'translations' => 'array',
         ];
     }
 
@@ -71,10 +77,11 @@ class Category extends Model
         return [
             'id' => $this->id,
             'parent_id' => $this->parent_id,
-            'name' => $this->name,
+            'name' => $this->transString('name') ?? $this->name,
             'slug' => $this->slug,
             'position' => $this->position,
             'products_count' => $this->products_count ?? null,
+            'translations' => $this->editorTranslations(['name']),
         ];
     }
 }

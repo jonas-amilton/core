@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Modules\Catalog\Models;
 
+use App\Support\Translatable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Carbon;
@@ -15,12 +16,15 @@ use Modules\Media\Models\Media;
  * @property string $slug
  * @property string|null $sku
  * @property string|null $description
+ * @property array<string, array<string, mixed>>|null $translations
  * @property int $position
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  */
 class Product extends Model
 {
+    use Translatable;
+
     protected $table = 'catalog_products';
 
     protected $fillable = [
@@ -28,6 +32,7 @@ class Product extends Model
         'slug',
         'sku',
         'description',
+        'translations',
         'position',
     ];
 
@@ -38,6 +43,7 @@ class Product extends Model
     {
         return [
             'position' => 'integer',
+            'translations' => 'array',
         ];
     }
 
@@ -87,7 +93,7 @@ class Product extends Model
     {
         return [
             'id' => $this->id,
-            'name' => $this->name,
+            'name' => $this->transString('name') ?? $this->name,
             'slug' => $this->slug,
             'sku' => $this->sku,
             'position' => $this->position,
@@ -115,6 +121,7 @@ class Product extends Model
                 ->all(),
             'category_ids' => $this->categories->pluck('id')->all(),
             'related_ids' => $this->related->pluck('id')->all(),
+            'translations' => $this->editorTranslations(['name', 'description']),
         ];
     }
 
@@ -125,14 +132,14 @@ class Product extends Model
     {
         return [
             'id' => $this->id,
-            'name' => $this->name,
+            'name' => $this->transString('name') ?? $this->name,
             'slug' => $this->slug,
             'sku' => $this->sku,
-            'description' => $this->description,
+            'description' => $this->transString('description') ?? $this->description,
             'images' => $this->imageUrls(),
             'categories' => $this->categories
                 ->map(fn (Category $category): array => [
-                    'name' => $category->name,
+                    'name' => $category->transString('name') ?? $category->name,
                     'slug' => $category->slug,
                 ])
                 ->values()
@@ -146,7 +153,7 @@ class Product extends Model
     public function toCardArray(): array
     {
         return [
-            'title' => $this->name,
+            'title' => $this->transString('name') ?? $this->name,
             'description' => $this->sku,
             'url' => '/produto/'.$this->slug,
             'cover' => $this->cover(),

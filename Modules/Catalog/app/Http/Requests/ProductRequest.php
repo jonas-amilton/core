@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Modules\Catalog\Http\Requests;
 
+use App\Support\TranslationInput;
 use Illuminate\Foundation\Http\FormRequest;
 use Modules\Catalog\Data\ProductData;
 
@@ -31,11 +32,20 @@ final class ProductRequest extends FormRequest
             'media_ids.*' => ['integer', 'exists:media,id'],
             'related_ids' => ['nullable', 'array'],
             'related_ids.*' => ['integer', 'exists:catalog_products,id'],
+            'translations' => ['nullable', 'array'],
+            'translations.*.name' => ['nullable', 'string', 'max:200'],
+            'translations.*.description' => ['nullable', 'string', 'max:50000'],
         ];
     }
 
     public function toData(): ProductData
     {
-        return ProductData::fromArray($this->validated());
+        return ProductData::fromArray([
+            ...$this->validated(),
+            'translations' => TranslationInput::fromArray(
+                $this->input('translations'),
+                ['name', 'description'],
+            ),
+        ]);
     }
 }

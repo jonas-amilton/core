@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { Head, Link, useForm } from '@inertiajs/vue3';
 import { ArrowLeft, Check, ImageIcon, Save, Trash2, X } from '@lucide/vue';
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import MediaPicker from '@modules/Media/resources/assets/js/components/MediaPicker.vue';
 import type { PickedMedia } from '@modules/Media/resources/assets/js/types';
 import {
@@ -31,6 +31,7 @@ type Product = {
     media: ProductMedia[];
     category_ids: number[];
     related_ids: number[];
+    translations: Record<'en' | 'es', { name: string | null; description: string | null }>;
 };
 
 type CategoryOption = {
@@ -57,7 +58,15 @@ defineOptions({
 
 const pickerOpen = ref(false);
 
-const mediaItems = ref<ProductMedia[]>(props.product?.media ?? []);
+type EditLocale = 'pt_BR' | 'en' | 'es';
+
+const locales: EditLocale[] = ['pt_BR', 'en', 'es'];
+const localeLabels: Record<EditLocale, string> = {
+    pt_BR: 'PT',
+    en: 'EN',
+    es: 'ES',
+};
+const editLocale = ref<EditLocale>('pt_BR');
 
 const form = useForm({
     name: props.product?.name ?? '',
@@ -68,7 +77,52 @@ const form = useForm({
     category_ids: props.product?.category_ids ?? [],
     media_ids: props.product?.media.map((item) => item.id) ?? [],
     related_ids: props.product?.related_ids ?? [],
+    translations: {
+        en: {
+            name: props.product?.translations.en.name ?? '',
+            description: props.product?.translations.en.description ?? '',
+        },
+        es: {
+            name: props.product?.translations.es.name ?? '',
+            description: props.product?.translations.es.description ?? '',
+        },
+    },
 });
+
+const name = computed({
+    get: () =>
+        editLocale.value === 'pt_BR'
+            ? form.name
+            : (form.translations[editLocale.value].name ?? ''),
+    set: (value: string) => {
+        if (editLocale.value === 'pt_BR') {
+            form.name = value;
+
+            return;
+        }
+
+        form.translations[editLocale.value].name = value;
+    },
+});
+
+const description = computed({
+    get: () =>
+        editLocale.value === 'pt_BR'
+            ? form.description
+            : (form.translations[editLocale.value].description ?? ''),
+    set: (value: string) => {
+        if (editLocale.value === 'pt_BR') {
+            form.description = value;
+
+            return;
+        }
+
+        form.translations[editLocale.value].description = value;
+    },
+});
+
+const mediaItems = ref<ProductMedia[]>(props.product?.media ?? []);
+
 
 function save(): void {
     if (props.product) {
@@ -129,11 +183,34 @@ function removeMedia(id: number): void {
             <div
                 class="grid gap-4 rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900"
             >
+                <div class="flex items-center gap-1">
+                    <button
+                        v-for="loc in locales"
+                        :key="loc"
+                        type="button"
+                        class="rounded-md px-2 py-0.5 text-[11px] font-medium transition-colors"
+                        :class="
+                            editLocale === loc
+                                ? 'bg-indigo-100 text-indigo-700 dark:bg-indigo-500/20 dark:text-indigo-300'
+                                : 'text-slate-500 hover:bg-slate-100 dark:text-slate-500 dark:hover:bg-slate-800'
+                        "
+                        @click="editLocale = loc"
+                    >
+                        {{ localeLabels[loc] }}
+                    </button>
+                    <span
+                        v-if="editLocale !== 'pt_BR'"
+                        class="ml-1 text-[11px] text-slate-400"
+                    >
+                        Tradução — vazio usa o português
+                    </span>
+                </div>
+
                 <label class="grid gap-1.5">
                     <span class="text-xs font-medium text-slate-600 dark:text-slate-400">
                         Nome
                     </span>
-                    <input v-model="form.name" type="text" :class="fieldClasses" />
+                    <input v-model="name" type="text" :class="fieldClasses" />
                     <span v-if="form.errors.name" class="text-xs text-red-600">
                         {{ form.errors.name }}
                     </span>
@@ -144,7 +221,7 @@ function removeMedia(id: number): void {
                         Descrição
                     </span>
                     <textarea
-                        v-model="form.description"
+                        v-model="description"
                         :rows="16"
                         :class="[fieldClasses, 'h-auto py-2 leading-relaxed']"
                     />

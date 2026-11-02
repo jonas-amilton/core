@@ -10,6 +10,7 @@ final readonly class ProductData
      * @param  array<int, int>  $categoryIds
      * @param  array<int, int>  $mediaIds
      * @param  array<int, int>  $relatedIds
+     * @param  array<string, array<string, string>>  $translations
      */
     public function __construct(
         public string $name,
@@ -20,6 +21,7 @@ final readonly class ProductData
         public array $categoryIds = [],
         public array $mediaIds = [],
         public array $relatedIds = [],
+        public array $translations = [],
     ) {}
 
     /**
@@ -36,6 +38,7 @@ final readonly class ProductData
             categoryIds: self::integers($data['category_ids'] ?? []),
             mediaIds: self::integers($data['media_ids'] ?? []),
             relatedIds: self::integers($data['related_ids'] ?? []),
+            translations: is_array($data['translations'] ?? null) ? $data['translations'] : [],
         );
     }
 

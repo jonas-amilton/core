@@ -177,6 +177,52 @@ class CatalogManagementTest extends TestCase
         $this->assertSame(0, Product::query()->whereKey($second->id)->count());
     }
 
+    public function test_products_and_categories_translate_on_the_site(): void
+    {
+        $this->actingAs(User::factory()->create());
+
+        $this->post(route('catalog.category.store'), [
+            'name' => 'Cartuchos',
+            'translations' => ['en' => ['name' => 'Cartridges']],
+        ]);
+
+        $category = Category::query()->firstOrFail();
+
+        $this->post(route('catalog.product.store'), $this->payload([
+            'category_ids' => [$category->id],
+            'translations' => [
+                'en' => [
+                    'name' => 'Cartridge heater',
+                    'description' => 'High load cartridge.',
+                ],
+            ],
+        ]));
+
+        $product = Product::query()->firstOrFail();
+
+        $this->assertSame('Cartridge heater', $product->translations['en']['name']);
+
+        $this->get(route('catalog.category', $category).'?locale=en')
+            ->assertOk()
+            ->assertInertia(fn (Assert $inertia) => $inertia
+                ->where('activeCategory.name', 'Cartridges')
+                ->where('products.data.0.name', 'Cartridge heater')
+            );
+
+        $this->get(route('catalog.show', $product).'?locale=en')
+            ->assertOk()
+            ->assertInertia(fn (Assert $inertia) => $inertia
+                ->where('product.name', 'Cartridge heater')
+                ->where('product.description', 'High load cartridge.')
+            );
+
+        $this->get(route('catalog.show', $product).'?locale=es')
+            ->assertOk()
+            ->assertInertia(fn (Assert $inertia) => $inertia
+                ->where('product.name', 'Resistência Cartucho')
+            );
+    }
+
     public function test_admin_screens_render(): void
     {
         $this->actingAs(User::factory()->create());

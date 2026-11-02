@@ -32,4 +32,31 @@ trait Translatable
 
         return is_string($value) ? $value : null;
     }
+
+    /**
+     * Raw per-language values for the admin editors, without the pt-BR
+     * fallback so an empty tab stays empty until the user writes it.
+     *
+     * @param  array<int, string>  $fields
+     * @return array<string, array<string, string|null>>
+     */
+    public function editorTranslations(array $fields): array
+    {
+        $translations = is_array($this->translations ?? null) ? $this->translations : [];
+        $values = [];
+
+        foreach (['en', 'es'] as $locale) {
+            foreach ($fields as $field) {
+                $value = is_array($translations[$locale] ?? null)
+                    ? ($translations[$locale][$field] ?? null)
+                    : null;
+
+                $values[$locale][$field] = is_string($value) && trim($value) !== ''
+                    ? $value
+                    : null;
+            }
+        }
+
+        return $values;
+    }
 }
