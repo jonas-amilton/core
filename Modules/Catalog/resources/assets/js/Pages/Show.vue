@@ -48,17 +48,17 @@ function addProduct(): void {
     <Head :title="props.product.name" />
 
     <SiteShell :navigation="props.navigation">
-        <article class="px-4 py-10 sm:px-6">
+        <article class="px-4 py-12 sm:px-6 sm:py-16">
             <nav
                 v-if="props.product.categories.length > 0"
-                class="flex flex-wrap gap-2 text-xs text-slate-500"
+                class="flex flex-wrap gap-2 text-xs text-stone-500"
                 :aria-label="t('catalog.categoriesAria')"
             >
                 <Link
                     v-for="category in props.product.categories"
                     :key="category.slug"
                     :href="`/produtos/c/${category.slug}`"
-                    class="hover:text-indigo-600"
+                    class="hover:text-orange-700"
                 >
                     {{ category.name }}
                 </Link>
@@ -70,7 +70,7 @@ function addProduct(): void {
                         v-if="props.product.images.length > 0"
                         :src="props.product.images[activeImage]"
                         :alt="props.product.name"
-                        class="aspect-square w-full rounded-xl border border-slate-200 bg-white object-contain p-6 dark:border-slate-800"
+                        class="aspect-square w-full rounded-sm border border-stone-200 bg-white object-contain p-6 dark:border-stone-800"
                     />
                     <div
                         v-if="props.product.images.length > 1"
@@ -81,33 +81,40 @@ function addProduct(): void {
                             :key="image"
                             type="button"
                             :class="[
-                                'size-16 overflow-hidden rounded-lg border bg-white p-1',
+                                'size-16 overflow-hidden rounded-sm border bg-white p-1',
                                 index === activeImage
-                                    ? 'border-indigo-500'
-                                    : 'border-slate-200 dark:border-slate-800',
+                                    ? 'border-orange-600'
+                                    : 'border-stone-200 dark:border-stone-800',
                             ]"
                             :aria-label="`Ver foto ${index + 1}`"
                             @click="activeImage = index"
                         >
-                            <img :src="image" alt="" class="size-full object-contain" />
+                            <img
+                                :src="image"
+                                alt=""
+                                class="size-full object-contain"
+                            />
                         </button>
                     </div>
                 </div>
 
                 <div>
                     <h1
-                        class="text-3xl font-semibold tracking-tight text-slate-900 dark:text-slate-100"
+                        class="font-display text-4xl tracking-tight text-stone-950 sm:text-5xl dark:text-stone-50"
                     >
                         {{ props.product.name }}
                     </h1>
 
-                    <p v-if="props.product.sku" class="mt-2 text-sm text-slate-500">
+                    <p
+                        v-if="props.product.sku"
+                        class="mt-2 text-sm text-stone-500"
+                    >
                         {{ t('catalog.sku') }}: {{ props.product.sku }}
                     </p>
 
                     <div
                         v-if="props.product.description"
-                        class="mt-6 whitespace-pre-line text-sm leading-relaxed text-slate-700 dark:text-slate-300"
+                        class="mt-6 text-sm leading-relaxed whitespace-pre-line text-stone-700 dark:text-stone-300"
                     >
                         {{ props.product.description }}
                     </div>
@@ -115,7 +122,7 @@ function addProduct(): void {
                     <div class="mt-8 flex flex-wrap items-center gap-3">
                         <button
                             type="button"
-                            class="inline-flex h-10 items-center gap-2 rounded-lg bg-indigo-600 px-5 text-sm font-medium text-white hover:bg-indigo-500"
+                            class="inline-flex h-10 items-center gap-2 rounded-sm bg-stone-900 px-5 text-sm font-medium text-stone-50 hover:bg-stone-800 dark:bg-stone-100 dark:text-stone-900 dark:hover:bg-stone-200"
                             @click="addProduct"
                         >
                             <Plus class="size-4" aria-hidden="true" />
@@ -123,7 +130,7 @@ function addProduct(): void {
                         </button>
                         <Link
                             href="/orcamento"
-                            class="text-sm text-indigo-600 hover:underline dark:text-indigo-400"
+                            class="text-sm text-orange-700 hover:underline dark:text-orange-400"
                         >
                             {{ t('catalog.viewQuote') }}
                         </Link>
@@ -140,7 +147,7 @@ function addProduct(): void {
 
             <section v-if="props.related.length > 0" class="mt-14">
                 <h2
-                    class="text-lg font-semibold tracking-tight text-slate-900 dark:text-slate-100"
+                    class="font-display text-2xl tracking-tight text-stone-950 dark:text-stone-50"
                 >
                     {{ t('catalog.related') }}
                 </h2>
@@ -148,15 +155,18 @@ function addProduct(): void {
                     <li
                         v-for="item in props.related"
                         :key="item.url"
-                        class="rounded-xl border border-slate-200 p-4 dark:border-slate-800"
+                        class="rounded-sm border border-stone-200 p-4 dark:border-stone-800"
                     >
                         <Link
                             :href="item.url"
-                            class="text-sm font-medium text-slate-900 hover:text-indigo-600 dark:text-slate-100 dark:hover:text-indigo-400"
+                            class="text-sm font-medium text-stone-900 hover:text-orange-700 dark:text-stone-100 dark:hover:text-orange-400"
                         >
                             {{ item.title }}
                         </Link>
-                        <p v-if="item.description" class="mt-1 text-xs text-slate-500">
+                        <p
+                            v-if="item.description"
+                            class="mt-1 text-xs text-stone-500"
+                        >
                             {{ item.description }}
                         </p>
                     </li>

@@ -94,13 +94,13 @@ defineProps<{
             <div class="flex items-center justify-between">
                 <Label
                     for="remember"
-                    class="flex items-center gap-2.5 text-sm font-normal text-slate-600 dark:text-slate-400"
+                    class="flex items-center gap-2.5 text-sm font-normal text-stone-600 dark:text-stone-400"
                 >
                     <Checkbox
                         id="remember"
                         name="remember"
                         :tabindex="3"
-                        class="border-slate-300 data-[state=checked]:border-indigo-600 data-[state=checked]:bg-indigo-600 dark:border-slate-700"
+                        class="border-stone-300 data-[state=checked]:border-orange-700 data-[state=checked]:bg-orange-700 dark:border-stone-700"
                     />
                     <span>Lembrar de mim</span>
                 </Label>
@@ -120,7 +120,7 @@ defineProps<{
             </Button>
         </div>
 
-        <p class="text-center text-xs text-slate-500 dark:text-slate-500">
+        <p class="text-center text-xs text-stone-500 dark:text-stone-500">
             Acesso restrito a administradores do site.
         </p>
     </Form>

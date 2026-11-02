@@ -11,67 +11,51 @@ defineProps<{
 
 <template>
     <div
-        class="relative flex min-h-svh flex-col items-center justify-center overflow-hidden bg-white p-6 text-slate-900 antialiased md:p-10 dark:bg-slate-950 dark:text-slate-100"
+        class="flex min-h-svh flex-col items-center justify-center bg-background p-6 text-foreground antialiased md:p-10"
     >
-        <div
-            aria-hidden="true"
-            class="pointer-events-none absolute inset-0 -z-10 overflow-hidden"
-        >
-            <div
-                class="absolute -top-40 left-1/2 h-96 w-[46rem] -translate-x-1/2 rounded-full bg-indigo-500/20 blur-3xl dark:bg-indigo-500/10"
-            />
-            <div
-                class="absolute right-0 -bottom-24 size-72 rounded-full bg-violet-500/15 blur-3xl dark:bg-violet-500/10"
-            />
-        </div>
-
         <div class="w-full max-w-md">
-            <div
-                class="rounded-2xl border border-slate-200/80 bg-white p-6 shadow-xl shadow-slate-900/5 sm:p-8 dark:border-slate-800 dark:bg-slate-900 dark:shadow-black/40"
-            >
-                <div class="mb-8 flex flex-col items-center gap-4 text-center">
+            <div class="border-t-2 border-stone-900 pt-8 dark:border-stone-100">
+                <div class="mb-8 flex flex-col items-start gap-4">
                     <Link
                         :href="home()"
                         aria-label="CoreCMS — voltar para o site"
-                        class="flex items-center gap-2.5 rounded-lg focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2 focus-visible:outline-none dark:focus-visible:ring-offset-slate-900"
+                        class="flex items-center gap-2.5 focus-visible:ring-2 focus-visible:ring-orange-700 focus-visible:outline-none"
                     >
                         <span
-                            class="flex size-10 items-center justify-center rounded-xl bg-linear-to-br from-indigo-500 to-violet-600 text-lg font-semibold text-white shadow-sm"
+                            class="flex size-8 items-center justify-center bg-stone-900 font-display text-lg text-stone-50 dark:bg-stone-100 dark:text-stone-900"
                         >
                             C
                         </span>
-                        <span class="text-lg font-semibold tracking-tight">
-                            Core<span
-                                class="text-indigo-600 dark:text-indigo-400"
-                                >CMS</span
-                            >
+                        <span
+                            class="font-display text-2xl tracking-tight text-stone-950 dark:text-stone-50"
+                        >
+                            CoreCMS
                         </span>
                     </Link>
 
-                    <div class="space-y-1.5">
-                        <h1 class="text-xl font-semibold tracking-tight">
+                    <div class="space-y-2">
+                        <h1
+                            class="font-display text-3xl leading-tight tracking-tight text-stone-950 dark:text-stone-50"
+                        >
                             {{ title }}
                         </h1>
                         <p
-                            class="text-sm text-balance text-slate-600 dark:text-slate-400"
+                            class="text-sm text-balance text-stone-600 dark:text-stone-400"
                         >
                             {{ description }}
                         </p>
                     </div>
                 </div>
-
                 <slot />
             </div>
 
-            <p class="mt-6 text-center">
-                <Link
-                    :href="home()"
-                    class="inline-flex items-center gap-1.5 rounded-sm text-sm text-slate-500 transition-colors hover:text-indigo-600 focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:outline-none dark:text-slate-400 dark:hover:text-indigo-300"
-                >
-                    <ArrowLeft class="size-3.5" aria-hidden="true" />
-                    Voltar para o site
-                </Link>
-            </p>
+            <Link
+                :href="home()"
+                class="mt-8 inline-flex items-center gap-1.5 text-[11px] font-medium tracking-[0.12em] text-stone-500 uppercase transition-colors hover:text-orange-800 dark:text-stone-400 dark:hover:text-orange-400"
+            >
+                <ArrowLeft class="size-3.5" aria-hidden="true" />
+                Voltar ao site
+            </Link>
         </div>
     </div>
 </template>

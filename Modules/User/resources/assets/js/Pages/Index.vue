@@ -65,17 +65,17 @@ function remove(item: UserItem): void {
         <header class="flex flex-wrap items-end justify-between gap-3">
             <div>
                 <h1
-                    class="text-2xl font-semibold tracking-tight text-slate-900 dark:text-slate-100"
+                    class="text-2xl font-semibold tracking-tight text-stone-900 dark:text-stone-100"
                 >
                     Usuários
                 </h1>
-                <p class="mt-1 text-sm text-slate-600 dark:text-slate-400">
+                <p class="mt-1 text-sm text-stone-600 dark:text-stone-400">
                     Quem pode entrar no painel e editar o site.
                 </p>
             </div>
             <Link
                 :href="create()"
-                class="inline-flex h-10 items-center gap-2 rounded-lg bg-indigo-600 px-4 text-sm font-medium text-white transition-colors hover:bg-indigo-500"
+                class="inline-flex h-10 items-center gap-2 rounded-sm bg-stone-900 px-4 text-sm font-medium text-stone-50 dark:text-stone-900 dark:bg-stone-100 dark:hover:bg-stone-200 transition-colors hover:bg-stone-800"
             >
                 <Plus class="size-4" aria-hidden="true" />
                 Novo usuário
@@ -85,7 +85,7 @@ function remove(item: UserItem): void {
         <p
             v-if="$page.props.errors?.user"
             role="alert"
-            class="rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700 dark:border-red-500/30 dark:bg-red-500/10 dark:text-red-300"
+            class="rounded-sm border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700 dark:border-red-500/30 dark:bg-red-500/10 dark:text-red-300"
         >
             {{ $page.props.errors.user }}
         </p>
@@ -96,11 +96,11 @@ function remove(item: UserItem): void {
                 type="search"
                 placeholder="Buscar por nome ou e-mail"
                 aria-label="Buscar usuário"
-                class="h-10 w-full max-w-sm rounded-lg border border-slate-200 bg-white px-3 text-sm text-slate-900 placeholder:text-slate-400 focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-indigo-500/30 focus-visible:outline-none dark:border-slate-800 dark:bg-slate-950/60 dark:text-slate-100"
+                class="h-10 w-full max-w-sm rounded-sm border border-stone-200 bg-white px-3 text-sm text-stone-900 placeholder:text-stone-400 focus-visible:border-orange-600 focus-visible:ring-2 focus-visible:ring-orange-600/30 focus-visible:outline-none dark:border-stone-800 dark:bg-stone-950/60 dark:text-stone-100"
             />
             <button
                 type="submit"
-                class="h-10 rounded-lg border border-slate-200 px-3 text-sm font-medium text-slate-700 hover:bg-slate-50 dark:border-slate-800 dark:text-slate-200 dark:hover:bg-slate-800"
+                class="h-10 rounded-sm border border-stone-200 px-3 text-sm font-medium text-stone-700 hover:bg-stone-50 dark:border-stone-800 dark:text-stone-200 dark:hover:bg-stone-800"
             >
                 Buscar
             </button>
@@ -108,11 +108,11 @@ function remove(item: UserItem): void {
 
         <div
             v-if="users.length > 0"
-            class="overflow-hidden rounded-xl border border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-900"
+            class="overflow-hidden rounded-sm border border-stone-200 bg-white dark:border-stone-800 dark:bg-stone-900"
         >
             <table class="w-full text-left text-sm">
                 <thead
-                    class="border-b border-slate-200 bg-slate-50 text-xs text-slate-500 uppercase dark:border-slate-800 dark:bg-slate-950/60 dark:text-slate-400"
+                    class="border-b border-stone-200 bg-stone-50 text-xs text-stone-500 uppercase dark:border-stone-800 dark:bg-stone-950/60 dark:text-stone-400"
                 >
                     <tr>
                         <th scope="col" class="px-4 py-2.5 font-medium">
@@ -135,35 +135,35 @@ function remove(item: UserItem): void {
                         </th>
                     </tr>
                 </thead>
-                <tbody class="divide-y divide-slate-200 dark:divide-slate-800">
+                <tbody class="divide-y divide-stone-200 dark:divide-stone-800">
                     <tr
                         v-for="item in users"
                         :key="item.id"
-                        class="transition-colors hover:bg-slate-50 dark:hover:bg-slate-800/50"
+                        class="transition-colors hover:bg-stone-50 dark:hover:bg-stone-800/50"
                     >
                         <td class="px-4 py-3">
                             <div class="flex items-center gap-2">
                                 <Link
                                     :href="edit(item.id)"
-                                    class="font-medium text-slate-900 hover:text-indigo-600 dark:text-slate-100 dark:hover:text-indigo-400"
+                                    class="font-medium text-stone-900 hover:text-orange-700 dark:text-stone-100 dark:hover:text-orange-400"
                                 >
                                     {{ item.name }}
                                 </Link>
                                 <span
                                     v-if="item.id === currentUserId"
-                                    class="rounded-full border border-slate-200 bg-slate-100 px-2 py-0.5 text-[11px] font-medium text-slate-600 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300"
+                                    class="border border-stone-200 bg-stone-100 px-2 py-0.5 text-[11px] font-medium text-stone-600 dark:border-stone-700 dark:bg-stone-800 dark:text-stone-300"
                                 >
                                     você
                                 </span>
                             </div>
                         </td>
                         <td
-                            class="px-4 py-3 text-slate-600 dark:text-slate-400"
+                            class="px-4 py-3 text-stone-600 dark:text-stone-400"
                         >
                             {{ item.email }}
                         </td>
                         <td
-                            class="hidden px-4 py-3 text-xs text-slate-500 md:table-cell dark:text-slate-400"
+                            class="hidden px-4 py-3 text-xs text-stone-500 md:table-cell dark:text-stone-400"
                         >
                             {{ formatDate(item.created_at) }}
                         </td>
@@ -171,7 +171,7 @@ function remove(item: UserItem): void {
                             <div class="inline-flex items-center gap-1">
                                 <Link
                                     :href="edit(item.id)"
-                                    class="rounded-md p-1 text-slate-400 hover:bg-slate-100 hover:text-slate-700 dark:hover:bg-slate-800"
+                                    class="rounded-sm p-1 text-stone-400 hover:bg-stone-100 hover:text-stone-700 dark:hover:bg-stone-800"
                                     aria-label="Editar usuário"
                                 >
                                     <Pencil
@@ -182,7 +182,7 @@ function remove(item: UserItem): void {
                                 <button
                                     v-if="item.id !== currentUserId"
                                     type="button"
-                                    class="rounded-md p-1 text-slate-400 hover:bg-red-50 hover:text-red-600 dark:hover:bg-red-500/10"
+                                    class="rounded-sm p-1 text-stone-400 hover:bg-red-50 hover:text-red-600 dark:hover:bg-red-500/10"
                                     aria-label="Excluir usuário"
                                     @click="remove(item)"
                                 >
@@ -200,19 +200,19 @@ function remove(item: UserItem): void {
 
         <div
             v-else
-            class="flex flex-col items-center justify-center rounded-xl border border-dashed border-slate-300 bg-white px-6 py-16 text-center dark:border-slate-700 dark:bg-slate-900"
+            class="flex flex-col items-center justify-center rounded-sm border border-dashed border-stone-300 bg-white px-6 py-16 text-center dark:border-stone-700 dark:bg-stone-900"
         >
             <span
-                class="flex size-12 items-center justify-center rounded-xl bg-indigo-50 text-indigo-600 dark:bg-indigo-500/10 dark:text-indigo-400"
+                class="flex size-12 items-center justify-center rounded-sm bg-orange-50 text-orange-700 dark:bg-orange-600/10 dark:text-orange-400"
             >
                 <Users class="size-6" aria-hidden="true" />
             </span>
             <p
-                class="mt-4 text-sm font-medium text-slate-900 dark:text-slate-100"
+                class="mt-4 text-sm font-medium text-stone-900 dark:text-stone-100"
             >
                 Nenhum usuário encontrado
             </p>
-            <p class="mt-1 max-w-sm text-sm text-slate-600 dark:text-slate-400">
+            <p class="mt-1 max-w-sm text-sm text-stone-600 dark:text-stone-400">
                 Crie um usuário para dar acesso ao painel.
             </p>
         </div>

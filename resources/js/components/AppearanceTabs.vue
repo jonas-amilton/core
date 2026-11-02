@@ -13,7 +13,7 @@ const tabs = [
 
 <template>
     <div
-        class="inline-flex gap-1 rounded-lg border border-slate-200 bg-slate-100 p-1 dark:border-slate-800 dark:bg-slate-950/60"
+        class="inline-flex gap-1 rounded-sm border border-stone-200 bg-stone-100 p-1 dark:border-stone-800 dark:bg-stone-950/60"
     >
         <button
             v-for="{ value, Icon, label } in tabs"
@@ -22,10 +22,10 @@ const tabs = [
             :aria-pressed="appearance === value"
             @click="updateAppearance(value)"
             :class="[
-                'flex items-center rounded-md px-3.5 py-1.5 text-sm transition-colors focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:outline-none',
+                'flex items-center rounded-sm px-3.5 py-1.5 text-sm transition-colors focus-visible:ring-2 focus-visible:ring-orange-600 focus-visible:outline-none',
                 appearance === value
-                    ? 'bg-white font-medium text-indigo-600 shadow-xs dark:bg-slate-800 dark:text-indigo-400'
-                    : 'text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-100',
+                    ? 'bg-white font-medium text-orange-700 dark:bg-stone-800 dark:text-orange-400'
+                    : 'text-stone-500 hover:text-stone-900 dark:text-stone-400 dark:hover:text-stone-100',
             ]"
         >
             <component :is="Icon" class="-ml-1 h-4 w-4" aria-hidden="true" />

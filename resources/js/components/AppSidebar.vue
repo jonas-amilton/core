@@ -44,12 +44,15 @@ import { index as testimonials } from '@/routes/testimonial';
 import { index as users } from '@/routes/user';
 import type { NavItem } from '@/types';
 
-const mainNavItems: NavItem[] = [
+const overviewItems: NavItem[] = [
     {
         title: 'Dashboard',
         href: dashboard(),
         icon: LayoutGrid,
     },
+];
+
+const contentItems: NavItem[] = [
     {
         title: 'Páginas',
         href: pages(),
@@ -86,14 +89,17 @@ const mainNavItems: NavItem[] = [
         icon: Building2,
     },
     {
-        title: 'Orçamentos',
-        href: quotes(),
-        icon: ClipboardList,
-    },
-    {
         title: 'Lojas',
         href: stores(),
         icon: Store,
+    },
+];
+
+const operationItems: NavItem[] = [
+    {
+        title: 'Orçamentos',
+        href: quotes(),
+        icon: ClipboardList,
     },
     {
         title: 'Mensagens',
@@ -123,7 +129,7 @@ const footerNavItems: NavItem[] = [
 
 <template>
     <Sidebar collapsible="icon" variant="inset">
-        <SidebarHeader>
+        <SidebarHeader class="border-b border-sidebar-border">
             <SidebarMenu>
                 <SidebarMenuItem>
                     <SidebarMenuButton size="lg" as-child>
@@ -135,8 +141,10 @@ const footerNavItems: NavItem[] = [
             </SidebarMenu>
         </SidebarHeader>
 
-        <SidebarContent>
-            <NavMain :items="mainNavItems" />
+        <SidebarContent class="gap-3 pt-2">
+            <NavMain :items="overviewItems" />
+            <NavMain :items="contentItems" label="Conteúdo" />
+            <NavMain :items="operationItems" label="Operação" />
         </SidebarContent>
 
         <SidebarFooter>

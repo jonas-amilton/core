@@ -459,11 +459,11 @@ onBeforeUnmount(() => {
     <div class="flex min-h-[calc(100vh-4rem)] flex-col">
         <!-- Barra de topo -->
         <header
-            class="sticky top-0 z-20 flex flex-wrap items-center gap-3 border-b border-slate-200 bg-white/90 px-4 py-3 backdrop-blur-md dark:border-slate-800 dark:bg-slate-950/90"
+            class="sticky top-0 z-20 flex flex-wrap items-center gap-3 border-b border-stone-200 bg-background px-4 py-3 dark:border-stone-800"
         >
             <Link
                 :href="pagesIndex()"
-                class="inline-flex items-center gap-1.5 rounded-md px-2 py-1 text-sm text-slate-600 transition-colors hover:bg-slate-100 hover:text-slate-900 focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:outline-none dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-slate-100"
+                class="inline-flex items-center gap-1.5 rounded-sm px-2 py-1 text-sm text-stone-600 transition-colors hover:bg-stone-100 hover:text-stone-900 focus-visible:ring-2 focus-visible:ring-orange-600 focus-visible:outline-none dark:text-stone-400 dark:hover:bg-stone-800 dark:hover:text-stone-100"
             >
                 <ArrowLeft class="size-4" aria-hidden="true" />
                 Páginas
@@ -473,18 +473,18 @@ onBeforeUnmount(() => {
                 <input
                     v-model="title"
                     aria-label="Título da página"
-                    class="w-full truncate rounded-md bg-transparent px-2 py-1 text-lg font-semibold text-slate-900 outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 dark:text-slate-100"
+                    class="w-full truncate rounded-sm bg-transparent px-2 py-1 text-lg font-semibold text-stone-900 outline-none focus-visible:ring-2 focus-visible:ring-orange-600 dark:text-stone-100"
                 />
                 <div class="mt-1 flex items-center gap-1 px-2">
                     <button
                         v-for="loc in pageLocales"
                         :key="loc"
                         type="button"
-                        class="rounded-md px-2 py-0.5 text-[11px] font-medium transition-colors"
+                        class="rounded-sm px-2 py-0.5 text-[11px] font-medium transition-colors"
                         :class="
                             editLocale === loc
-                                ? 'bg-indigo-100 text-indigo-700 dark:bg-indigo-500/20 dark:text-indigo-300'
-                                : 'text-slate-500 hover:bg-slate-100 dark:text-slate-500 dark:hover:bg-slate-800'
+                                ? 'bg-orange-100 text-orange-800 dark:bg-orange-600/20 dark:text-orange-300'
+                                : 'text-stone-500 hover:bg-stone-100 dark:text-stone-500 dark:hover:bg-stone-800'
                         "
                         @click="switchPageLocale(loc)"
                     >
@@ -492,7 +492,7 @@ onBeforeUnmount(() => {
                     </button>
                     <span
                         v-if="editLocale !== 'pt_BR'"
-                        class="ml-1 text-[11px] text-slate-400"
+                        class="ml-1 text-[11px] text-stone-400"
                     >
                         Tradução — conteúdo vazio usa o português
                     </span>
@@ -500,7 +500,7 @@ onBeforeUnmount(() => {
                 <div class="flex items-center gap-2 px-2 text-xs">
                     <span
                         :class="[
-                            'rounded-full border px-2 py-0.5 font-medium',
+                            'border px-2 py-0.5 font-medium',
                             statusClasses[status],
                         ]"
                     >
@@ -508,13 +508,13 @@ onBeforeUnmount(() => {
                     </span>
                     <span
                         v-if="isHome"
-                        class="rounded-full border border-indigo-200 bg-indigo-50 px-2 py-0.5 font-medium text-indigo-700 dark:border-indigo-500/30 dark:bg-indigo-500/10 dark:text-indigo-300"
+                        class="border border-orange-200 bg-orange-50 px-2 py-0.5 font-medium text-orange-800 dark:border-stone-700 dark:bg-orange-600/10 dark:text-orange-300"
                     >
                         Página inicial
                     </span>
                     <span
                         v-else-if="isNotFound"
-                        class="rounded-full border border-slate-200 bg-slate-100 px-2 py-0.5 font-medium text-slate-600 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300"
+                        class="border border-stone-200 bg-stone-100 px-2 py-0.5 font-medium text-stone-600 dark:border-stone-700 dark:bg-stone-800 dark:text-stone-300"
                     >
                         Página 404
                     </span>
@@ -522,7 +522,7 @@ onBeforeUnmount(() => {
                         :class="
                             errorMessage
                                 ? 'text-red-600 dark:text-red-400'
-                                : 'text-slate-500 dark:text-slate-500'
+                                : 'text-stone-500 dark:text-stone-500'
                         "
                     >
                         {{ saveLabel }}
@@ -533,7 +533,7 @@ onBeforeUnmount(() => {
             <div class="flex flex-wrap items-center gap-2">
                 <button
                     type="button"
-                    class="inline-flex h-9 items-center rounded-md border border-slate-200 bg-white px-3 text-sm font-medium text-slate-700 transition-colors hover:bg-slate-50 disabled:opacity-50 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-200 dark:hover:bg-slate-800"
+                    class="inline-flex h-9 items-center rounded-sm border border-stone-200 bg-white px-3 text-sm font-medium text-stone-700 transition-colors hover:bg-stone-50 disabled:opacity-50 dark:border-stone-800 dark:bg-stone-900 dark:text-stone-200 dark:hover:bg-stone-800"
                     :disabled="saving || !dirty"
                     @click="save"
                 >
@@ -545,7 +545,7 @@ onBeforeUnmount(() => {
                     :href="publicUrl"
                     target="_blank"
                     rel="noopener"
-                    class="inline-flex h-9 items-center gap-1.5 rounded-md border border-slate-200 bg-white px-3 text-sm font-medium text-slate-700 transition-colors hover:bg-slate-50 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-200 dark:hover:bg-slate-800"
+                    class="inline-flex h-9 items-center gap-1.5 rounded-sm border border-stone-200 bg-white px-3 text-sm font-medium text-stone-700 transition-colors hover:bg-stone-50 dark:border-stone-800 dark:bg-stone-900 dark:text-stone-200 dark:hover:bg-stone-800"
                 >
                     <ExternalLink class="size-3.5" aria-hidden="true" />
                     Ver no site
@@ -556,7 +556,7 @@ onBeforeUnmount(() => {
                     :href="preview.url(pageId)"
                     target="_blank"
                     rel="noopener"
-                    class="inline-flex h-9 items-center gap-1.5 rounded-md border border-slate-200 bg-white px-3 text-sm font-medium text-slate-700 transition-colors hover:bg-slate-50 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-200 dark:hover:bg-slate-800"
+                    class="inline-flex h-9 items-center gap-1.5 rounded-sm border border-stone-200 bg-white px-3 text-sm font-medium text-stone-700 transition-colors hover:bg-stone-50 dark:border-stone-800 dark:bg-stone-900 dark:text-stone-200 dark:hover:bg-stone-800"
                 >
                     <ExternalLink class="size-3.5" aria-hidden="true" />
                     Pré-visualizar
@@ -565,7 +565,7 @@ onBeforeUnmount(() => {
                 <button
                     v-if="status === 'published' && !isSystem"
                     type="button"
-                    class="inline-flex h-9 items-center rounded-md border border-slate-200 px-3 text-sm font-medium text-slate-700 transition-colors hover:bg-slate-50 dark:border-slate-800 dark:text-slate-200 dark:hover:bg-slate-800"
+                    class="inline-flex h-9 items-center rounded-sm border border-stone-200 px-3 text-sm font-medium text-stone-700 transition-colors hover:bg-stone-50 dark:border-stone-800 dark:text-stone-200 dark:hover:bg-stone-800"
                     @click="unpublishPage"
                 >
                     Despublicar
@@ -573,7 +573,7 @@ onBeforeUnmount(() => {
 
                 <button
                     type="button"
-                    class="inline-flex h-9 items-center rounded-md bg-indigo-600 px-4 text-sm font-medium text-white transition-colors hover:bg-indigo-500 disabled:cursor-not-allowed disabled:opacity-50"
+                    class="inline-flex h-9 items-center rounded-sm bg-stone-900 px-4 text-sm font-medium text-stone-50 dark:text-stone-900 dark:bg-stone-100 dark:hover:bg-stone-200 transition-colors hover:bg-stone-800 disabled:cursor-not-allowed disabled:opacity-50"
                     :disabled="!pageId"
                     :title="
                         pageId ? undefined : 'Salve a página antes de publicar'
@@ -593,27 +593,27 @@ onBeforeUnmount(() => {
                     "
                 >
                     <summary
-                        class="inline-flex h-9 cursor-pointer items-center gap-1.5 rounded-md border border-slate-200 px-3 text-sm font-medium text-slate-700 transition-colors marker:content-none hover:bg-slate-50 dark:border-slate-800 dark:text-slate-200 dark:hover:bg-slate-800"
+                        class="inline-flex h-9 cursor-pointer items-center gap-1.5 rounded-sm border border-stone-200 px-3 text-sm font-medium text-stone-700 transition-colors marker:content-none hover:bg-stone-50 dark:border-stone-800 dark:text-stone-200 dark:hover:bg-stone-800"
                     >
                         <CalendarClock class="size-3.5" aria-hidden="true" />
                         Agendar
                     </summary>
                     <div
-                        class="absolute right-0 z-30 mt-2 w-64 rounded-xl border border-slate-200 bg-white p-3 shadow-xl dark:border-slate-800 dark:bg-slate-900"
+                        class="absolute right-0 z-30 mt-2 w-64 rounded-sm border border-stone-200 bg-white p-3 dark:border-stone-800 dark:bg-stone-900"
                     >
                         <label class="grid gap-1.5 text-xs font-medium">
-                            <span class="text-slate-600 dark:text-slate-400">
+                            <span class="text-stone-600 dark:text-stone-400">
                                 Publicar em
                             </span>
                             <input
                                 v-model="scheduleAt"
                                 type="datetime-local"
-                                class="h-10 w-full rounded-lg border border-slate-200 bg-white px-3 text-sm dark:border-slate-800 dark:bg-slate-950/60"
+                                class="h-10 w-full rounded-sm border border-stone-200 bg-white px-3 text-sm dark:border-stone-800 dark:bg-stone-950/60"
                             />
                         </label>
                         <button
                             type="button"
-                            class="mt-3 w-full rounded-lg bg-indigo-600 px-3 py-2 text-sm font-medium text-white hover:bg-indigo-500 disabled:opacity-50"
+                            class="mt-3 w-full rounded-sm bg-stone-900 px-3 py-2 text-sm font-medium text-stone-50 dark:text-stone-900 dark:bg-stone-100 dark:hover:bg-stone-200 hover:bg-stone-800 disabled:opacity-50"
                             :disabled="!pageId || !scheduleAt"
                             @click="schedulePublication"
                         >
@@ -629,17 +629,17 @@ onBeforeUnmount(() => {
         >
             <!-- Seções -->
             <aside
-                class="border-b border-slate-200 p-3 lg:border-r lg:border-b-0 dark:border-slate-800"
+                class="border-b border-stone-200 p-3 lg:border-r lg:border-b-0 dark:border-stone-800"
                 aria-label="Seções da página"
             >
                 <div class="flex items-center justify-between px-1">
                     <h2
-                        class="text-[11px] font-semibold tracking-wider text-slate-400 uppercase dark:text-slate-500"
+                        class="text-[11px] font-semibold tracking-wider text-stone-400 uppercase dark:text-stone-500"
                     >
                         Seções
                     </h2>
                     <span
-                        class="text-[11px] text-slate-400 dark:text-slate-500"
+                        class="text-[11px] text-stone-400 dark:text-stone-500"
                     >
                         {{ blocks.length }}
                     </span>
@@ -650,11 +650,11 @@ onBeforeUnmount(() => {
                         v-for="(block, index) in blocks"
                         :key="block.id"
                         draggable="true"
-                        class="group rounded-lg border px-2 py-1.5 transition-colors"
+                        class="group rounded-sm border px-2 py-1.5 transition-colors"
                         :class="
                             block.id === selectedId
-                                ? 'border-indigo-200 bg-indigo-50 dark:border-indigo-500/30 dark:bg-indigo-950/40'
-                                : 'border-transparent hover:bg-slate-100 dark:hover:bg-slate-800/60'
+                                ? 'border-orange-200 bg-orange-50 dark:border-stone-700 dark:bg-stone-800'
+                                : 'border-transparent hover:bg-stone-100 dark:hover:bg-stone-800/60'
                         "
                         @dragstart="draggingId = block.id"
                         @dragover.prevent
@@ -663,17 +663,17 @@ onBeforeUnmount(() => {
                     >
                         <div class="flex items-center gap-1.5">
                             <GripVertical
-                                class="size-3.5 shrink-0 cursor-grab text-slate-400"
+                                class="size-3.5 shrink-0 cursor-grab text-stone-400"
                                 aria-hidden="true"
                             />
                             <div class="min-w-0 flex-1">
                                 <p
-                                    class="truncate text-xs font-medium text-slate-700 dark:text-slate-300"
+                                    class="truncate text-xs font-medium text-stone-700 dark:text-stone-300"
                                 >
                                     {{ blockLabels[block.type] }}
                                 </p>
                                 <p
-                                    class="truncate text-[11px] text-slate-500 dark:text-slate-500"
+                                    class="truncate text-[11px] text-stone-500 dark:text-stone-500"
                                 >
                                     {{
                                         block.hidden
@@ -684,7 +684,7 @@ onBeforeUnmount(() => {
                             </div>
                             <button
                                 type="button"
-                                class="rounded p-1 text-slate-400 hover:bg-white hover:text-slate-700 dark:hover:bg-slate-700 dark:hover:text-slate-100"
+                                class="rounded p-1 text-stone-400 hover:bg-white hover:text-stone-700 dark:hover:bg-stone-700 dark:hover:text-stone-100"
                                 :aria-label="`Mover ${blockLabels[block.type]} para cima`"
                                 @click.stop="moveBlock(index, -1)"
                             >
@@ -695,7 +695,7 @@ onBeforeUnmount(() => {
                             </button>
                             <button
                                 type="button"
-                                class="rounded p-1 text-slate-400 hover:bg-white hover:text-slate-700 dark:hover:bg-slate-700 dark:hover:text-slate-100"
+                                class="rounded p-1 text-stone-400 hover:bg-white hover:text-stone-700 dark:hover:bg-stone-700 dark:hover:text-stone-100"
                                 :aria-label="`Mover ${blockLabels[block.type]} para baixo`"
                                 @click.stop="moveBlock(index, 1)"
                             >
@@ -710,19 +710,19 @@ onBeforeUnmount(() => {
 
                 <details ref="addMenu" class="relative mt-3">
                     <summary
-                        class="inline-flex w-full cursor-pointer items-center justify-center gap-1.5 rounded-lg border border-dashed border-slate-300 px-3 py-2 text-sm font-medium text-slate-600 transition-colors marker:content-none hover:border-indigo-400 hover:text-indigo-600 dark:border-slate-700 dark:text-slate-400"
+                        class="inline-flex w-full cursor-pointer items-center justify-center gap-1.5 rounded-sm border border-dashed border-stone-300 px-3 py-2 text-sm font-medium text-stone-600 transition-colors marker:content-none hover:border-orange-400 hover:text-orange-700 dark:border-stone-700 dark:text-stone-400"
                     >
                         <Plus class="size-4" aria-hidden="true" />
                         Adicionar bloco
                     </summary>
                     <div
-                        class="absolute left-0 z-30 mt-1 grid w-56 gap-1 rounded-xl border border-slate-200 bg-white p-2 shadow-xl dark:border-slate-800 dark:bg-slate-900"
+                        class="absolute left-0 z-30 mt-1 grid w-56 gap-1 rounded-sm border border-stone-200 bg-white p-2 dark:border-stone-800 dark:bg-stone-900"
                     >
                         <button
                             v-for="type in blockTypes"
                             :key="type"
                             type="button"
-                            class="rounded-md px-2 py-1.5 text-left text-sm text-slate-700 hover:bg-indigo-50 hover:text-indigo-700 dark:text-slate-300 dark:hover:bg-indigo-950/40 dark:hover:text-indigo-300"
+                            class="rounded-sm px-2 py-1.5 text-left text-sm text-stone-700 hover:bg-orange-50 hover:text-orange-800 dark:text-stone-300 dark:hover:bg-orange-950/40 dark:hover:text-orange-300"
                             @click="addBlock(type)"
                         >
                             {{ blockLabels[type] }}
@@ -731,15 +731,15 @@ onBeforeUnmount(() => {
                 </details>
 
                 <div
-                    class="mt-4 grid gap-2 rounded-lg border border-slate-200 p-3 dark:border-slate-800"
+                    class="mt-4 grid gap-2 rounded-sm border border-stone-200 p-3 dark:border-stone-800"
                 >
                     <label
-                        class="flex items-center gap-2 text-xs font-medium text-slate-700 dark:text-slate-300"
+                        class="flex items-center gap-2 text-xs font-medium text-stone-700 dark:text-stone-300"
                     >
                         <input v-model="isService" type="checkbox" />
                         Área de atuação
                     </label>
-                    <p class="text-[11px] text-slate-400 dark:text-slate-500">
+                    <p class="text-[11px] text-stone-400 dark:text-stone-500">
                         Aparece no bloco "Áreas de atuação" e no menu do site.
                     </p>
                     <div class="flex items-center gap-2">
@@ -751,7 +751,7 @@ onBeforeUnmount(() => {
                         />
                         <button
                             type="button"
-                            class="rounded-md border border-slate-200 px-2 py-1 text-xs font-medium text-slate-600 hover:border-indigo-400 hover:text-indigo-600 dark:border-slate-800 dark:text-slate-300"
+                            class="rounded-sm border border-stone-200 px-2 py-1 text-xs font-medium text-stone-600 hover:border-orange-400 hover:text-orange-700 dark:border-stone-800 dark:text-stone-300"
                             @click="
                                 pickerTarget = 'page';
                                 pickerOpen = true;
@@ -762,7 +762,7 @@ onBeforeUnmount(() => {
                         <button
                             v-if="pageIcon"
                             type="button"
-                            class="rounded-md p-1 text-slate-400 hover:text-red-600"
+                            class="rounded-sm p-1 text-stone-400 hover:text-red-600"
                             aria-label="Remover ícone"
                             @click="pageIcon = ''"
                         >
@@ -774,11 +774,11 @@ onBeforeUnmount(() => {
 
             <!-- Canvas -->
             <main
-                class="min-h-[50vh] bg-slate-50 p-4 sm:p-6 dark:bg-slate-950/40"
+                class="min-h-[50vh] bg-stone-50 p-4 sm:p-6 dark:bg-stone-950/40"
                 @click.self="selectedId = null"
             >
                 <div
-                    class="mx-auto max-w-3xl overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm dark:border-slate-800 dark:bg-slate-900"
+                    class="mx-auto max-w-3xl overflow-hidden rounded-sm border border-stone-200 bg-white dark:border-stone-800 dark:bg-stone-900"
                 >
                     <template v-if="blocks.length > 0">
                         <div
@@ -787,8 +787,8 @@ onBeforeUnmount(() => {
                             class="relative cursor-pointer transition-shadow"
                             :class="
                                 block.id === selectedId
-                                    ? 'z-10 ring-2 ring-indigo-500 ring-inset'
-                                    : 'hover:ring-2 hover:ring-indigo-200 hover:ring-inset dark:hover:ring-indigo-500/30'
+                                    ? 'z-10 ring-2 ring-orange-600 ring-inset'
+                                    : 'hover:ring-2 hover:ring-orange-200 hover:ring-inset dark:hover:ring-orange-600/30'
                             "
                             @click="selectedId = block.id"
                         >
@@ -803,7 +803,7 @@ onBeforeUnmount(() => {
                             </div>
                             <span
                                 v-if="block.hidden"
-                                class="absolute top-2 right-2 rounded-full bg-slate-900/80 px-2 py-0.5 text-[10px] font-medium text-white"
+                                class="absolute top-2 right-2 bg-stone-900/90 px-2 py-0.5 text-[10px] font-medium text-white"
                             >
                                 Oculto
                             </span>
@@ -812,12 +812,12 @@ onBeforeUnmount(() => {
 
                     <div v-else class="p-8 text-center">
                         <p
-                            class="text-sm font-medium text-slate-700 dark:text-slate-300"
+                            class="text-sm font-medium text-stone-700 dark:text-stone-300"
                         >
                             Página em branco
                         </p>
                         <p
-                            class="mt-1 text-xs text-slate-500 dark:text-slate-400"
+                            class="mt-1 text-xs text-stone-500 dark:text-stone-400"
                         >
                             Comece com um template ou adicione um bloco.
                         </p>
@@ -826,16 +826,16 @@ onBeforeUnmount(() => {
                                 v-for="template in templates"
                                 :key="template.id"
                                 type="button"
-                                class="rounded-lg border border-slate-200 p-3 text-left transition-colors hover:border-indigo-300 dark:border-slate-800 dark:hover:border-indigo-500/40"
+                                class="rounded-sm border border-stone-200 p-3 text-left transition-colors hover:border-orange-300 dark:border-stone-800 dark:hover:border-orange-600/40"
                                 @click="applyTemplate(template.id)"
                             >
                                 <span
-                                    class="block text-sm font-medium text-slate-900 dark:text-slate-100"
+                                    class="block text-sm font-medium text-stone-900 dark:text-stone-100"
                                 >
                                     {{ template.label }}
                                 </span>
                                 <span
-                                    class="mt-1 block text-xs text-slate-500 dark:text-slate-400"
+                                    class="mt-1 block text-xs text-stone-500 dark:text-stone-400"
                                 >
                                     {{ template.description }}
                                 </span>
@@ -847,20 +847,20 @@ onBeforeUnmount(() => {
 
             <!-- Inspetor -->
             <aside
-                class="border-t border-slate-200 p-4 lg:border-t-0 lg:border-l dark:border-slate-800"
+                class="border-t border-stone-200 p-4 lg:border-t-0 lg:border-l dark:border-stone-800"
                 aria-label="Propriedades do bloco"
             >
                 <template v-if="selected">
                     <div class="flex items-center justify-between">
                         <h2
-                            class="text-[11px] font-semibold tracking-wider text-slate-400 uppercase dark:text-slate-500"
+                            class="text-[11px] font-semibold tracking-wider text-stone-400 uppercase dark:text-stone-500"
                         >
                             {{ blockLabels[selected.type] }}
                         </h2>
                         <div class="flex items-center gap-1">
                             <button
                                 type="button"
-                                class="rounded p-1 text-slate-400 hover:bg-slate-100 hover:text-slate-700 dark:hover:bg-slate-800"
+                                class="rounded p-1 text-stone-400 hover:bg-stone-100 hover:text-stone-700 dark:hover:bg-stone-800"
                                 :aria-label="
                                     selected.hidden
                                         ? 'Mostrar bloco'
@@ -876,7 +876,7 @@ onBeforeUnmount(() => {
                             </button>
                             <button
                                 type="button"
-                                class="rounded p-1 text-slate-400 hover:bg-slate-100 hover:text-slate-700 dark:hover:bg-slate-800"
+                                class="rounded p-1 text-stone-400 hover:bg-stone-100 hover:text-stone-700 dark:hover:bg-stone-800"
                                 aria-label="Duplicar bloco"
                                 @click="duplicateBlock(selected)"
                             >
@@ -884,7 +884,7 @@ onBeforeUnmount(() => {
                             </button>
                             <button
                                 type="button"
-                                class="rounded p-1 text-slate-400 hover:bg-red-50 hover:text-red-600 dark:hover:bg-red-500/10"
+                                class="rounded p-1 text-stone-400 hover:bg-red-50 hover:text-red-600 dark:hover:bg-red-500/10"
                                 aria-label="Excluir bloco"
                                 @click="removeBlock(selected)"
                             >
@@ -927,7 +927,7 @@ onBeforeUnmount(() => {
                         <template v-else-if="selected.type === 'image'">
                             <button
                                 type="button"
-                                class="inline-flex w-full items-center justify-center gap-1.5 rounded-lg border border-slate-200 px-3 py-2 text-sm font-medium text-slate-700 hover:border-indigo-400 hover:text-indigo-600 dark:border-slate-800 dark:text-slate-200"
+                                class="inline-flex w-full items-center justify-center gap-1.5 rounded-sm border border-stone-200 px-3 py-2 text-sm font-medium text-stone-700 hover:border-orange-400 hover:text-orange-700 dark:border-stone-800 dark:text-stone-200"
                                 @click="
                                     pickerTarget = 'block';
                                     pickerOpen = true;
@@ -986,7 +986,7 @@ onBeforeUnmount(() => {
                                 label="Título da seção"
                             />
                             <p
-                                class="text-xs text-slate-500 dark:text-slate-400"
+                                class="text-xs text-stone-500 dark:text-stone-400"
                             >
                                 O conteúdo desta seção vem do cadastro no
                                 painel, não do editor.
@@ -1066,17 +1066,17 @@ onBeforeUnmount(() => {
                             <div
                                 v-for="(item, index) in selected.items ?? []"
                                 :key="index"
-                                class="space-y-2 rounded-lg border border-slate-200 p-3 dark:border-slate-800"
+                                class="space-y-2 rounded-sm border border-stone-200 p-3 dark:border-stone-800"
                             >
                                 <div class="flex items-center justify-between">
                                     <span
-                                        class="text-[11px] font-medium text-slate-400 uppercase"
+                                        class="text-[11px] font-medium text-stone-400 uppercase"
                                     >
                                         Item {{ index + 1 }}
                                     </span>
                                     <button
                                         type="button"
-                                        class="rounded p-1 text-slate-400 hover:text-red-600"
+                                        class="rounded p-1 text-stone-400 hover:text-red-600"
                                         aria-label="Remover item"
                                         @click="removeGridItem(selected, index)"
                                     >
@@ -1099,7 +1099,7 @@ onBeforeUnmount(() => {
                             </div>
                             <button
                                 type="button"
-                                class="inline-flex w-full items-center justify-center gap-1.5 rounded-lg border border-dashed border-slate-300 px-3 py-2 text-sm text-slate-600 hover:border-indigo-400 hover:text-indigo-600 dark:border-slate-700 dark:text-slate-400"
+                                class="inline-flex w-full items-center justify-center gap-1.5 rounded-sm border border-dashed border-stone-300 px-3 py-2 text-sm text-stone-600 hover:border-orange-400 hover:text-orange-700 dark:border-stone-700 dark:text-stone-400"
                                 @click="addGridItem(selected)"
                             >
                                 <Plus class="size-4" aria-hidden="true" />
@@ -1109,13 +1109,13 @@ onBeforeUnmount(() => {
                     </div>
                 </template>
 
-                <p v-else class="text-sm text-slate-500 dark:text-slate-400">
+                <p v-else class="text-sm text-stone-500 dark:text-stone-400">
                     Selecione um bloco no canvas ou na lista para editar.
                 </p>
 
                 <details v-if="revisions.length > 0" class="mt-6">
                     <summary
-                        class="cursor-pointer text-[11px] font-semibold tracking-wider text-slate-400 uppercase marker:content-none hover:text-slate-600 dark:text-slate-500"
+                        class="cursor-pointer text-[11px] font-semibold tracking-wider text-stone-400 uppercase marker:content-none hover:text-stone-600 dark:text-stone-500"
                     >
                         Histórico ({{ revisions.length }})
                     </summary>
@@ -1123,21 +1123,21 @@ onBeforeUnmount(() => {
                         <li
                             v-for="revision in revisions"
                             :key="revision.id"
-                            class="flex items-center justify-between gap-2 rounded-md border border-slate-200 px-2 py-1.5 text-xs dark:border-slate-800"
+                            class="flex items-center justify-between gap-2 rounded-sm border border-stone-200 px-2 py-1.5 text-xs dark:border-stone-800"
                         >
                             <span class="min-w-0">
                                 <span
-                                    class="block truncate text-slate-700 dark:text-slate-300"
+                                    class="block truncate text-stone-700 dark:text-stone-300"
                                 >
                                     {{ revision.title }}
                                 </span>
-                                <span class="text-[11px] text-slate-400">
+                                <span class="text-[11px] text-stone-400">
                                     {{ revision.author ?? 'Sistema' }}
                                 </span>
                             </span>
                             <button
                                 type="button"
-                                class="shrink-0 rounded px-1.5 py-0.5 text-indigo-600 hover:bg-indigo-50 dark:text-indigo-400 dark:hover:bg-indigo-950/40"
+                                class="shrink-0 rounded px-1.5 py-0.5 text-orange-700 hover:bg-orange-50 dark:text-orange-400 dark:hover:bg-orange-950/40"
                                 @click="restoreRevision(revision)"
                             >
                                 Restaurar
@@ -1156,7 +1156,7 @@ onBeforeUnmount(() => {
 
         <p
             v-if="!pageId"
-            class="px-4 pb-3 text-[11px] text-slate-400 dark:text-slate-500"
+            class="px-4 pb-3 text-[11px] text-stone-400 dark:text-stone-500"
         >
             As alterações são salvas automaticamente. A página passa a existir
             no painel depois do primeiro salvamento.

@@ -115,7 +115,7 @@ defineProps<{
             </Button>
         </div>
 
-        <p class="text-center text-sm text-slate-600 dark:text-slate-400">
+        <p class="text-center text-sm text-stone-600 dark:text-stone-400">
             Já possui uma conta?
             <Link :href="login()" :tabindex="6" :class="linkClasses">
                 Entrar

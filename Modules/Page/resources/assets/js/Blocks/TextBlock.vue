@@ -5,9 +5,9 @@ defineProps<{ block: Block }>();
 </script>
 
 <template>
-    <section class="px-6 py-10 sm:px-10">
+    <section class="px-4 py-14 sm:px-6 sm:py-20">
         <p
-            class="max-w-3xl text-base leading-relaxed whitespace-pre-line text-slate-700 dark:text-slate-300"
+            class="mx-auto max-w-3xl text-[17px] leading-[1.8] whitespace-pre-line text-stone-700 dark:text-stone-300"
         >
             {{ block.body }}
         </p>

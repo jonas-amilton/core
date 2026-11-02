@@ -24,7 +24,7 @@ const passwordInput = useTemplateRef('passwordInput');
 
 <template>
     <section
-        class="rounded-xl border border-red-200 bg-red-50/60 p-6 dark:border-red-500/20 dark:bg-red-950/20"
+        class="rounded-sm border border-red-200 bg-red-50/60 p-6 dark:border-red-500/20 dark:bg-red-950/20"
     >
         <Heading
             variant="small"

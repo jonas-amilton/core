@@ -42,11 +42,11 @@ function save(): void {
     <div class="flex flex-1 flex-col gap-6 p-4 sm:p-6">
         <header>
             <h1
-                class="text-2xl font-semibold tracking-tight text-slate-900 dark:text-slate-100"
+                class="text-2xl font-semibold tracking-tight text-stone-900 dark:text-stone-100"
             >
                 Configurações
             </h1>
-            <p class="mt-1 text-sm text-slate-600 dark:text-slate-400">
+            <p class="mt-1 text-sm text-stone-600 dark:text-stone-400">
                 Dados de contato, redes sociais e textos do site público.
             </p>
         </header>
@@ -60,7 +60,7 @@ function save(): void {
                     :class="{ 'sm:col-span-2': field.type === 'textarea' }"
                 >
                     <span
-                        class="text-xs font-medium text-slate-600 dark:text-slate-400"
+                        class="text-xs font-medium text-stone-600 dark:text-stone-400"
                     >
                         {{ field.label }}
                     </span>
@@ -88,7 +88,7 @@ function save(): void {
             <div class="flex items-center gap-3">
                 <button
                     type="submit"
-                    class="inline-flex h-10 items-center gap-2 rounded-lg bg-indigo-600 px-4 text-sm font-medium text-white transition-colors hover:bg-indigo-500 disabled:opacity-50"
+                    class="inline-flex h-10 items-center gap-2 rounded-sm bg-stone-900 px-4 text-sm font-medium text-stone-50 dark:text-stone-900 dark:bg-stone-100 dark:hover:bg-stone-200 transition-colors hover:bg-stone-800 disabled:opacity-50"
                     :disabled="form.processing"
                 >
                     <Save class="size-4" aria-hidden="true" />

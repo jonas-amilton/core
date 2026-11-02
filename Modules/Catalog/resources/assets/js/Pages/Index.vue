@@ -46,9 +46,9 @@ const title = props.activeCategory
     <Head :title="title" />
 
     <SiteShell :navigation="props.navigation">
-        <section class="px-4 py-10 sm:px-6">
+        <section class="px-4 py-12 sm:px-6 sm:py-16">
             <h1
-                class="text-3xl font-semibold tracking-tight text-slate-900 dark:text-slate-100"
+                class="font-display text-4xl tracking-tight text-stone-950 sm:text-5xl dark:text-stone-50"
             >
                 {{
                     props.activeCategory
@@ -65,10 +65,10 @@ const title = props.activeCategory
                 <Link
                     href="/produtos"
                     :class="[
-                        'rounded-full border px-3 py-1 text-xs font-medium',
+                        'border px-3 py-1.5 text-[11px] font-medium tracking-[0.1em] uppercase',
                         props.activeCategory === null
-                            ? 'border-indigo-200 bg-indigo-50 text-indigo-700 dark:border-indigo-500/30 dark:bg-indigo-500/10 dark:text-indigo-300'
-                            : 'border-slate-200 text-slate-600 hover:border-indigo-300 dark:border-slate-800 dark:text-slate-400',
+                            ? 'border-orange-200 bg-orange-50 text-orange-800 dark:border-stone-700 dark:bg-orange-600/10 dark:text-orange-300'
+                            : 'border-stone-200 text-stone-600 hover:border-orange-300 dark:border-stone-800 dark:text-stone-400',
                     ]"
                 >
                     {{ t('common.all') }}
@@ -78,17 +78,14 @@ const title = props.activeCategory
                     :key="category.id"
                     :href="`/produtos/c/${category.slug}`"
                     :class="[
-                        'rounded-full border px-3 py-1 text-xs font-medium',
+                        'border px-3 py-1.5 text-[11px] font-medium tracking-[0.1em] uppercase',
                         props.activeCategory?.id === category.id
-                            ? 'border-indigo-200 bg-indigo-50 text-indigo-700 dark:border-indigo-500/30 dark:bg-indigo-500/10 dark:text-indigo-300'
-                            : 'border-slate-200 text-slate-600 hover:border-indigo-300 dark:border-slate-800 dark:text-slate-400',
+                            ? 'border-orange-200 bg-orange-50 text-orange-800 dark:border-stone-700 dark:bg-orange-600/10 dark:text-orange-300'
+                            : 'border-stone-200 text-stone-600 hover:border-orange-300 dark:border-stone-800 dark:text-stone-400',
                     ]"
                 >
                     {{ category.name }}
-                    <span
-                        v-if="category.products_count"
-                        class="text-slate-400"
-                    >
+                    <span v-if="category.products_count" class="text-stone-400">
                         ({{ category.products_count }})
                     </span>
                 </Link>
@@ -98,7 +95,7 @@ const title = props.activeCategory
                 <li
                     v-for="product in props.products.data"
                     :key="product.id"
-                    class="overflow-hidden rounded-xl border border-slate-200 transition-colors hover:border-indigo-300 dark:border-slate-800 dark:hover:border-indigo-500/40"
+                    class="overflow-hidden rounded-sm border border-stone-200 transition-colors hover:border-orange-300 dark:border-stone-800 dark:hover:border-orange-600/40"
                 >
                     <Link :href="`/produto/${product.slug}`" class="block">
                         <img
@@ -107,13 +104,18 @@ const title = props.activeCategory
                             alt=""
                             class="aspect-square w-full bg-white object-contain p-6"
                         />
-                        <div class="border-t border-slate-100 p-4 dark:border-slate-800">
+                        <div
+                            class="border-t border-stone-100 p-4 dark:border-stone-800"
+                        >
                             <h2
-                                class="text-sm font-semibold text-slate-900 dark:text-slate-100"
+                                class="text-sm font-semibold text-stone-900 dark:text-stone-100"
                             >
                                 {{ product.name }}
                             </h2>
-                            <p v-if="product.sku" class="mt-1 text-xs text-slate-400">
+                            <p
+                                v-if="product.sku"
+                                class="mt-1 text-xs text-stone-400"
+                            >
                                 {{ t('catalog.sku') }}: {{ product.sku }}
                             </p>
                         </div>
@@ -123,7 +125,7 @@ const title = props.activeCategory
 
             <p
                 v-if="props.products.data.length === 0"
-                class="mt-10 rounded-xl border border-dashed border-slate-300 px-6 py-16 text-center text-sm text-slate-500 dark:border-slate-700 dark:text-slate-400"
+                class="mt-10 rounded-sm border border-dashed border-stone-300 px-6 py-16 text-center text-sm text-stone-500 dark:border-stone-700 dark:text-stone-400"
             >
                 {{ t('catalog.empty') }}
             </p>
@@ -136,16 +138,21 @@ const title = props.activeCategory
                 <Link
                     v-if="props.products.prev_page_url"
                     :href="props.products.prev_page_url"
-                    class="text-indigo-600 hover:underline dark:text-indigo-400"
+                    class="text-orange-700 hover:underline dark:text-orange-400"
                 >
                     {{ t('common.previous') }}
                 </Link>
-                <span v-else class="text-slate-400">{{ t('common.previous') }}</span>
+                <span v-else class="text-stone-400">{{
+                    t('common.previous')
+                }}</span>
 
-                <span class="text-xs text-slate-500">
+                <span class="text-xs text-stone-500">
                     {{
                         t('common.pageOf')
-                            .replace(':current', String(props.products.current_page))
+                            .replace(
+                                ':current',
+                                String(props.products.current_page),
+                            )
                             .replace(':total', String(props.products.last_page))
                     }}
                 </span>
@@ -153,11 +160,13 @@ const title = props.activeCategory
                 <Link
                     v-if="props.products.next_page_url"
                     :href="props.products.next_page_url"
-                    class="text-indigo-600 hover:underline dark:text-indigo-400"
+                    class="text-orange-700 hover:underline dark:text-orange-400"
                 >
                     {{ t('common.next') }}
                 </Link>
-                <span v-else class="text-slate-400">{{ t('common.next') }}</span>
+                <span v-else class="text-stone-400">{{
+                    t('common.next')
+                }}</span>
             </nav>
         </section>
     </SiteShell>

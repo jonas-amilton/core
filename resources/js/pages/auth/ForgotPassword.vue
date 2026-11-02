@@ -68,7 +68,7 @@ defineProps<{
             </div>
         </Form>
 
-        <p class="text-center text-sm text-slate-600 dark:text-slate-400">
+        <p class="text-center text-sm text-stone-600 dark:text-stone-400">
             Ou volte para
             <Link :href="login()" :class="linkClasses">entrar</Link>
         </p>

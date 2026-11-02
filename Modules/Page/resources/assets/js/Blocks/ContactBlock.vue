@@ -29,36 +29,36 @@ function submit(): void {
 </script>
 
 <template>
-    <section class="px-4 py-12 sm:px-6">
+    <section class="px-4 py-14 sm:px-6 sm:py-20">
         <div class="mx-auto max-w-2xl">
             <h2
                 v-if="block.title"
-                class="text-2xl font-semibold tracking-tight text-slate-900 dark:text-slate-100"
+                class="font-display text-3xl tracking-tight text-stone-950 sm:text-4xl dark:text-stone-50"
             >
                 {{ block.title }}
             </h2>
             <p
                 v-if="block.subtitle"
-                class="mt-1 text-slate-600 dark:text-slate-400"
+                class="mt-2 text-stone-600 dark:text-stone-400"
             >
                 {{ block.subtitle }}
             </p>
 
             <p
                 v-if="form.recentlySuccessful"
-                class="mt-4 inline-flex items-center gap-1.5 rounded-lg bg-emerald-50 px-3 py-2 text-sm text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-300"
+                class="mt-5 inline-flex items-center gap-2 text-sm text-emerald-700 dark:text-emerald-400"
             >
                 <Check class="size-4" aria-hidden="true" />
                 {{ t('contact.success') }}
             </p>
 
             <form
-                class="mt-6 grid gap-3 sm:grid-cols-2"
+                class="mt-8 grid gap-4 sm:grid-cols-2"
                 @submit.prevent="submit"
             >
                 <label class="grid gap-1.5">
                     <span
-                        class="text-xs font-medium text-slate-600 dark:text-slate-400"
+                        class="text-xs font-medium text-stone-600 dark:text-stone-400"
                     >
                         {{ t('contact.name') }}
                     </span>
@@ -74,7 +74,7 @@ function submit(): void {
 
                 <label class="grid gap-1.5">
                     <span
-                        class="text-xs font-medium text-slate-600 dark:text-slate-400"
+                        class="text-xs font-medium text-stone-600 dark:text-stone-400"
                     >
                         {{ t('contact.email') }}
                     </span>
@@ -90,7 +90,7 @@ function submit(): void {
 
                 <label class="grid gap-1.5 sm:col-span-2">
                     <span
-                        class="text-xs font-medium text-slate-600 dark:text-slate-400"
+                        class="text-xs font-medium text-stone-600 dark:text-stone-400"
                     >
                         {{ t('contact.phone') }}
                     </span>
@@ -103,7 +103,7 @@ function submit(): void {
 
                 <label class="grid gap-1.5 sm:col-span-2">
                     <span
-                        class="text-xs font-medium text-slate-600 dark:text-slate-400"
+                        class="text-xs font-medium text-stone-600 dark:text-stone-400"
                     >
                         {{ t('contact.message') }}
                     </span>
@@ -133,7 +133,7 @@ function submit(): void {
                 <div class="sm:col-span-2">
                     <button
                         type="submit"
-                        class="inline-flex h-10 items-center rounded-lg bg-indigo-600 px-5 text-sm font-medium text-white hover:bg-indigo-500 disabled:opacity-50"
+                        class="inline-flex h-11 items-center bg-stone-900 px-5 text-sm font-medium text-stone-50 transition-colors hover:bg-stone-800 disabled:opacity-50 dark:bg-stone-100 dark:text-stone-900 dark:hover:bg-stone-200"
                         :disabled="form.processing"
                     >
                         {{ t('contact.submit') }}

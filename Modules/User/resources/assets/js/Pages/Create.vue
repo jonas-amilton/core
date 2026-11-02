@@ -41,17 +41,17 @@ function submit(): void {
         <header>
             <Link
                 :href="userIndex()"
-                class="inline-flex items-center gap-1.5 text-sm text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-100"
+                class="inline-flex items-center gap-1.5 text-sm text-stone-600 hover:text-stone-900 dark:text-stone-400 dark:hover:text-stone-100"
             >
                 <ArrowLeft class="size-4" aria-hidden="true" />
                 Usuários
             </Link>
             <h1
-                class="mt-2 text-2xl font-semibold tracking-tight text-slate-900 dark:text-slate-100"
+                class="mt-2 text-2xl font-semibold tracking-tight text-stone-900 dark:text-stone-100"
             >
                 Novo usuário
             </h1>
-            <p class="mt-1 text-sm text-slate-600 dark:text-slate-400">
+            <p class="mt-1 text-sm text-stone-600 dark:text-stone-400">
                 A conta já é criada com acesso total ao painel.
             </p>
         </header>

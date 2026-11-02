@@ -81,7 +81,7 @@ const toggleRecoveryMode = (clearErrors: () => void): void => {
                                     v-for="index in 6"
                                     :key="index"
                                     :index="index - 1"
-                                    class="size-12 rounded-md border text-base dark:border-slate-800 dark:bg-slate-950/60"
+                                    class="size-12 rounded-sm border text-base dark:border-stone-800 dark:bg-stone-950/60"
                                 />
                             </InputOTPGroup>
                         </InputOTP>
@@ -96,7 +96,7 @@ const toggleRecoveryMode = (clearErrors: () => void): void => {
                     Continuar
                 </Button>
                 <div
-                    class="text-center text-sm text-slate-600 dark:text-slate-400"
+                    class="text-center text-sm text-stone-600 dark:text-stone-400"
                 >
                     <span>ou você pode </span>
                     <button
@@ -135,7 +135,7 @@ const toggleRecoveryMode = (clearErrors: () => void): void => {
                 </Button>
 
                 <div
-                    class="text-center text-sm text-slate-600 dark:text-slate-400"
+                    class="text-center text-sm text-stone-600 dark:text-stone-400"
                 >
                     <span>ou você pode </span>
                     <button

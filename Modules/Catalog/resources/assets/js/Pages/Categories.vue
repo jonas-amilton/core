@@ -123,28 +123,28 @@ function remove(item: Category): void {
         <header>
             <Link
                 :href="productsIndex()"
-                class="inline-flex items-center gap-1.5 rounded-md px-2 py-1 text-sm text-slate-600 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-slate-100"
+                class="inline-flex items-center gap-1.5 rounded-sm px-2 py-1 text-sm text-stone-600 hover:bg-stone-100 hover:text-stone-900 dark:text-stone-400 dark:hover:bg-stone-800 dark:hover:text-stone-100"
             >
                 <ArrowLeft class="size-4" aria-hidden="true" />
                 Produtos
             </Link>
             <h1
-                class="mt-2 text-2xl font-semibold tracking-tight text-slate-900 dark:text-slate-100"
+                class="mt-2 text-2xl font-semibold tracking-tight text-stone-900 dark:text-stone-100"
             >
                 Categorias
             </h1>
-            <p class="mt-1 text-sm text-slate-600 dark:text-slate-400">
+            <p class="mt-1 text-sm text-stone-600 dark:text-stone-400">
                 Categorias podem ter subcategorias (até três níveis no site).
             </p>
         </header>
 
         <form
-            class="grid gap-3 rounded-xl border border-slate-200 bg-white p-4 sm:grid-cols-2 lg:grid-cols-[1fr_1fr_1fr_auto] dark:border-slate-800 dark:bg-slate-900"
+            class="grid gap-3 rounded-sm border border-stone-200 bg-white p-4 sm:grid-cols-2 lg:grid-cols-[1fr_1fr_1fr_auto] dark:border-stone-800 dark:bg-stone-900"
             @submit.prevent="submit"
         >
             <label class="grid gap-1.5">
                 <span
-                    class="flex items-center gap-1 text-xs font-medium text-slate-600 dark:text-slate-400"
+                    class="flex items-center gap-1 text-xs font-medium text-stone-600 dark:text-stone-400"
                 >
                     Nome
                     <button
@@ -154,8 +154,8 @@ function remove(item: Category): void {
                         class="rounded px-1 text-[10px]"
                         :class="
                             editLocale === loc
-                                ? 'bg-indigo-100 text-indigo-700 dark:bg-indigo-500/20 dark:text-indigo-300'
-                                : 'text-slate-400 hover:text-slate-600'
+                                ? 'bg-orange-100 text-orange-800 dark:bg-orange-600/20 dark:text-orange-300'
+                                : 'text-stone-400 hover:text-stone-600'
                         "
                         @click="editLocale = loc"
                     >
@@ -169,7 +169,7 @@ function remove(item: Category): void {
             </label>
 
             <label class="grid gap-1.5">
-                <span class="text-xs font-medium text-slate-600 dark:text-slate-400">
+                <span class="text-xs font-medium text-stone-600 dark:text-stone-400">
                     Slug
                 </span>
                 <input
@@ -181,7 +181,7 @@ function remove(item: Category): void {
             </label>
 
             <label class="grid gap-1.5">
-                <span class="text-xs font-medium text-slate-600 dark:text-slate-400">
+                <span class="text-xs font-medium text-stone-600 dark:text-stone-400">
                     Categoria pai
                 </span>
                 <select v-model="form.parent_id" :class="fieldClasses">
@@ -200,7 +200,7 @@ function remove(item: Category): void {
             <div class="flex items-end gap-2">
                 <button
                     type="submit"
-                    class="inline-flex h-10 items-center gap-2 rounded-lg bg-indigo-600 px-4 text-sm font-medium text-white hover:bg-indigo-500 disabled:opacity-50"
+                    class="inline-flex h-10 items-center gap-2 rounded-sm bg-stone-900 px-4 text-sm font-medium text-stone-50 dark:text-stone-900 dark:bg-stone-100 dark:hover:bg-stone-200 hover:bg-stone-800 disabled:opacity-50"
                     :disabled="form.processing"
                 >
                     <component
@@ -213,7 +213,7 @@ function remove(item: Category): void {
                 <button
                     v-if="editing"
                     type="button"
-                    class="inline-flex h-10 items-center rounded-lg border border-slate-200 px-3 text-sm text-slate-600 dark:border-slate-800 dark:text-slate-300"
+                    class="inline-flex h-10 items-center rounded-sm border border-stone-200 px-3 text-sm text-stone-600 dark:border-stone-800 dark:text-stone-300"
                     @click="reset"
                 >
                     <X class="size-4" aria-hidden="true" />
@@ -225,26 +225,26 @@ function remove(item: Category): void {
             <li
                 v-for="item in props.categories"
                 :key="item.id"
-                class="flex items-center justify-between gap-3 rounded-xl border border-slate-200 bg-white px-4 py-3 dark:border-slate-800 dark:bg-slate-900"
+                class="flex items-center justify-between gap-3 rounded-sm border border-stone-200 bg-white px-4 py-3 dark:border-stone-800 dark:bg-stone-900"
             >
                 <div class="min-w-0">
-                    <p class="truncate text-sm font-medium text-slate-900 dark:text-slate-100">
+                    <p class="truncate text-sm font-medium text-stone-900 dark:text-stone-100">
                         {{ item.name }}
                         <span
                             v-if="item.products_count !== null"
-                            class="text-xs font-normal text-slate-400"
+                            class="text-xs font-normal text-stone-400"
                         >
                             · {{ item.products_count }} produto(s)
                         </span>
                     </p>
-                    <p class="truncate text-xs text-slate-400">
+                    <p class="truncate text-xs text-stone-400">
                         /produtos/c/{{ item.slug }}
                     </p>
                 </div>
                 <div class="flex shrink-0 items-center gap-1">
                     <button
                         type="button"
-                        class="rounded-md p-1 text-slate-400 hover:bg-slate-100 hover:text-slate-700 dark:hover:bg-slate-800"
+                        class="rounded-sm p-1 text-stone-400 hover:bg-stone-100 hover:text-stone-700 dark:hover:bg-stone-800"
                         aria-label="Editar categoria"
                         @click="edit(item)"
                     >
@@ -252,7 +252,7 @@ function remove(item: Category): void {
                     </button>
                     <button
                         type="button"
-                        class="rounded-md p-1 text-slate-400 hover:bg-red-50 hover:text-red-600 dark:hover:bg-red-500/10"
+                        class="rounded-sm p-1 text-stone-400 hover:bg-red-50 hover:text-red-600 dark:hover:bg-red-500/10"
                         aria-label="Excluir categoria"
                         @click="remove(item)"
                     >
@@ -264,7 +264,7 @@ function remove(item: Category): void {
 
         <p
             v-if="props.categories.length === 0"
-            class="rounded-xl border border-dashed border-slate-300 px-6 py-12 text-center text-sm text-slate-500 dark:border-slate-700 dark:text-slate-400"
+            class="rounded-sm border border-dashed border-stone-300 px-6 py-12 text-center text-sm text-stone-500 dark:border-stone-700 dark:text-stone-400"
         >
             Nenhuma categoria criada.
         </p>

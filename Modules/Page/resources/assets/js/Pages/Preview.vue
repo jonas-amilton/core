@@ -47,23 +47,23 @@ const visibleBlocks = (blocks: Block[]): Block[] =>
 <template>
     <Head :title="`Pré-visualização: ${page.title}`" />
 
-    <div class="min-h-screen bg-white dark:bg-slate-950">
+    <div class="min-h-screen bg-white dark:bg-stone-950">
         <div
-            class="sticky top-0 z-10 flex items-center justify-between gap-3 border-b border-slate-200 bg-white/90 px-4 py-2 backdrop-blur-md dark:border-slate-800 dark:bg-slate-950/90"
+            class="sticky top-0 z-10 flex items-center justify-between gap-3 border-b border-stone-200 bg-background px-4 py-2 dark:border-stone-800"
         >
             <Link
                 :href="edit(page.id)"
-                class="inline-flex items-center gap-1.5 rounded-md px-2 py-1 text-sm text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-100"
+                class="inline-flex items-center gap-1.5 rounded-sm px-2 py-1 text-sm text-stone-600 hover:text-stone-900 dark:text-stone-400 dark:hover:text-stone-100"
             >
                 <ArrowLeft class="size-4" aria-hidden="true" />
                 Voltar ao editor
             </Link>
             <div class="flex items-center gap-2 text-xs">
-                <span class="text-slate-500 dark:text-slate-400">
+                <span class="text-stone-500 dark:text-stone-400">
                     {{ statusLabels[page.status] }}
                 </span>
-                <span class="text-slate-400 dark:text-slate-600">·</span>
-                <span class="font-mono text-slate-500 dark:text-slate-400">
+                <span class="text-stone-400 dark:text-stone-600">·</span>
+                <span class="font-mono text-stone-500 dark:text-stone-400">
                     /{{ page.slug }}
                 </span>
             </div>
@@ -76,7 +76,7 @@ const visibleBlocks = (blocks: Block[]): Block[] =>
 
             <p
                 v-if="visibleBlocks(page.blocks).length === 0"
-                class="px-6 py-20 text-center text-sm text-slate-500 dark:text-slate-400"
+                class="px-6 py-20 text-center text-sm text-stone-500 dark:text-stone-400"
             >
                 Esta página não tem blocos visíveis.
             </p>

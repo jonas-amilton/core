@@ -58,17 +58,17 @@ function submit(): void {
         <header>
             <Link
                 :href="mediaIndex()"
-                class="inline-flex items-center gap-1.5 text-sm text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-100"
+                class="inline-flex items-center gap-1.5 text-sm text-stone-600 hover:text-stone-900 dark:text-stone-400 dark:hover:text-stone-100"
             >
                 <ArrowLeft class="size-4" aria-hidden="true" />
                 Mídia
             </Link>
             <h1
-                class="mt-2 text-2xl font-semibold tracking-tight text-slate-900 dark:text-slate-100"
+                class="mt-2 text-2xl font-semibold tracking-tight text-stone-900 dark:text-stone-100"
             >
                 Enviar arquivo
             </h1>
-            <p class="mt-1 text-sm text-slate-600 dark:text-slate-400">
+            <p class="mt-1 text-sm text-stone-600 dark:text-stone-400">
                 JPG, PNG, WebP, GIF ou PDF — até
                 {{ Math.round(maxKilobytes / 1024) }} MB.
             </p>
@@ -76,19 +76,19 @@ function submit(): void {
 
         <form class="max-w-xl space-y-5" @submit.prevent="submit">
             <label
-                class="flex cursor-pointer flex-col items-center justify-center gap-2 rounded-xl border border-dashed border-slate-300 bg-white px-6 py-10 text-center transition-colors hover:border-indigo-400 dark:border-slate-700 dark:bg-slate-900"
+                class="flex cursor-pointer flex-col items-center justify-center gap-2 rounded-sm border border-dashed border-stone-300 bg-white px-6 py-10 text-center transition-colors hover:border-orange-400 dark:border-stone-700 dark:bg-stone-900"
             >
                 <span
-                    class="flex size-11 items-center justify-center rounded-lg bg-indigo-50 text-indigo-600 dark:bg-indigo-500/10 dark:text-indigo-400"
+                    class="flex size-11 items-center justify-center rounded-sm bg-orange-50 text-orange-700 dark:bg-orange-600/10 dark:text-orange-400"
                 >
                     <Upload class="size-5" aria-hidden="true" />
                 </span>
                 <span
-                    class="text-sm font-medium text-slate-900 dark:text-slate-100"
+                    class="text-sm font-medium text-stone-900 dark:text-stone-100"
                 >
                     {{ form.file ? form.file.name : 'Selecionar arquivo' }}
                 </span>
-                <span class="text-xs text-slate-500 dark:text-slate-400">
+                <span class="text-xs text-stone-500 dark:text-stone-400">
                     Clique para escolher no computador
                 </span>
                 <input
@@ -110,13 +110,13 @@ function submit(): void {
                 v-if="preview"
                 :src="preview"
                 alt="Pré-visualização do arquivo"
-                class="max-h-64 w-full rounded-xl border border-slate-200 object-contain dark:border-slate-800"
+                class="max-h-64 w-full rounded-sm border border-stone-200 object-contain dark:border-stone-800"
             />
 
             <div class="grid gap-2">
                 <label
                     for="alt"
-                    class="text-xs font-medium text-slate-600 dark:text-slate-400"
+                    class="text-xs font-medium text-stone-600 dark:text-stone-400"
                 >
                     Texto alternativo
                 </label>
@@ -138,7 +138,7 @@ function submit(): void {
             <div class="grid gap-2">
                 <label
                     for="caption"
-                    class="text-xs font-medium text-slate-600 dark:text-slate-400"
+                    class="text-xs font-medium text-stone-600 dark:text-stone-400"
                 >
                     Legenda
                 </label>
@@ -159,7 +159,7 @@ function submit(): void {
 
             <button
                 type="submit"
-                class="inline-flex h-11 items-center justify-center gap-2 rounded-lg bg-indigo-600 px-6 text-sm font-medium text-white transition-colors hover:bg-indigo-500 disabled:opacity-60"
+                class="inline-flex h-11 items-center justify-center gap-2 rounded-sm bg-stone-900 px-6 text-sm font-medium text-stone-50 dark:text-stone-900 dark:bg-stone-100 dark:hover:bg-stone-200 transition-colors hover:bg-stone-800 disabled:opacity-60"
                 :disabled="form.processing || !form.file"
             >
                 <Upload class="size-4" aria-hidden="true" />

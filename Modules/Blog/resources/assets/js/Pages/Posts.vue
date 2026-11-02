@@ -57,25 +57,25 @@ function remove(post: Post): void {
         <header class="flex flex-wrap items-end justify-between gap-3">
             <div>
                 <h1
-                    class="text-2xl font-semibold tracking-tight text-slate-900 dark:text-slate-100"
+                    class="text-2xl font-semibold tracking-tight text-stone-900 dark:text-stone-100"
                 >
                     Blog
                 </h1>
-                <p class="mt-1 text-sm text-slate-600 dark:text-slate-400">
+                <p class="mt-1 text-sm text-stone-600 dark:text-stone-400">
                     Artigos publicados em /blog.
                 </p>
             </div>
             <div class="flex items-center gap-2">
                 <Link
                     :href="categoriesIndex()"
-                    class="inline-flex h-10 items-center gap-2 rounded-lg border border-slate-200 px-4 text-sm font-medium text-slate-700 hover:bg-slate-50 dark:border-slate-800 dark:text-slate-200 dark:hover:bg-slate-800"
+                    class="inline-flex h-10 items-center gap-2 rounded-sm border border-stone-200 px-4 text-sm font-medium text-stone-700 hover:bg-stone-50 dark:border-stone-800 dark:text-stone-200 dark:hover:bg-stone-800"
                 >
                     <FolderTree class="size-4" aria-hidden="true" />
                     Categorias
                 </Link>
                 <Link
                     :href="create()"
-                    class="inline-flex h-10 items-center gap-2 rounded-lg bg-indigo-600 px-4 text-sm font-medium text-white transition-colors hover:bg-indigo-500"
+                    class="inline-flex h-10 items-center gap-2 rounded-sm bg-stone-900 px-4 text-sm font-medium text-stone-50 dark:text-stone-900 dark:bg-stone-100 dark:hover:bg-stone-200 transition-colors hover:bg-stone-800"
                 >
                     <Plus class="size-4" aria-hidden="true" />
                     Novo artigo
@@ -85,11 +85,11 @@ function remove(post: Post): void {
 
         <div
             v-if="props.posts.length > 0"
-            class="overflow-hidden rounded-xl border border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-900"
+            class="overflow-hidden rounded-sm border border-stone-200 bg-white dark:border-stone-800 dark:bg-stone-900"
         >
             <table class="w-full text-left text-sm">
                 <thead
-                    class="border-b border-slate-200 bg-slate-50 text-xs text-slate-500 uppercase dark:border-slate-800 dark:bg-slate-950/60 dark:text-slate-400"
+                    class="border-b border-stone-200 bg-stone-50 text-xs text-stone-500 uppercase dark:border-stone-800 dark:bg-stone-950/60 dark:text-stone-400"
                 >
                     <tr>
                         <th scope="col" class="px-4 py-2.5 font-medium">
@@ -115,30 +115,30 @@ function remove(post: Post): void {
                         </th>
                     </tr>
                 </thead>
-                <tbody class="divide-y divide-slate-200 dark:divide-slate-800">
+                <tbody class="divide-y divide-stone-200 dark:divide-stone-800">
                     <tr
                         v-for="item in props.posts"
                         :key="item.id"
-                        class="transition-colors hover:bg-slate-50 dark:hover:bg-slate-800/50"
+                        class="transition-colors hover:bg-stone-50 dark:hover:bg-stone-800/50"
                     >
                         <td class="px-4 py-3">
                             <Link
                                 :href="edit(item.id)"
-                                class="font-medium text-slate-900 hover:text-indigo-600 dark:text-slate-100 dark:hover:text-indigo-400"
+                                class="font-medium text-stone-900 hover:text-orange-700 dark:text-stone-100 dark:hover:text-orange-400"
                             >
                                 {{ item.title }}
                             </Link>
-                            <p class="text-xs text-slate-400">
+                            <p class="text-xs text-stone-400">
                                 /{{ item.slug }}
                             </p>
                         </td>
                         <td class="hidden px-4 py-3 sm:table-cell">
                             <span
                                 :class="[
-                                    'rounded-full border px-2 py-0.5 text-[11px] font-medium',
+                                    'border px-2 py-0.5 text-[11px] font-medium',
                                     isPublished(item)
                                         ? 'border-emerald-200 bg-emerald-50 text-emerald-700 dark:border-emerald-500/30 dark:bg-emerald-500/10 dark:text-emerald-300'
-                                        : 'border-slate-200 bg-slate-100 text-slate-600 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300',
+                                        : 'border-stone-200 bg-stone-100 text-stone-600 dark:border-stone-700 dark:bg-stone-800 dark:text-stone-300',
                                 ]"
                             >
                                 {{
@@ -147,7 +147,7 @@ function remove(post: Post): void {
                             </span>
                         </td>
                         <td
-                            class="hidden px-4 py-3 text-xs text-slate-500 md:table-cell dark:text-slate-400"
+                            class="hidden px-4 py-3 text-xs text-stone-500 md:table-cell dark:text-stone-400"
                         >
                             {{ formatDate(item.updated_at) }}
                         </td>
@@ -155,7 +155,7 @@ function remove(post: Post): void {
                             <div class="inline-flex items-center gap-1">
                                 <Link
                                     :href="edit(item.id)"
-                                    class="rounded-md p-1 text-slate-400 hover:bg-slate-100 hover:text-slate-700 dark:hover:bg-slate-800"
+                                    class="rounded-sm p-1 text-stone-400 hover:bg-stone-100 hover:text-stone-700 dark:hover:bg-stone-800"
                                     aria-label="Editar artigo"
                                 >
                                     <Pencil
@@ -165,7 +165,7 @@ function remove(post: Post): void {
                                 </Link>
                                 <button
                                     type="button"
-                                    class="rounded-md p-1 text-slate-400 hover:bg-red-50 hover:text-red-600 dark:hover:bg-red-500/10"
+                                    class="rounded-sm p-1 text-stone-400 hover:bg-red-50 hover:text-red-600 dark:hover:bg-red-500/10"
                                     aria-label="Excluir artigo"
                                     @click="remove(item)"
                                 >
@@ -183,7 +183,7 @@ function remove(post: Post): void {
 
         <p
             v-else
-            class="rounded-xl border border-dashed border-slate-300 px-6 py-16 text-center text-sm text-slate-500 dark:border-slate-700 dark:text-slate-400"
+            class="rounded-sm border border-dashed border-stone-300 px-6 py-16 text-center text-sm text-stone-500 dark:border-stone-700 dark:text-stone-400"
         >
             Nenhum artigo ainda. Crie o primeiro.
         </p>

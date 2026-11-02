@@ -65,26 +65,26 @@ function choose(media: ApiItem): void {
 <template>
     <div
         v-if="open"
-        class="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/60 p-4"
+        class="fixed inset-0 z-50 flex items-center justify-center bg-stone-950/60 p-4"
         role="dialog"
         aria-modal="true"
         aria-label="Escolher da biblioteca de mídia"
         @click.self="emit('close')"
     >
         <div
-            class="flex max-h-[80vh] w-full max-w-3xl flex-col rounded-xl border border-slate-200 bg-white shadow-2xl dark:border-slate-800 dark:bg-slate-900"
+            class="flex max-h-[80vh] w-full max-w-3xl flex-col rounded-sm border border-stone-200 bg-white dark:border-stone-800 dark:bg-stone-900"
         >
             <div
-                class="flex items-center gap-3 border-b border-slate-200 p-4 dark:border-slate-800"
+                class="flex items-center gap-3 border-b border-stone-200 p-4 dark:border-stone-800"
             >
                 <h2
-                    class="text-sm font-semibold text-slate-900 dark:text-slate-100"
+                    class="text-sm font-semibold text-stone-900 dark:text-stone-100"
                 >
                     Biblioteca de mídia
                 </h2>
                 <button
                     type="button"
-                    class="ml-auto rounded-md p-1 text-slate-400 hover:bg-slate-100 hover:text-slate-700 dark:hover:bg-slate-800"
+                    class="ml-auto rounded-sm p-1 text-stone-400 hover:bg-stone-100 hover:text-stone-700 dark:hover:bg-stone-800"
                     aria-label="Fechar"
                     @click="emit('close')"
                 >
@@ -93,19 +93,19 @@ function choose(media: ApiItem): void {
             </div>
 
             <div
-                class="flex gap-2 border-b border-slate-200 p-3 dark:border-slate-800"
+                class="flex gap-2 border-b border-stone-200 p-3 dark:border-stone-800"
             >
                 <input
                     v-model="search"
                     type="search"
                     placeholder="Buscar imagem"
                     aria-label="Buscar imagem"
-                    class="h-9 flex-1 rounded-lg border border-slate-200 bg-white px-3 text-sm text-slate-900 focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-indigo-500/30 focus-visible:outline-none dark:border-slate-800 dark:bg-slate-950/60 dark:text-slate-100"
+                    class="h-9 flex-1 rounded-sm border border-stone-200 bg-white px-3 text-sm text-stone-900 focus-visible:border-orange-600 focus-visible:ring-2 focus-visible:ring-orange-600/30 focus-visible:outline-none dark:border-stone-800 dark:bg-stone-950/60 dark:text-stone-100"
                     @keyup.enter="load"
                 />
                 <button
                     type="button"
-                    class="h-9 rounded-lg border border-slate-200 px-3 text-sm font-medium text-slate-700 hover:bg-slate-50 dark:border-slate-800 dark:text-slate-200 dark:hover:bg-slate-800"
+                    class="h-9 rounded-sm border border-stone-200 px-3 text-sm font-medium text-stone-700 hover:bg-stone-50 dark:border-stone-800 dark:text-stone-200 dark:hover:bg-stone-800"
                     @click="load"
                 >
                     Buscar
@@ -115,7 +115,7 @@ function choose(media: ApiItem): void {
             <div class="min-h-40 flex-1 overflow-y-auto p-3">
                 <p
                     v-if="loading"
-                    class="p-6 text-center text-sm text-slate-500"
+                    class="p-6 text-center text-sm text-stone-500"
                 >
                     Carregando...
                 </p>
@@ -127,7 +127,7 @@ function choose(media: ApiItem): void {
                 </p>
                 <p
                     v-else-if="items.length === 0"
-                    class="p-6 text-center text-sm text-slate-500 dark:text-slate-400"
+                    class="p-6 text-center text-sm text-stone-500 dark:text-stone-400"
                 >
                     Nenhuma imagem encontrada.
                 </p>
@@ -135,7 +135,7 @@ function choose(media: ApiItem): void {
                     <li v-for="item in items" :key="item.id">
                         <button
                             type="button"
-                            class="group w-full overflow-hidden rounded-lg border border-slate-200 text-left transition-colors hover:border-indigo-400 dark:border-slate-800"
+                            class="group w-full overflow-hidden rounded-sm border border-stone-200 text-left transition-colors hover:border-orange-400 dark:border-stone-800"
                             @click="choose(item)"
                         >
                             <img
@@ -144,7 +144,7 @@ function choose(media: ApiItem): void {
                                 class="aspect-video w-full object-cover"
                             />
                             <span
-                                class="block truncate px-2 py-1.5 text-xs text-slate-600 dark:text-slate-400"
+                                class="block truncate px-2 py-1.5 text-xs text-stone-600 dark:text-stone-400"
                             >
                                 {{ item.alt || item.original_name }}
                             </span>
@@ -154,13 +154,13 @@ function choose(media: ApiItem): void {
             </div>
 
             <div
-                class="border-t border-slate-200 p-3 text-right dark:border-slate-800"
+                class="border-t border-stone-200 p-3 text-right dark:border-stone-800"
             >
                 <a
                     href="/media/create"
                     target="_blank"
                     rel="noopener"
-                    class="inline-flex items-center gap-1 text-xs font-medium text-indigo-600 hover:underline dark:text-indigo-400"
+                    class="inline-flex items-center gap-1 text-xs font-medium text-orange-700 hover:underline dark:text-orange-400"
                 >
                     <ImageIcon class="size-3.5" aria-hidden="true" />
                     Enviar novo arquivo

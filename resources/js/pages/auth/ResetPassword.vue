@@ -51,7 +51,7 @@ const inputEmail = ref(props.email);
                     readonly
                     :class="[
                         fieldClasses,
-                        'cursor-not-allowed text-slate-500 dark:text-slate-400',
+                        'cursor-not-allowed text-stone-500 dark:text-stone-400',
                     ]"
                 />
                 <InputError :message="errors.email" />

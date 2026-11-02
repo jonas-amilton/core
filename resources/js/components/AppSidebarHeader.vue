@@ -15,10 +15,14 @@ withDefaults(
 
 <template>
     <header
-        class="sticky top-0 z-20 flex h-16 shrink-0 items-center gap-2 border-b border-slate-200/80 bg-white/80 px-6 backdrop-blur-md transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12 md:px-4 dark:border-slate-800/80 dark:bg-slate-950/80"
+        class="sticky top-0 z-20 flex h-14 shrink-0 items-center gap-2 border-b border-stone-200 bg-background px-4 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12 dark:border-stone-800"
     >
         <div class="flex items-center gap-2">
             <SidebarTrigger class="-ml-1" />
+            <span
+                class="h-4 w-px bg-stone-200 dark:bg-stone-800"
+                aria-hidden="true"
+            />
             <template v-if="breadcrumbs && breadcrumbs.length > 0">
                 <Breadcrumbs :breadcrumbs="breadcrumbs" />
             </template>

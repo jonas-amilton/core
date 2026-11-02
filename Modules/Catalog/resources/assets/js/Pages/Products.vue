@@ -78,25 +78,25 @@ function remove(item: Product): void {
         <header class="flex flex-wrap items-end justify-between gap-3">
             <div>
                 <h1
-                    class="text-2xl font-semibold tracking-tight text-slate-900 dark:text-slate-100"
+                    class="text-2xl font-semibold tracking-tight text-stone-900 dark:text-stone-100"
                 >
                     Produtos
                 </h1>
-                <p class="mt-1 text-sm text-slate-600 dark:text-slate-400">
+                <p class="mt-1 text-sm text-stone-600 dark:text-stone-400">
                     Catálogo exibido em /produtos.
                 </p>
             </div>
             <div class="flex items-center gap-2">
                 <Link
                     :href="categoryIndex()"
-                    class="inline-flex h-10 items-center gap-2 rounded-lg border border-slate-200 px-4 text-sm font-medium text-slate-700 hover:bg-slate-50 dark:border-slate-800 dark:text-slate-200 dark:hover:bg-slate-800"
+                    class="inline-flex h-10 items-center gap-2 rounded-sm border border-stone-200 px-4 text-sm font-medium text-stone-700 hover:bg-stone-50 dark:border-stone-800 dark:text-stone-200 dark:hover:bg-stone-800"
                 >
                     <FolderTree class="size-4" aria-hidden="true" />
                     Categorias
                 </Link>
                 <Link
                     :href="create()"
-                    class="inline-flex h-10 items-center gap-2 rounded-lg bg-indigo-600 px-4 text-sm font-medium text-white transition-colors hover:bg-indigo-500"
+                    class="inline-flex h-10 items-center gap-2 rounded-sm bg-stone-900 px-4 text-sm font-medium text-stone-50 dark:text-stone-900 dark:bg-stone-100 dark:hover:bg-stone-200 transition-colors hover:bg-stone-800"
                 >
                     <Plus class="size-4" aria-hidden="true" />
                     Novo produto
@@ -109,7 +109,7 @@ function remove(item: Product): void {
             @submit.prevent="applyFilters"
         >
             <label class="grid gap-1.5">
-                <span class="text-xs font-medium text-slate-600 dark:text-slate-400">
+                <span class="text-xs font-medium text-stone-600 dark:text-stone-400">
                     Buscar
                 </span>
                 <input
@@ -120,7 +120,7 @@ function remove(item: Product): void {
                 />
             </label>
             <label class="grid gap-1.5">
-                <span class="text-xs font-medium text-slate-600 dark:text-slate-400">
+                <span class="text-xs font-medium text-stone-600 dark:text-stone-400">
                     Categoria
                 </span>
                 <select v-model="category" :class="[fieldClasses, 'w-56']">
@@ -136,7 +136,7 @@ function remove(item: Product): void {
             </label>
             <button
                 type="submit"
-                class="h-10 rounded-lg border border-slate-200 px-4 text-sm font-medium text-slate-700 hover:bg-slate-50 dark:border-slate-800 dark:text-slate-200 dark:hover:bg-slate-800"
+                class="h-10 rounded-sm border border-stone-200 px-4 text-sm font-medium text-stone-700 hover:bg-stone-50 dark:border-stone-800 dark:text-stone-200 dark:hover:bg-stone-800"
             >
                 Filtrar
             </button>
@@ -144,11 +144,11 @@ function remove(item: Product): void {
 
         <div
             v-if="props.products.data.length > 0"
-            class="overflow-hidden rounded-xl border border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-900"
+            class="overflow-hidden rounded-sm border border-stone-200 bg-white dark:border-stone-800 dark:bg-stone-900"
         >
             <table class="w-full text-left text-sm">
                 <thead
-                    class="border-b border-slate-200 bg-slate-50 text-xs text-slate-500 uppercase dark:border-slate-800 dark:bg-slate-950/60 dark:text-slate-400"
+                    class="border-b border-stone-200 bg-stone-50 text-xs text-stone-500 uppercase dark:border-stone-800 dark:bg-stone-950/60 dark:text-stone-400"
                 >
                     <tr>
                         <th scope="col" class="px-4 py-2.5 font-medium">Produto</th>
@@ -158,36 +158,36 @@ function remove(item: Product): void {
                         <th scope="col" class="px-4 py-2.5 text-right font-medium">Ações</th>
                     </tr>
                 </thead>
-                <tbody class="divide-y divide-slate-200 dark:divide-slate-800">
+                <tbody class="divide-y divide-stone-200 dark:divide-stone-800">
                     <tr
                         v-for="item in props.products.data"
                         :key="item.id"
-                        class="transition-colors hover:bg-slate-50 dark:hover:bg-slate-800/50"
+                        class="transition-colors hover:bg-stone-50 dark:hover:bg-stone-800/50"
                     >
                         <td class="px-4 py-3">
                             <Link
                                 :href="edit(item.id)"
-                                class="font-medium text-slate-900 hover:text-indigo-600 dark:text-slate-100 dark:hover:text-indigo-400"
+                                class="font-medium text-stone-900 hover:text-orange-700 dark:text-stone-100 dark:hover:text-orange-400"
                             >
                                 {{ item.name }}
                             </Link>
-                            <p class="text-xs text-slate-400">/{{ item.slug }}</p>
+                            <p class="text-xs text-stone-400">/{{ item.slug }}</p>
                         </td>
-                        <td class="hidden px-4 py-3 text-xs text-slate-500 sm:table-cell">
+                        <td class="hidden px-4 py-3 text-xs text-stone-500 sm:table-cell">
                             {{ item.sku || '—' }}
                         </td>
                         <td class="px-4 py-3 text-right">
                             <div class="inline-flex items-center gap-1">
                                 <Link
                                     :href="edit(item.id)"
-                                    class="rounded-md p-1 text-slate-400 hover:bg-slate-100 hover:text-slate-700 dark:hover:bg-slate-800"
+                                    class="rounded-sm p-1 text-stone-400 hover:bg-stone-100 hover:text-stone-700 dark:hover:bg-stone-800"
                                     aria-label="Editar produto"
                                 >
                                     <Pencil class="size-3.5" aria-hidden="true" />
                                 </Link>
                                 <button
                                     type="button"
-                                    class="rounded-md p-1 text-slate-400 hover:bg-red-50 hover:text-red-600 dark:hover:bg-red-500/10"
+                                    class="rounded-sm p-1 text-stone-400 hover:bg-red-50 hover:text-red-600 dark:hover:bg-red-500/10"
                                     aria-label="Excluir produto"
                                     @click="remove(item)"
                                 >
@@ -202,7 +202,7 @@ function remove(item: Product): void {
 
         <p
             v-else
-            class="rounded-xl border border-dashed border-slate-300 px-6 py-16 text-center text-sm text-slate-500 dark:border-slate-700 dark:text-slate-400"
+            class="rounded-sm border border-dashed border-stone-300 px-6 py-16 text-center text-sm text-stone-500 dark:border-stone-700 dark:text-stone-400"
         >
             Nenhum produto encontrado.
         </p>
@@ -215,13 +215,13 @@ function remove(item: Product): void {
             <Link
                 v-if="props.products.prev_page_url"
                 :href="props.products.prev_page_url"
-                class="text-indigo-600 hover:underline dark:text-indigo-400"
+                class="text-orange-700 hover:underline dark:text-orange-400"
             >
                 Anterior
             </Link>
-            <span v-else class="text-slate-400">Anterior</span>
+            <span v-else class="text-stone-400">Anterior</span>
 
-            <span class="text-xs text-slate-500">
+            <span class="text-xs text-stone-500">
                 Página {{ props.products.current_page }} de
                 {{ props.products.last_page }}
             </span>
@@ -229,11 +229,11 @@ function remove(item: Product): void {
             <Link
                 v-if="props.products.next_page_url"
                 :href="props.products.next_page_url"
-                class="text-indigo-600 hover:underline dark:text-indigo-400"
+                class="text-orange-700 hover:underline dark:text-orange-400"
             >
                 Próxima
             </Link>
-            <span v-else class="text-slate-400">Próxima</span>
+            <span v-else class="text-stone-400">Próxima</span>
         </nav>
     </div>
 </template>

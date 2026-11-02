@@ -166,14 +166,14 @@ function removeMedia(id: number): void {
         <header class="flex flex-wrap items-center justify-between gap-3">
             <Link
                 :href="productsIndex()"
-                class="inline-flex items-center gap-1.5 rounded-md px-2 py-1 text-sm text-slate-600 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-slate-100"
+                class="inline-flex items-center gap-1.5 rounded-sm px-2 py-1 text-sm text-stone-600 hover:bg-stone-100 hover:text-stone-900 dark:text-stone-400 dark:hover:bg-stone-800 dark:hover:text-stone-100"
             >
                 <ArrowLeft class="size-4" aria-hidden="true" />
                 Produtos
             </Link>
             <Link
                 :href="categoryIndex()"
-                class="text-sm text-slate-500 hover:text-indigo-600 dark:text-slate-400"
+                class="text-sm text-stone-500 hover:text-orange-700 dark:text-stone-400"
             >
                 Categorias
             </Link>
@@ -181,18 +181,18 @@ function removeMedia(id: number): void {
 
         <form class="grid gap-4 lg:grid-cols-[1fr_320px]" @submit.prevent="save">
             <div
-                class="grid gap-4 rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900"
+                class="grid gap-4 rounded-sm border border-stone-200 bg-white p-4 dark:border-stone-800 dark:bg-stone-900"
             >
                 <div class="flex items-center gap-1">
                     <button
                         v-for="loc in locales"
                         :key="loc"
                         type="button"
-                        class="rounded-md px-2 py-0.5 text-[11px] font-medium transition-colors"
+                        class="rounded-sm px-2 py-0.5 text-[11px] font-medium transition-colors"
                         :class="
                             editLocale === loc
-                                ? 'bg-indigo-100 text-indigo-700 dark:bg-indigo-500/20 dark:text-indigo-300'
-                                : 'text-slate-500 hover:bg-slate-100 dark:text-slate-500 dark:hover:bg-slate-800'
+                                ? 'bg-orange-100 text-orange-800 dark:bg-orange-600/20 dark:text-orange-300'
+                                : 'text-stone-500 hover:bg-stone-100 dark:text-stone-500 dark:hover:bg-stone-800'
                         "
                         @click="editLocale = loc"
                     >
@@ -200,14 +200,14 @@ function removeMedia(id: number): void {
                     </button>
                     <span
                         v-if="editLocale !== 'pt_BR'"
-                        class="ml-1 text-[11px] text-slate-400"
+                        class="ml-1 text-[11px] text-stone-400"
                     >
                         Tradução — vazio usa o português
                     </span>
                 </div>
 
                 <label class="grid gap-1.5">
-                    <span class="text-xs font-medium text-slate-600 dark:text-slate-400">
+                    <span class="text-xs font-medium text-stone-600 dark:text-stone-400">
                         Nome
                     </span>
                     <input v-model="name" type="text" :class="fieldClasses" />
@@ -217,7 +217,7 @@ function removeMedia(id: number): void {
                 </label>
 
                 <label class="grid gap-1.5">
-                    <span class="text-xs font-medium text-slate-600 dark:text-slate-400">
+                    <span class="text-xs font-medium text-stone-600 dark:text-stone-400">
                         Descrição
                     </span>
                     <textarea
@@ -228,15 +228,15 @@ function removeMedia(id: number): void {
                 </label>
 
                 <div
-                    class="grid gap-2 rounded-lg border border-slate-200 p-3 dark:border-slate-800"
+                    class="grid gap-2 rounded-sm border border-stone-200 p-3 dark:border-stone-800"
                 >
-                    <span class="text-xs font-medium text-slate-600 dark:text-slate-400">
+                    <span class="text-xs font-medium text-stone-600 dark:text-stone-400">
                         Categorias
                     </span>
                     <label
                         v-for="option in props.categories"
                         :key="option.id"
-                        class="flex items-center gap-2 text-sm text-slate-700 dark:text-slate-300"
+                        class="flex items-center gap-2 text-sm text-stone-700 dark:text-stone-300"
                     >
                         <input
                             v-model="form.category_ids"
@@ -247,7 +247,7 @@ function removeMedia(id: number): void {
                     </label>
                     <p
                         v-if="props.categories.length === 0"
-                        class="text-xs text-slate-400"
+                        class="text-xs text-stone-400"
                     >
                         Crie categorias primeiro.
                     </p>
@@ -256,17 +256,17 @@ function removeMedia(id: number): void {
 
             <aside class="grid content-start gap-4">
                 <div
-                    class="grid gap-3 rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900"
+                    class="grid gap-3 rounded-sm border border-stone-200 bg-white p-4 dark:border-stone-800 dark:bg-stone-900"
                 >
                     <label class="grid gap-1.5">
-                        <span class="text-xs font-medium text-slate-600 dark:text-slate-400">
+                        <span class="text-xs font-medium text-stone-600 dark:text-stone-400">
                             SKU / código
                         </span>
                         <input v-model="form.sku" type="text" :class="fieldClasses" />
                     </label>
 
                     <label class="grid gap-1.5">
-                        <span class="text-xs font-medium text-slate-600 dark:text-slate-400">
+                        <span class="text-xs font-medium text-stone-600 dark:text-stone-400">
                             Endereço (slug)
                         </span>
                         <input
@@ -278,7 +278,7 @@ function removeMedia(id: number): void {
                     </label>
 
                     <label class="grid gap-1.5">
-                        <span class="text-xs font-medium text-slate-600 dark:text-slate-400">
+                        <span class="text-xs font-medium text-stone-600 dark:text-stone-400">
                             Ordem
                         </span>
                         <input
@@ -291,28 +291,28 @@ function removeMedia(id: number): void {
                 </div>
 
                 <div
-                    class="grid gap-2 rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900"
+                    class="grid gap-2 rounded-sm border border-stone-200 bg-white p-4 dark:border-stone-800 dark:bg-stone-900"
                 >
-                    <span class="text-xs font-medium text-slate-600 dark:text-slate-400">
+                    <span class="text-xs font-medium text-stone-600 dark:text-stone-400">
                         Fotos
                     </span>
                     <ul v-if="mediaItems.length > 0" class="grid gap-2">
                         <li
                             v-for="item in mediaItems"
                             :key="item.id"
-                            class="flex items-center gap-2 rounded-lg border border-slate-200 p-2 dark:border-slate-800"
+                            class="flex items-center gap-2 rounded-sm border border-stone-200 p-2 dark:border-stone-800"
                         >
                             <img
                                 :src="item.url"
                                 alt=""
                                 class="size-10 rounded object-contain"
                             />
-                            <span class="flex-1 truncate text-xs text-slate-500">
+                            <span class="flex-1 truncate text-xs text-stone-500">
                                 {{ item.original_name }}
                             </span>
                             <button
                                 type="button"
-                                class="rounded-md p-1 text-slate-400 hover:text-red-600"
+                                class="rounded-sm p-1 text-stone-400 hover:text-red-600"
                                 aria-label="Remover foto"
                                 @click="removeMedia(item.id)"
                             >
@@ -322,22 +322,22 @@ function removeMedia(id: number): void {
                     </ul>
                     <button
                         type="button"
-                        class="inline-flex h-9 items-center justify-center gap-1.5 rounded-lg border border-slate-200 px-3 text-sm font-medium text-slate-700 hover:border-indigo-400 hover:text-indigo-600 dark:border-slate-800 dark:text-slate-200"
+                        class="inline-flex h-9 items-center justify-center gap-1.5 rounded-sm border border-stone-200 px-3 text-sm font-medium text-stone-700 hover:border-orange-400 hover:text-orange-700 dark:border-stone-800 dark:text-stone-200"
                         @click="pickerOpen = true"
                     >
                         <ImageIcon class="size-4" aria-hidden="true" />
                         Adicionar foto
                     </button>
-                    <p class="text-[11px] text-slate-400">
+                    <p class="text-[11px] text-stone-400">
                         A primeira foto é a capa.
                     </p>
                 </div>
 
                 <div
-                    class="grid gap-2 rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900"
+                    class="grid gap-2 rounded-sm border border-stone-200 bg-white p-4 dark:border-stone-800 dark:bg-stone-900"
                 >
                     <label class="grid gap-1.5">
-                        <span class="text-xs font-medium text-slate-600 dark:text-slate-400">
+                        <span class="text-xs font-medium text-stone-600 dark:text-stone-400">
                             Produtos relacionados
                         </span>
                         <select
@@ -361,7 +361,7 @@ function removeMedia(id: number): void {
                 <div class="flex items-center gap-2">
                     <button
                         type="submit"
-                        class="inline-flex h-10 items-center gap-2 rounded-lg bg-indigo-600 px-4 text-sm font-medium text-white hover:bg-indigo-500 disabled:opacity-50"
+                        class="inline-flex h-10 items-center gap-2 rounded-sm bg-stone-900 px-4 text-sm font-medium text-stone-50 dark:text-stone-900 dark:bg-stone-100 dark:hover:bg-stone-200 hover:bg-stone-800 disabled:opacity-50"
                         :disabled="form.processing"
                     >
                         <component
@@ -375,7 +375,7 @@ function removeMedia(id: number): void {
                     <button
                         v-if="props.product"
                         type="button"
-                        class="inline-flex h-10 items-center gap-2 rounded-lg border border-slate-200 px-3 text-sm font-medium text-red-600 hover:bg-red-50 dark:border-slate-800 dark:hover:bg-red-500/10"
+                        class="inline-flex h-10 items-center gap-2 rounded-sm border border-stone-200 px-3 text-sm font-medium text-red-600 hover:bg-red-50 dark:border-stone-800 dark:hover:bg-red-500/10"
                         @click="remove"
                     >
                         <Trash2 class="size-4" aria-hidden="true" />

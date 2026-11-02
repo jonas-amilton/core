@@ -53,19 +53,19 @@ function submit(): void {
     <Head title="Orçamento" />
 
     <SiteShell :navigation="props.navigation">
-        <section class="px-4 py-10 sm:px-6">
+        <section class="px-4 py-12 sm:px-6 sm:py-16">
             <h1
-                class="text-3xl font-semibold tracking-tight text-slate-900 dark:text-slate-100"
+                class="font-display text-4xl tracking-tight text-stone-950 sm:text-5xl dark:text-stone-50"
             >
                 {{ t('quote.title') }}
             </h1>
-            <p class="mt-1 text-sm text-slate-600 dark:text-slate-400">
+            <p class="mt-1 text-sm text-stone-600 dark:text-stone-400">
                 {{ t('quote.subtitle') }}
             </p>
 
             <p
                 v-if="form.recentlySuccessful"
-                class="mt-4 inline-flex items-center gap-1.5 rounded-lg bg-emerald-50 px-3 py-2 text-sm text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-300"
+                class="mt-4 inline-flex items-center gap-1.5 rounded-sm bg-emerald-50 px-3 py-2 text-sm text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-300"
             >
                 <Check class="size-4" aria-hidden="true" />
                 {{ t('quote.success') }}
@@ -73,39 +73,44 @@ function submit(): void {
 
             <p
                 v-if="cartError"
-                class="mt-4 rounded-lg bg-red-50 px-3 py-2 text-sm text-red-700 dark:bg-red-500/10 dark:text-red-300"
+                class="mt-4 rounded-sm bg-red-50 px-3 py-2 text-sm text-red-700 dark:bg-red-500/10 dark:text-red-300"
             >
                 {{ cartError }}
             </p>
 
-            <div v-if="props.items.length > 0" class="mt-6 grid gap-6 lg:grid-cols-2">
+            <div
+                v-if="props.items.length > 0"
+                class="mt-6 grid gap-6 lg:grid-cols-2"
+            >
                 <ul class="grid content-start gap-2">
                     <li
                         v-for="item in props.items"
                         :key="item.id"
-                        class="flex items-center gap-3 rounded-xl border border-slate-200 p-3 dark:border-slate-800"
+                        class="flex items-center gap-3 rounded-sm border border-stone-200 p-3 dark:border-stone-800"
                     >
                         <img
                             v-if="item.cover"
                             :src="item.cover"
                             alt=""
-                            class="size-16 rounded-lg bg-white object-contain p-1"
+                            class="size-16 rounded-sm bg-white object-contain p-1"
                         />
                         <div class="min-w-0 flex-1">
                             <Link
                                 :href="`/produto/${item.slug}`"
-                                class="text-sm font-medium text-slate-900 hover:text-indigo-600 dark:text-slate-100 dark:hover:text-indigo-400"
+                                class="text-sm font-medium text-stone-900 hover:text-orange-700 dark:text-stone-100 dark:hover:text-orange-400"
                             >
                                 {{ item.name }}
                             </Link>
-                            <p class="text-xs text-slate-500">
-                                <template v-if="item.sku">{{ t('catalog.sku') }} {{ item.sku }} · </template>
+                            <p class="text-xs text-stone-500">
+                                <template v-if="item.sku"
+                                    >{{ t('catalog.sku') }} {{ item.sku }} ·
+                                </template>
                                 {{ t('quote.quantity') }} {{ item.quantity }}
                             </p>
                         </div>
                         <button
                             type="button"
-                            class="rounded-md p-1 text-slate-400 hover:bg-red-50 hover:text-red-600 dark:hover:bg-red-500/10"
+                            class="rounded-sm p-1 text-stone-400 hover:bg-red-50 hover:text-red-600 dark:hover:bg-red-500/10"
                             :aria-label="`${t('quote.remove')} ${item.name}`"
                             @click="remove(item)"
                         >
@@ -115,44 +120,73 @@ function submit(): void {
                 </ul>
 
                 <form
-                    class="grid content-start gap-3 rounded-xl border border-slate-200 p-4 dark:border-slate-800"
+                    class="grid content-start gap-3 rounded-sm border border-stone-200 p-4 dark:border-stone-800"
                     @submit.prevent="submit"
                 >
                     <label class="grid gap-1.5">
-                        <span class="text-xs font-medium text-slate-600 dark:text-slate-400">
+                        <span
+                            class="text-xs font-medium text-stone-600 dark:text-stone-400"
+                        >
                             {{ t('quote.name') }}
                         </span>
-                        <input v-model="form.name" type="text" :class="fieldClasses" />
-                        <span v-if="form.errors.name" class="text-xs text-red-600">
+                        <input
+                            v-model="form.name"
+                            type="text"
+                            :class="fieldClasses"
+                        />
+                        <span
+                            v-if="form.errors.name"
+                            class="text-xs text-red-600"
+                        >
                             {{ form.errors.name }}
                         </span>
                     </label>
 
                     <label class="grid gap-1.5">
-                        <span class="text-xs font-medium text-slate-600 dark:text-slate-400">
+                        <span
+                            class="text-xs font-medium text-stone-600 dark:text-stone-400"
+                        >
                             {{ t('quote.email') }}
                         </span>
-                        <input v-model="form.email" type="email" :class="fieldClasses" />
-                        <span v-if="form.errors.email" class="text-xs text-red-600">
+                        <input
+                            v-model="form.email"
+                            type="email"
+                            :class="fieldClasses"
+                        />
+                        <span
+                            v-if="form.errors.email"
+                            class="text-xs text-red-600"
+                        >
                             {{ form.errors.email }}
                         </span>
                     </label>
 
                     <label class="grid gap-1.5">
-                        <span class="text-xs font-medium text-slate-600 dark:text-slate-400">
+                        <span
+                            class="text-xs font-medium text-stone-600 dark:text-stone-400"
+                        >
                             {{ t('quote.phone') }}
                         </span>
-                        <input v-model="form.phone" type="tel" :class="fieldClasses" />
+                        <input
+                            v-model="form.phone"
+                            type="tel"
+                            :class="fieldClasses"
+                        />
                     </label>
 
                     <label class="grid gap-1.5">
-                        <span class="text-xs font-medium text-slate-600 dark:text-slate-400">
+                        <span
+                            class="text-xs font-medium text-stone-600 dark:text-stone-400"
+                        >
                             {{ t('quote.message') }}
                         </span>
                         <textarea
                             v-model="form.message"
                             :rows="4"
-                            :class="[fieldClasses, 'h-auto py-2 leading-relaxed']"
+                            :class="[
+                                fieldClasses,
+                                'h-auto py-2 leading-relaxed',
+                            ]"
                         />
                     </label>
 
@@ -168,7 +202,7 @@ function submit(): void {
 
                     <button
                         type="submit"
-                        class="inline-flex h-10 items-center justify-center rounded-lg bg-indigo-600 px-5 text-sm font-medium text-white hover:bg-indigo-500 disabled:opacity-50"
+                        class="inline-flex h-10 items-center justify-center rounded-sm bg-stone-900 px-5 text-sm font-medium text-stone-50 hover:bg-stone-800 disabled:opacity-50 dark:bg-stone-100 dark:text-stone-900 dark:hover:bg-stone-200"
                         :disabled="form.processing"
                     >
                         {{ t('quote.submit') }}
@@ -178,10 +212,13 @@ function submit(): void {
 
             <p
                 v-else
-                class="mt-8 rounded-xl border border-dashed border-slate-300 px-6 py-16 text-center text-sm text-slate-500 dark:border-slate-700 dark:text-slate-400"
+                class="mt-8 rounded-sm border border-dashed border-stone-300 px-6 py-16 text-center text-sm text-stone-500 dark:border-stone-700 dark:text-stone-400"
             >
                 {{ t('quote.empty') }}
-                <Link href="/produtos" class="text-indigo-600 hover:underline dark:text-indigo-400">
+                <Link
+                    href="/produtos"
+                    class="text-orange-700 hover:underline dark:text-orange-400"
+                >
                     {{ t('quote.viewProducts') }}
                 </Link>
             </p>

@@ -59,17 +59,17 @@ function remove(): void {
         <header>
             <Link
                 :href="userIndex()"
-                class="inline-flex items-center gap-1.5 text-sm text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-100"
+                class="inline-flex items-center gap-1.5 text-sm text-stone-600 hover:text-stone-900 dark:text-stone-400 dark:hover:text-stone-100"
             >
                 <ArrowLeft class="size-4" aria-hidden="true" />
                 Usuários
             </Link>
             <h1
-                class="mt-2 text-2xl font-semibold tracking-tight text-slate-900 dark:text-slate-100"
+                class="mt-2 text-2xl font-semibold tracking-tight text-stone-900 dark:text-stone-100"
             >
                 {{ user.name }}
             </h1>
-            <p class="mt-1 text-sm text-slate-600 dark:text-slate-400">
+            <p class="mt-1 text-sm text-stone-600 dark:text-stone-400">
                 {{
                     isSelf
                         ? 'Esta é a sua conta.'
@@ -117,7 +117,7 @@ function remove(): void {
 
             <div class="grid gap-2">
                 <label for="password" :class="labelClasses">
-                    Nova senha <span class="text-slate-400">(opcional)</span>
+                    Nova senha <span class="text-stone-400">(opcional)</span>
                 </label>
                 <input
                     id="password"
@@ -159,7 +159,7 @@ function remove(): void {
                 <button
                     v-if="!isSelf"
                     type="button"
-                    class="inline-flex h-10 items-center gap-2 rounded-lg border border-red-200 px-4 text-sm font-medium text-red-600 transition-colors hover:bg-red-50 dark:border-red-500/30 dark:text-red-400 dark:hover:bg-red-500/10"
+                    class="inline-flex h-10 items-center gap-2 rounded-sm border border-red-200 px-4 text-sm font-medium text-red-600 transition-colors hover:bg-red-50 dark:border-red-500/30 dark:text-red-400 dark:hover:bg-red-500/10"
                     @click="remove"
                 >
                     <Trash2 class="size-4" aria-hidden="true" />

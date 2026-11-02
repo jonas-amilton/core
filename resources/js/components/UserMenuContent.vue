@@ -50,7 +50,7 @@ const themes = [
     <DropdownMenuSeparator />
     <DropdownMenuGroup>
         <DropdownMenuLabel
-            class="text-xs font-medium text-slate-400 dark:text-slate-500"
+            class="text-xs font-medium text-stone-400 dark:text-stone-500"
         >
             Tema
         </DropdownMenuLabel>
@@ -64,7 +64,7 @@ const themes = [
             {{ theme.label }}
             <Check
                 v-if="appearance === theme.value"
-                class="ml-auto h-4 w-4 text-indigo-600 dark:text-indigo-400"
+                class="ml-auto h-4 w-4 text-orange-700 dark:text-orange-400"
             />
         </DropdownMenuItem>
     </DropdownMenuGroup>

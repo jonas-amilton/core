@@ -51,17 +51,17 @@ function remove(): void {
         <header>
             <Link
                 :href="mediaIndex()"
-                class="inline-flex items-center gap-1.5 text-sm text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-100"
+                class="inline-flex items-center gap-1.5 text-sm text-stone-600 hover:text-stone-900 dark:text-stone-400 dark:hover:text-stone-100"
             >
                 <ArrowLeft class="size-4" aria-hidden="true" />
                 Mídia
             </Link>
             <h1
-                class="mt-2 truncate text-2xl font-semibold tracking-tight text-slate-900 dark:text-slate-100"
+                class="mt-2 truncate text-2xl font-semibold tracking-tight text-stone-900 dark:text-stone-100"
             >
                 {{ media.original_name }}
             </h1>
-            <p class="mt-1 text-sm text-slate-600 dark:text-slate-400">
+            <p class="mt-1 text-sm text-stone-600 dark:text-stone-400">
                 {{ formatSize(media.size) }}
                 <template v-if="media.width && media.height">
                     · {{ media.width }}×{{ media.height }}
@@ -72,7 +72,7 @@ function remove(): void {
 
         <div class="grid gap-6 lg:grid-cols-[minmax(0,1fr)_320px]">
             <div
-                class="flex items-center justify-center overflow-hidden rounded-xl border border-slate-200 bg-slate-100 dark:border-slate-800 dark:bg-slate-950/60"
+                class="flex items-center justify-center overflow-hidden rounded-sm border border-stone-200 bg-stone-100 dark:border-stone-800 dark:bg-stone-950/60"
             >
                 <img
                     v-if="media.kind === 'image'"
@@ -81,14 +81,14 @@ function remove(): void {
                     class="max-h-[28rem] w-full object-contain"
                 />
                 <div v-else class="p-10 text-center">
-                    <p class="text-sm text-slate-600 dark:text-slate-400">
+                    <p class="text-sm text-stone-600 dark:text-stone-400">
                         Documento
                     </p>
                     <a
                         :href="media.url"
                         target="_blank"
                         rel="noopener"
-                        class="mt-2 inline-block text-sm font-medium text-indigo-600 hover:underline dark:text-indigo-400"
+                        class="mt-2 inline-block text-sm font-medium text-orange-700 hover:underline dark:text-orange-400"
                     >
                         Abrir arquivo
                     </a>
@@ -99,7 +99,7 @@ function remove(): void {
                 <div class="grid gap-2">
                     <label
                         for="alt"
-                        class="text-xs font-medium text-slate-600 dark:text-slate-400"
+                        class="text-xs font-medium text-stone-600 dark:text-stone-400"
                     >
                         Texto alternativo
                     </label>
@@ -120,7 +120,7 @@ function remove(): void {
                 <div class="grid gap-2">
                     <label
                         for="caption"
-                        class="text-xs font-medium text-slate-600 dark:text-slate-400"
+                        class="text-xs font-medium text-stone-600 dark:text-stone-400"
                     >
                         Legenda
                     </label>
@@ -140,14 +140,14 @@ function remove(): void {
 
                 <button
                     type="submit"
-                    class="inline-flex h-11 w-full items-center justify-center rounded-lg bg-indigo-600 px-6 text-sm font-medium text-white transition-colors hover:bg-indigo-500 disabled:opacity-60"
+                    class="inline-flex h-11 w-full items-center justify-center rounded-sm bg-stone-900 px-6 text-sm font-medium text-stone-50 dark:text-stone-900 dark:bg-stone-100 dark:hover:bg-stone-200 transition-colors hover:bg-stone-800 disabled:opacity-60"
                     :disabled="form.processing"
                 >
                     {{ form.processing ? 'Salvando...' : 'Salvar' }}
                 </button>
 
                 <div
-                    class="rounded-lg border border-slate-200 p-3 text-xs text-slate-600 dark:border-slate-800 dark:text-slate-400"
+                    class="rounded-sm border border-stone-200 p-3 text-xs text-stone-600 dark:border-stone-800 dark:text-stone-400"
                 >
                     <p v-if="usage > 0">
                         Usado em {{ usage }} página(s). Para excluir, remova o
@@ -158,7 +158,7 @@ function remove(): void {
 
                 <button
                     type="button"
-                    class="inline-flex h-10 w-full items-center justify-center gap-2 rounded-lg border border-red-200 px-4 text-sm font-medium text-red-600 transition-colors hover:bg-red-50 disabled:cursor-not-allowed disabled:opacity-50 dark:border-red-500/30 dark:text-red-400 dark:hover:bg-red-500/10"
+                    class="inline-flex h-10 w-full items-center justify-center gap-2 rounded-sm border border-red-200 px-4 text-sm font-medium text-red-600 transition-colors hover:bg-red-50 disabled:cursor-not-allowed disabled:opacity-50 dark:border-red-500/30 dark:text-red-400 dark:hover:bg-red-500/10"
                     :disabled="usage > 0"
                     @click="remove"
                 >

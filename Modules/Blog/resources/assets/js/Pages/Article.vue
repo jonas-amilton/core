@@ -39,22 +39,22 @@ const formatDate = (value: string | null): string =>
     <Head :title="props.post.title" />
 
     <SiteShell :navigation="props.navigation">
-        <article class="px-4 py-10 sm:px-6">
+        <article class="px-4 py-12 sm:px-6 sm:py-16">
             <Link
                 href="/blog"
-                class="inline-flex items-center gap-1.5 text-sm text-slate-500 hover:text-indigo-600 dark:text-slate-400"
+                class="inline-flex items-center gap-1.5 text-sm text-stone-500 hover:text-orange-700 dark:text-stone-400"
             >
                 <ArrowLeft class="size-4" aria-hidden="true" />
                 Blog
             </Link>
 
-            <p class="mt-6 text-xs text-slate-400">
+            <p class="mt-6 text-xs text-stone-400">
                 {{ formatDate(props.post.published_at) }}
                 <template v-if="props.post.category">
                     ·
                     <a
                         :href="`/blog/categoria/${props.post.category_slug}`"
-                        class="hover:text-indigo-600"
+                        class="hover:text-orange-700"
                     >
                         {{ props.post.category }}
                     </a>
@@ -62,14 +62,14 @@ const formatDate = (value: string | null): string =>
             </p>
 
             <h1
-                class="mt-2 text-3xl font-semibold tracking-tight text-slate-900 dark:text-slate-100"
+                class="mt-3 font-display text-4xl leading-[1.05] tracking-tight text-stone-950 sm:text-5xl dark:text-stone-50"
             >
                 {{ props.post.title }}
             </h1>
 
             <p
                 v-if="props.post.excerpt"
-                class="mt-3 text-lg text-slate-600 dark:text-slate-400"
+                class="mt-3 text-lg text-stone-600 dark:text-stone-400"
             >
                 {{ props.post.excerpt }}
             </p>
@@ -78,18 +78,18 @@ const formatDate = (value: string | null): string =>
                 v-if="props.post.cover"
                 :src="props.post.cover"
                 alt=""
-                class="mt-6 aspect-video w-full rounded-xl object-cover"
+                class="mt-8 aspect-video w-full border border-stone-200 object-cover dark:border-stone-800"
             />
 
             <div
-                class="mt-6 max-w-2xl text-sm leading-relaxed whitespace-pre-line text-slate-700 dark:text-slate-300"
+                class="mt-8 max-w-2xl text-[17px] leading-[1.8] whitespace-pre-line text-stone-700 dark:text-stone-300"
             >
                 {{ props.post.body }}
             </div>
 
             <section v-if="props.latest.length > 0" class="mt-14">
                 <h2
-                    class="text-lg font-semibold tracking-tight text-slate-900 dark:text-slate-100"
+                    class="font-display text-2xl tracking-tight text-stone-950 dark:text-stone-50"
                 >
                     {{ t('blog.readAlso') }}
                 </h2>
@@ -97,11 +97,11 @@ const formatDate = (value: string | null): string =>
                     <li
                         v-for="item in props.latest"
                         :key="item.id"
-                        class="rounded-xl border border-slate-200 p-4 dark:border-slate-800"
+                        class="rounded-sm border border-stone-200 p-4 dark:border-stone-800"
                     >
                         <a
                             :href="`/blog/${item.slug}`"
-                            class="text-sm font-medium text-slate-900 hover:text-indigo-600 dark:text-slate-100 dark:hover:text-indigo-400"
+                            class="text-sm font-medium text-stone-900 hover:text-orange-700 dark:text-stone-100 dark:hover:text-orange-400"
                         >
                             {{ item.title }}
                         </a>
