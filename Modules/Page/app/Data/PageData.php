@@ -8,6 +8,7 @@ final readonly class PageData
 {
     /**
      * @param  array<int, BlockData>  $blocks
+     * @param  array<string, array{title: string|null, blocks: array<int, array<string, mixed>>}>  $translations
      */
     public function __construct(
         public string $title,
@@ -15,6 +16,7 @@ final readonly class PageData
         public array $blocks,
         public ?string $icon = null,
         public bool $isService = false,
+        public array $translations = [],
     ) {}
 
     /**
@@ -31,12 +33,13 @@ final readonly class PageData
             ),
             icon: isset($data['icon']) && $data['icon'] !== '' ? (string) $data['icon'] : null,
             isService: (bool) ($data['is_service'] ?? false),
+            translations: is_array($data['translations'] ?? null) ? $data['translations'] : [],
         );
     }
 
     public function withSlug(string $slug): self
     {
-        return new self($this->title, $slug, $this->blocks, $this->icon, $this->isService);
+        return new self($this->title, $slug, $this->blocks, $this->icon, $this->isService, $this->translations);
     }
 
     /**

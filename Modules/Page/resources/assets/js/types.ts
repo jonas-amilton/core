@@ -71,8 +71,16 @@ export type NavigationItem = {
     url: string;
 };
 
+export type PageLocale = 'pt_BR' | 'en' | 'es';
+
+export type PageTranslation = {
+    title: string | null;
+    blocks: Block[];
+};
+
 export type PageRecord = PageSummary & {
     blocks: Block[];
+    translations: Record<'en' | 'es', PageTranslation>;
 };
 
 export type Revision = {

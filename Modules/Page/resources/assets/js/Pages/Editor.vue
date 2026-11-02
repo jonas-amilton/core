@@ -50,6 +50,7 @@ import TextField from '../components/TextField.vue';
 import type {
     Block,
     BlockType,
+    PageLocale,
     PageRecord,
     PickedMedia,
     Revision,
@@ -93,9 +94,34 @@ const renderers = {
 
 const blockTypes = Object.keys(blockLabels) as BlockType[];
 
+const pageLocales: PageLocale[] = ['pt_BR', 'en', 'es'];
+const localeLabels: Record<PageLocale, string> = {
+    pt_BR: 'PT',
+    en: 'EN',
+    es: 'ES',
+};
+
+const localeDrafts = ref<
+    Record<PageLocale, { title: string; blocks: Block[] }>
+>({
+    pt_BR: {
+        title: props.page?.title ?? 'Nova página',
+        blocks: props.page?.blocks ?? [],
+    },
+    en: {
+        title: props.page?.translations?.en?.title ?? '',
+        blocks: props.page?.translations?.en?.blocks ?? [],
+    },
+    es: {
+        title: props.page?.translations?.es?.title ?? '',
+        blocks: props.page?.translations?.es?.blocks ?? [],
+    },
+});
+
+const editLocale = ref<PageLocale>('pt_BR');
 const pageId = ref<number | null>(props.page?.id ?? null);
-const title = ref(props.page?.title ?? 'Nova página');
-const blocks = ref<Block[]>(props.page?.blocks ?? []);
+const title = ref(localeDrafts.value.pt_BR.title);
+const blocks = ref<Block[]>(localeDrafts.value.pt_BR.blocks);
 const selectedId = ref<string | null>(blocks.value[0]?.id ?? null);
 const pageIcon = ref(props.page?.icon ?? '');
 const isService = ref(props.page?.is_service ?? false);
@@ -156,6 +182,32 @@ function schedule(): void {
     saveTimer = setTimeout(save, 700);
 }
 
+function switchPageLocale(target: PageLocale): void {
+    if (target === editLocale.value) {
+        return;
+    }
+
+    localeDrafts.value[editLocale.value] = {
+        title: title.value,
+        blocks: blocks.value,
+    };
+    editLocale.value = target;
+
+    const draft = localeDrafts.value[target];
+    const useCopy = draft.blocks.length === 0 && target !== 'pt_BR';
+
+    title.value = draft.title;
+    blocks.value = useCopy
+        ? structuredClone(localeDrafts.value.pt_BR.blocks)
+        : draft.blocks;
+
+    localeDrafts.value[target] = {
+        title: title.value,
+        blocks: blocks.value,
+    };
+    selectedId.value = blocks.value[0]?.id ?? null;
+}
+
 function save(): void {
     if (saving.value) {
         schedule();
@@ -163,12 +215,28 @@ function save(): void {
         return;
     }
 
+    localeDrafts.value[editLocale.value] = {
+        title: title.value,
+        blocks: blocks.value,
+    };
+    const base = localeDrafts.value.pt_BR;
+
     const payload = {
-        title: title.value.trim() || 'Nova página',
+        title: base.title.trim() || 'Nova página',
         slug: props.page?.slug ?? null,
         icon: pageIcon.value || null,
         is_service: isService.value,
-        blocks: blocks.value,
+        blocks: base.blocks,
+        translations: {
+            en: {
+                title: localeDrafts.value.en.title || null,
+                blocks: localeDrafts.value.en.blocks,
+            },
+            es: {
+                title: localeDrafts.value.es.title || null,
+                blocks: localeDrafts.value.es.blocks,
+            },
+        },
     };
 
     saving.value = true;
@@ -407,6 +475,28 @@ onBeforeUnmount(() => {
                     aria-label="Título da página"
                     class="w-full truncate rounded-md bg-transparent px-2 py-1 text-lg font-semibold text-slate-900 outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 dark:text-slate-100"
                 />
+                <div class="mt-1 flex items-center gap-1 px-2">
+                    <button
+                        v-for="loc in pageLocales"
+                        :key="loc"
+                        type="button"
+                        class="rounded-md px-2 py-0.5 text-[11px] font-medium transition-colors"
+                        :class="
+                            editLocale === loc
+                                ? 'bg-indigo-100 text-indigo-700 dark:bg-indigo-500/20 dark:text-indigo-300'
+                                : 'text-slate-500 hover:bg-slate-100 dark:text-slate-500 dark:hover:bg-slate-800'
+                        "
+                        @click="switchPageLocale(loc)"
+                    >
+                        {{ localeLabels[loc] }}
+                    </button>
+                    <span
+                        v-if="editLocale !== 'pt_BR'"
+                        class="ml-1 text-[11px] text-slate-400"
+                    >
+                        Tradução — conteúdo vazio usa o português
+                    </span>
+                </div>
                 <div class="flex items-center gap-2 px-2 text-xs">
                     <span
                         :class="[

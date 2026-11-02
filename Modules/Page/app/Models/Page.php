@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Modules\Page\Models;
 
+use App\Support\Translatable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Carbon;
@@ -16,6 +17,7 @@ use Modules\Page\Enums\PageStatus;
  * @property string|null $icon
  * @property bool $is_service
  * @property array<int, array<string, mixed>> $blocks
+ * @property array<string, array<string, mixed>>|null $translations
  * @property PageStatus $status
  * @property Carbon|null $published_at
  * @property Carbon|null $created_at
@@ -23,6 +25,8 @@ use Modules\Page\Enums\PageStatus;
  */
 class Page extends Model
 {
+    use Translatable;
+
     public const HOME_SLUG = 'home';
 
     public const NOT_FOUND_SLUG = '404';
@@ -47,6 +51,7 @@ class Page extends Model
         'icon',
         'is_service',
         'blocks',
+        'translations',
         'status',
         'published_at',
     ];
@@ -58,6 +63,7 @@ class Page extends Model
     {
         return [
             'blocks' => 'array',
+            'translations' => 'array',
             'is_service' => 'boolean',
             'status' => PageStatus::class,
             'published_at' => 'datetime',
@@ -120,6 +126,57 @@ class Page extends Model
     }
 
     /**
+     * Blocks for the active language, falling back to the pt-BR base.
+     *
+     * @return array<int, array<string, mixed>>
+     */
+    public function blocksFor(?string $locale = null): array
+    {
+        $locale ??= (string) app()->getLocale();
+        $blocks = $this->storedBlocks($locale);
+
+        return $blocks !== [] ? $blocks : array_values($this->blocks ?? []);
+    }
+
+    /**
+     * @return array<int, array<string, mixed>>
+     */
+    private function storedBlocks(string $locale): array
+    {
+        $translations = is_array($this->translations) ? $this->translations : [];
+        $blocks = $translations[$locale]['blocks'] ?? null;
+
+        return is_array($blocks) ? array_values($blocks) : [];
+    }
+
+    /**
+     * Raw per-language values for the editor, without the pt-BR fallback so an
+     * empty tab stays empty until the user writes the translation.
+     *
+     * @return array<string, array{title: string|null, blocks: array<int, array<string, mixed>>}>
+     */
+    public function translationsForEditor(): array
+    {
+        $translations = is_array($this->translations) ? $this->translations : [];
+        $title = fn (string $locale): ?string => isset($translations[$locale]['title'])
+            && is_string($translations[$locale]['title'])
+            && trim($translations[$locale]['title']) !== ''
+                ? $translations[$locale]['title']
+                : null;
+
+        return [
+            'en' => [
+                'title' => $title('en'),
+                'blocks' => $this->storedBlocks('en'),
+            ],
+            'es' => [
+                'title' => $title('es'),
+                'blocks' => $this->storedBlocks('es'),
+            ],
+        ];
+    }
+
+    /**
      * @return array<string, mixed>
      */
     public function toEditorArray(): array
@@ -127,6 +184,7 @@ class Page extends Model
         return [
             ...$this->toAdminArray(),
             'blocks' => $this->blocks ?? [],
+            'translations' => $this->translationsForEditor(),
         ];
     }
 
@@ -139,8 +197,9 @@ class Page extends Model
     {
         return [
             ...$this->toAdminArray(),
+            'title' => $this->transString('title') ?? $this->title,
             'blocks' => array_values(array_filter(
-                $this->blocks ?? [],
+                $this->blocksFor(),
                 fn (array $block): bool => empty($block['hidden']),
             )),
         ];

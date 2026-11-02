@@ -58,6 +58,7 @@ final class EloquentPageRepository implements PageRepository
             'icon' => $data->icon,
             'is_service' => $data->isService,
             'blocks' => $data->blocksAsArray(),
+            'translations' => $data->translations !== [] ? $data->translations : null,
             'status' => $status,
             'published_at' => $publishedAt,
         ]);
@@ -71,6 +72,7 @@ final class EloquentPageRepository implements PageRepository
             'icon' => $data->icon,
             'is_service' => $data->isService,
             'blocks' => $data->blocksAsArray(),
+            'translations' => $data->translations !== [] ? $data->translations : null,
         ]);
 
         return $page->refresh();

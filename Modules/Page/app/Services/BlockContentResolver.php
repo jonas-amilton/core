@@ -60,7 +60,7 @@ final class BlockContentResolver
     {
         return $this->pages->publishedServices()
             ->map(fn (Page $page): array => [
-                'title' => $page->title,
+                'title' => $page->transString('title') ?? $page->title,
                 'url' => '/'.$page->slug,
                 'icon' => $page->icon,
             ])

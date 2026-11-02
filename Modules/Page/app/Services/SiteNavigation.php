@@ -18,7 +18,7 @@ final class SiteNavigation
     {
         return $this->pages->publishedForNavigation()
             ->map(fn (Page $page): array => [
-                'title' => $page->title,
+                'title' => $page->transString('title') ?? $page->title,
                 'slug' => $page->slug,
                 'url' => $page->slug === 'home' ? '/' : '/'.$page->slug,
             ])

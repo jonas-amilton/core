@@ -31,6 +31,7 @@ class AppServiceProvider extends ServiceProvider
         // e módulos) para nunca engolir /pages, /login, /admin ou /settings.
         $this->app->booted(function (): void {
             Route::get('{slug}', PageController::class)
+                ->middleware('web')
                 ->where('slug', '[A-Za-z0-9\-]+')
                 ->name('site.page');
         });

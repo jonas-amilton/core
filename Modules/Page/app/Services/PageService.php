@@ -66,7 +66,14 @@ final class PageService
 
         return $this->pages->update(
             $page,
-            new PageData($revision->title, $page->slug, $blocks, $page->icon, $page->is_service),
+            new PageData(
+                $revision->title,
+                $page->slug,
+                $blocks,
+                $page->icon,
+                $page->is_service,
+                $page->translationsForEditor(),
+            ),
         );
     }
 

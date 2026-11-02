@@ -148,6 +148,36 @@ class PageManagementTest extends TestCase
         $this->assertSame(0, Page::count());
     }
 
+    public function test_page_translations_are_saved_from_the_editor(): void
+    {
+        $this->actingAs(User::factory()->create());
+
+        $this->post(route('page.store'), $this->payload([
+            'translations' => [
+                'en' => [
+                    'title' => 'About us',
+                    'blocks' => [
+                        ['id' => 'en-1', 'type' => 'text', 'body' => 'Content'],
+                    ],
+                ],
+                'es' => ['title' => '', 'blocks' => []],
+            ],
+        ]))->assertRedirect();
+
+        $page = Page::query()->where('slug', '!=', 'home')->where('slug', '!=', '404')->firstOrFail();
+
+        $this->assertSame('About us', $page->translations['en']['title']);
+        $this->assertArrayNotHasKey('es', $page->translations);
+
+        $this->get(route('page.edit', $page))
+            ->assertOk()
+            ->assertInertia(fn (Assert $inertia) => $inertia
+                ->where('page.translations.en.title', 'About us')
+                ->where('page.translations.en.blocks.0.body', 'Content')
+                ->where('page.translations.es.title', null)
+            );
+    }
+
     public function test_updating_keeps_the_original_slug(): void
     {
         $this->actingAs(User::factory()->create());

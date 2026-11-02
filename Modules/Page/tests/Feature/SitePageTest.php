@@ -50,6 +50,34 @@ class SitePageTest extends TestCase
         $this->assertSame(1, Page::query()->where('slug', 'home')->count());
     }
 
+    public function test_page_translations_follow_the_session_language(): void
+    {
+        $this->createPage([
+            'translations' => [
+                'en' => [
+                    'title' => 'About us',
+                    'blocks' => [
+                        ['id' => 'b1', 'type' => 'text', 'body' => 'Content'],
+                    ],
+                ],
+            ],
+        ]);
+
+        $this->get('/sobre-nos')
+            ->assertOk()
+            ->assertInertia(fn (Assert $inertia) => $inertia
+                ->where('page.title', 'Sobre nós')
+                ->where('page.blocks.0.body', 'Conteúdo')
+            );
+
+        $this->get('/sobre-nos?locale=en')
+            ->assertOk()
+            ->assertInertia(fn (Assert $inertia) => $inertia
+                ->where('page.title', 'About us')
+                ->where('page.blocks.0.body', 'Content')
+            );
+    }
+
     public function test_published_pages_are_publicly_accessible(): void
     {
         $this->createPage();
