@@ -25,15 +25,30 @@ const { t } = useI18n();
 
 const props = defineProps<{
     items: CartItem[];
+    subtotal: number;
+    discount: number;
+    coupon: { code: string; percent: number } | null;
     navigation: NavigationItem[];
 }>();
 
-const total = computed(() =>
-    props.items.reduce(
-        (sum, item) => sum + (Number(item.price) || 0) * item.quantity,
-        0,
-    ),
+const total = computed(() => props.subtotal - props.discount);
+
+const couponForm = useForm({ code: '' });
+const couponError = computed(
+    () =>
+        (couponForm.errors as Record<string, string | undefined>).coupon,
 );
+
+function applyCoupon(): void {
+    couponForm.post('/orcamento/cupom', {
+        preserveScroll: true,
+        onSuccess: () => couponForm.reset('code'),
+    });
+}
+
+function removeCoupon(): void {
+    router.delete('/orcamento/cupom', { preserveScroll: true });
+}
 
 const lineTotal = (item: CartItem): string | null =>
     formatPrice((Number(item.price) || 0) * item.quantity);
@@ -109,7 +124,8 @@ function submit(): void {
                 v-if="props.items.length > 0"
                 class="mt-6 grid gap-6 lg:grid-cols-2"
             >
-                <ul class="grid content-start gap-2">
+                <div class="grid content-start gap-3">
+                    <ul class="grid content-start gap-2">
                     <li
                         v-for="item in props.items"
                         :key="item.id"
@@ -165,6 +181,59 @@ function submit(): void {
                         </button>
                     </li>
                 </ul>
+
+                <div
+                    class="rounded-lg border border-slate-200 bg-white p-4 shadow-xs dark:border-slate-800 dark:bg-slate-900"
+                >
+                    <div
+                        v-if="props.coupon"
+                        class="flex items-center justify-between gap-3 text-sm"
+                    >
+                        <span class="text-slate-700 dark:text-slate-300">
+                            {{ t('quote.coupon') }}
+                            <strong class="text-slate-950 dark:text-slate-50">
+                                {{ props.coupon.code }}
+                            </strong>
+                            (−{{ props.coupon.percent }}%)
+                        </span>
+                        <button
+                            type="button"
+                            class="text-xs font-medium text-red-600 hover:underline"
+                            @click="removeCoupon"
+                        >
+                            {{ t('quote.removeCoupon') }}
+                        </button>
+                    </div>
+
+                    <form
+                        v-else
+                        class="flex gap-2"
+                        @submit.prevent="applyCoupon"
+                    >
+                        <input
+                            v-model="couponForm.code"
+                            type="text"
+                            :placeholder="t('quote.couponPlaceholder')"
+                            :aria-label="t('quote.coupon')"
+                            class="h-10 min-w-0 flex-1 rounded-md border border-slate-300 bg-white px-3 text-sm uppercase text-slate-900 placeholder:normal-case placeholder:text-slate-500 focus-visible:border-blue-700 focus-visible:ring-2 focus-visible:ring-blue-700/20 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100"
+                        />
+                        <button
+                            type="submit"
+                            class="inline-flex h-10 items-center rounded-md border border-slate-300 px-4 text-sm font-medium text-slate-700 hover:bg-slate-50 disabled:opacity-50 dark:border-slate-700 dark:text-slate-200 dark:hover:bg-slate-800"
+                            :disabled="couponForm.processing"
+                        >
+                            {{ t('quote.applyCoupon') }}
+                        </button>
+                    </form>
+
+                    <p
+                        v-if="couponError"
+                        class="mt-2 text-xs text-red-600"
+                    >
+                        {{ couponError }}
+                    </p>
+                </div>
+                </div>
 
                 <form
                     class="grid content-start gap-3 rounded-lg border border-slate-200 bg-white p-4 shadow-xs dark:border-slate-800 dark:bg-slate-900"
@@ -248,18 +317,37 @@ function submit(): void {
                     />
 
                     <div
-                        class="flex items-center justify-between border-t border-slate-200 pt-3 dark:border-slate-800"
+                        class="grid gap-1 border-t border-slate-200 pt-3 text-sm dark:border-slate-800"
                     >
-                        <span
-                            class="text-sm font-medium text-slate-700 dark:text-slate-300"
+                        <p class="flex items-center justify-between">
+                            <span class="text-slate-600 dark:text-slate-400">
+                                {{ t('quote.subtotal') }}
+                            </span>
+                            <span class="text-slate-950 tabular-nums dark:text-slate-50">
+                                {{ formatPrice(props.subtotal) }}
+                            </span>
+                        </p>
+                        <p
+                            v-if="props.discount > 0"
+                            class="flex items-center justify-between text-emerald-700 dark:text-emerald-400"
                         >
-                            {{ t('quote.total') }}
-                        </span>
-                        <span
-                            class="text-xl font-semibold tracking-tight text-slate-950 tabular-nums dark:text-slate-50"
-                        >
-                            {{ formatPrice(total) }}
-                        </span>
+                            <span>{{ t('quote.discount') }}</span>
+                            <span class="tabular-nums">
+                                −{{ formatPrice(props.discount) }}
+                            </span>
+                        </p>
+                        <p class="mt-1 flex items-center justify-between">
+                            <span
+                                class="font-medium text-slate-700 dark:text-slate-300"
+                            >
+                                {{ t('quote.total') }}
+                            </span>
+                            <span
+                                class="text-xl font-semibold tracking-tight text-slate-950 tabular-nums dark:text-slate-50"
+                            >
+                                {{ formatPrice(total) }}
+                            </span>
+                        </p>
                     </div>
 
                     <button

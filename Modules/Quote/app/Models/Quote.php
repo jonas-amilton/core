@@ -14,6 +14,8 @@ use Illuminate\Support\Carbon;
  * @property string $email
  * @property string|null $phone
  * @property string|null $message
+ * @property string|null $coupon_code
+ * @property string $discount
  * @property Carbon|null $answered_at
  * @property Carbon|null $created_at
  */
@@ -24,6 +26,8 @@ class Quote extends Model
         'email',
         'phone',
         'message',
+        'coupon_code',
+        'discount',
         'answered_at',
     ];
 
@@ -34,6 +38,7 @@ class Quote extends Model
     {
         return [
             'answered_at' => 'datetime',
+            'discount' => 'decimal:2',
         ];
     }
 

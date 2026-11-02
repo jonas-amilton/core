@@ -15,6 +15,8 @@ final class Cart
 {
     private const KEY = 'quote.cart';
 
+    private const COUPON = 'quote.coupon';
+
     public function __construct(private CatalogRepository $catalog) {}
 
     /**
@@ -90,8 +92,25 @@ final class Cart
         session([self::KEY => $items]);
     }
 
+    public function couponCode(): ?string
+    {
+        $code = session(self::COUPON);
+
+        return is_string($code) && $code !== '' ? $code : null;
+    }
+
+    public function applyCoupon(string $code): void
+    {
+        session([self::COUPON => mb_strtoupper(trim($code))]);
+    }
+
+    public function removeCoupon(): void
+    {
+        session()->forget(self::COUPON);
+    }
+
     public function clear(): void
     {
-        session()->forget(self::KEY);
+        session()->forget([self::KEY, self::COUPON]);
     }
 }

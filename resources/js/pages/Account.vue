@@ -12,6 +12,14 @@ type OrderItem = {
     unit_price: string | null;
 };
 
+type Favorite = {
+    id: number;
+    name: string;
+    slug: string;
+    price: string | null;
+    cover: string | null;
+};
+
 type Order = {
     id: number;
     created_at: string | null;
@@ -24,6 +32,7 @@ const { locale, t } = useI18n();
 
 const props = defineProps<{
     orders: Order[];
+    favorites: Favorite[];
     navigation: NavigationItem[];
 }>();
 
@@ -149,6 +158,57 @@ const formatDate = (value: string | null): string =>
                 <Link href="/produtos" class="text-blue-700 hover:underline dark:text-blue-400">
                     {{ t('quote.viewProducts') }}
                 </Link>
+            </p>
+
+            <h2
+                class="mt-12 text-xl font-semibold tracking-tight text-slate-950 dark:text-slate-50"
+            >
+                {{ t('account.favorites') }}
+            </h2>
+
+            <ul
+                v-if="props.favorites.length > 0"
+                class="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3"
+            >
+                <li
+                    v-for="favorite in props.favorites"
+                    :key="favorite.id"
+                    class="rounded-lg border border-slate-200 bg-white p-4 shadow-xs dark:border-slate-800 dark:bg-slate-900"
+                >
+                    <Link
+                        :href="`/produto/${favorite.slug}`"
+                        class="flex items-center gap-3"
+                    >
+                        <img
+                            v-if="favorite.cover"
+                            :src="favorite.cover"
+                            alt=""
+                            class="size-16 shrink-0 rounded-md bg-white object-contain p-1"
+                        />
+                        <span class="min-w-0">
+                            <span
+                                class="block text-sm font-medium text-slate-900 hover:text-blue-700 dark:text-slate-100"
+                            >
+                                {{ favorite.name }}
+                            </span>
+                            <span
+                                class="mt-1 block text-sm font-semibold text-slate-950 tabular-nums dark:text-slate-50"
+                            >
+                                {{
+                                    formatPrice(favorite.price) ??
+                                    t('catalog.priceOnRequest')
+                                }}
+                            </span>
+                        </span>
+                    </Link>
+                </li>
+            </ul>
+
+            <p
+                v-else
+                class="mt-4 text-sm text-slate-500 dark:text-slate-400"
+            >
+                {{ t('account.emptyFavorites') }}
             </p>
         </section>
     </SiteShell>

@@ -15,7 +15,7 @@ interface QuoteRepository
     public function quotes(): Collection;
 
     /**
-     * @param  array{name: string, email: string, phone: string|null, message: string|null}  $data
+     * @param  array{name: string, email: string, phone: string|null, message: string|null, coupon_code?: string|null, discount?: float}  $data
      * @param  array<int, array{product_id: int|null, name: string, quantity: int, price: string|null}>  $items
      */
     public function create(array $data, array $items): Quote;

@@ -27,6 +27,7 @@ final class SettingsData
         'stat_years' => '',
         'stat_clients' => '',
         'stat_companies' => '',
+        'max_installments' => '0',
         'cookie_text' => 'Este site utiliza cookies para melhorar sua experiência de navegação.',
     ];
 
@@ -47,6 +48,7 @@ final class SettingsData
         'stat_years' => ['label' => 'Contador: anos de mercado', 'type' => 'text'],
         'stat_clients' => ['label' => 'Contador: clientes atendidos', 'type' => 'text'],
         'stat_companies' => ['label' => 'Contador: empresas criadas', 'type' => 'text'],
+        'max_installments' => ['label' => 'Parcelamento máximo (0 desativa)', 'type' => 'text'],
         'cookie_text' => ['label' => 'Texto do aviso de cookies (LGPD)', 'type' => 'textarea'],
     ];
 

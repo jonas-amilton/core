@@ -13,7 +13,9 @@ import {
     Newspaper,
     Package,
     Settings2,
+    Star,
     Store,
+    TicketPercent,
     Users,
 } from '@lucide/vue';
 import AppLogo from '@/components/AppLogo.vue';
@@ -37,6 +39,7 @@ import { index as faq } from '@/routes/faq';
 import { index as pages } from '@/routes/page';
 import { index as media } from '@/routes/media';
 import { index as products } from '@/routes/catalog/product';
+import { index as reviews } from '@/routes/catalog/review';
 import { index as quotes } from '@/routes/quote';
 import { index as settings } from '@/routes/settings';
 import { index as stores } from '@/routes/stores';
@@ -75,6 +78,11 @@ const contentItems: NavItem[] = [
         icon: Newspaper,
     },
     {
+        title: 'Avaliações',
+        href: reviews(),
+        icon: Star,
+    },
+    {
         title: 'Depoimentos',
         href: testimonials(),
         icon: MessageSquareQuote,
@@ -106,6 +114,11 @@ const operationItems: NavItem[] = [
         title: 'Mensagens',
         href: messages(),
         icon: Inbox,
+    },
+    {
+        title: 'Cupons',
+        href: '/painel/orcamentos/cupons',
+        icon: TicketPercent,
     },
 ];
 

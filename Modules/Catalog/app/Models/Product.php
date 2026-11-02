@@ -8,6 +8,7 @@ use App\Support\Searchable;
 use App\Support\Translatable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Carbon;
 use Modules\Media\Models\Media;
 
@@ -71,6 +72,14 @@ class Product extends Model
         return $this->belongsToMany(Media::class, 'catalog_product_media')
             ->withPivot('position')
             ->orderBy('catalog_product_media.position');
+    }
+
+    /**
+     * @return HasMany<Review, $this>
+     */
+    public function reviews(): HasMany
+    {
+        return $this->hasMany(Review::class);
     }
 
     /**

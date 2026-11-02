@@ -28,7 +28,7 @@ final class AccountController
 
                 $total = $quote->items->sum(
                     fn ($item): float => (float) ($item->unit_price ?? 0) * $item->quantity,
-                );
+                ) - (float) $quote->discount;
 
                 return [
                     'id' => $quote->id,
@@ -40,8 +40,14 @@ final class AccountController
             })
             ->all();
 
+        $favorites = $request->user()?->favorites()->with('media')->get()
+            ->map(fn ($product): array => $product->toSiteArray())
+            ->values()
+            ->all() ?? [];
+
         return Inertia::render('Account', [
             'orders' => $orders,
+            'favorites' => $favorites,
             'navigation' => $navigation->items(),
         ]);
     }

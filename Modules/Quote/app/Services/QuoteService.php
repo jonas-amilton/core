@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\ValidationException;
 use Modules\Catalog\Models\Product;
 use Modules\Quote\Contracts\QuoteRepository;
+use Modules\Quote\Models\Coupon;
 use Modules\Quote\Models\Quote;
 use Modules\Settings\Services\SettingsService;
 use Throwable;
@@ -44,7 +45,11 @@ final class QuoteService
             ]);
         }
 
-        $quote = DB::transaction(function () use ($data, $cartItems): Quote {
+        $coupon = $this->cart->couponCode() !== null
+            ? Coupon::query()->where('code', $this->cart->couponCode())->first()
+            : null;
+
+        $quote = DB::transaction(function () use ($data, $cartItems, $coupon): Quote {
             $items = [];
 
             foreach ($cartItems as $item) {
@@ -71,7 +76,20 @@ final class QuoteService
                 ];
             }
 
-            $quote = $this->quotes->create($data, $items);
+            $subtotal = array_sum(array_map(
+                fn (array $item): float => (float) ($item['price'] ?? 0) * $item['quantity'],
+                $items,
+            ));
+
+            $discount = $coupon !== null && $coupon->isValid()
+                ? $coupon->discountFor($subtotal)
+                : 0.0;
+
+            $quote = $this->quotes->create([
+                ...$data,
+                'coupon_code' => $discount > 0 ? $coupon?->code : null,
+                'discount' => $discount,
+            ], $items);
             $this->cart->clear();
 
             return $quote;
