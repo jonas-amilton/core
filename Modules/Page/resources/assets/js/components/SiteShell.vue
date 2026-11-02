@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { Link, usePage } from '@inertiajs/vue3';
-import { Clock, Mail, Menu, Phone, Search, ShoppingBag, UserRound } from '@lucide/vue';
+import { Clock, Mail, Menu, Moon, Phone, Search, ShoppingBag, Sun, UserRound } from '@lucide/vue';
 import { computed } from 'vue';
 import CookieConsent from '@/components/CookieConsent.vue';
+import { useAppearance } from '@/composables/useAppearance';
 import { switchLocale, useI18n } from '@/i18n';
 import type { Locale } from '@/i18n';
 import type { Auth } from '@/types';
@@ -28,19 +29,19 @@ const cartCount = computed(
 const authUser = computed(
     () => (page.props.auth as Auth | undefined)?.user ?? null,
 );
-const isStaff = computed(
-    () => authUser.value?.role === 'admin' || authUser.value?.role === 'editor',
+const accountHref = computed(() =>
+    authUser.value ? '/minha-conta' : '/login',
 );
-const accountHref = computed(() => {
-    if (!authUser.value) {
-        return '/login';
-    }
-
-    return isStaff.value ? '/admin' : '/minha-conta';
-});
 const accountLabel = computed(() =>
-    isStaff.value ? t('nav.panel') : t('nav.account'),
+    authUser.value ? t('nav.account') : t('nav.login'),
 );
+
+const { resolvedAppearance, updateAppearance } = useAppearance();
+const isDark = computed(() => resolvedAppearance.value === 'dark');
+
+function toggleTheme(): void {
+    updateAppearance(isDark.value ? 'light' : 'dark');
+}
 
 const socials = computed(() =>
     [
@@ -55,7 +56,7 @@ const isCurrent = (item: NavigationItem): boolean =>
 
 const navLink = (active: boolean): string =>
     [
-        'rounded-md px-3 py-2 text-sm font-medium transition-colors focus-visible:ring-2 focus-visible:ring-green-800 focus-visible:outline-none',
+        'rounded-full px-2.5 py-2 text-sm font-medium whitespace-nowrap transition-colors focus-visible:ring-2 focus-visible:ring-green-800 focus-visible:outline-none',
         active
             ? 'text-brand dark:text-green-400'
             : 'text-slate-700 hover:bg-[#f5f5f5] hover:text-slate-950 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-slate-100',
@@ -170,7 +171,7 @@ const navLink = (active: boolean): string =>
                     </form>
 
 
-                    <div class="flex items-center gap-3">
+                    <div class="flex items-center gap-2">
                         <a
                             href="/busca"
                             class="flex size-10 shrink-0 items-center justify-center rounded-full border border-slate-200 text-slate-700 hover:border-green-300 hover:text-brand 2xl:hidden dark:border-slate-800 dark:text-slate-400"
@@ -205,12 +206,27 @@ const navLink = (active: boolean): string =>
                             aria-hidden="true"
                         />
 
+                        <button
+                            type="button"
+                            class="flex size-10 shrink-0 items-center justify-center rounded-full border border-slate-200 text-slate-600 transition-colors hover:border-green-300 hover:text-brand dark:border-slate-800 dark:text-slate-300"
+                            :aria-label="t('theme.toggle')"
+                            :title="t('theme.toggle')"
+                            @click="toggleTheme"
+                        >
+                            <Sun
+                                v-if="isDark"
+                                class="size-4"
+                                aria-hidden="true"
+                            />
+                            <Moon v-else class="size-4" aria-hidden="true" />
+                        </button>
+
                         <a
                             :href="accountHref"
-                            class="hidden items-center gap-1.5 text-sm font-medium text-slate-700 transition-colors hover:text-brand md:inline-flex dark:text-slate-300 dark:hover:text-green-400"
+                            class="hidden items-center gap-1.5 whitespace-nowrap text-sm font-medium text-slate-700 transition-colors hover:text-brand md:inline-flex dark:text-slate-300 dark:hover:text-green-400"
                         >
                             <UserRound class="size-4" aria-hidden="true" />
-                            {{ accountLabel }}
+                            <span class="hidden xl:inline">{{ accountLabel }}</span>
                         </a>
 
                         <a
@@ -291,10 +307,11 @@ const navLink = (active: boolean): string =>
                                     </span>
                                 </a>
                                 <a
-                                    href="/admin"
-                                    class="rounded-md px-3 py-2 text-xs font-medium text-slate-600 dark:text-slate-400"
+                                    :href="accountHref"
+                                    class="mt-1 flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium text-slate-700 dark:text-slate-300"
                                 >
-                                    {{ t('nav.panel') }}
+                                    <UserRound class="size-4" aria-hidden="true" />
+                                    {{ accountLabel }}
                                 </a>
                             </nav>
                         </details>

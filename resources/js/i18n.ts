@@ -12,12 +12,16 @@ export const localeOptions: { value: Locale; label: string; short: string }[] = 
 type Dict = { [key: string]: string | Dict };
 
 const ptBR: Dict = {
+    theme: {
+        toggle: 'Alternar tema',
+    },
     nav: {
         pages: 'Páginas do site',
         blog: 'Blog',
         quote: 'Carrinho',
         panel: 'Painel',
         account: 'Minha conta',
+        login: 'Entrar',
     },
     hero: {
         eyebrow: 'Loja da fábrica',
@@ -230,12 +234,16 @@ const ptBR: Dict = {
 };
 
 const en: Dict = {
+    theme: {
+        toggle: 'Toggle theme',
+    },
     nav: {
         pages: 'Site pages',
         blog: 'Blog',
         quote: 'Cart',
         panel: 'Dashboard',
         account: 'My account',
+        login: 'Sign in',
     },
     hero: {
         eyebrow: 'Factory store',
@@ -447,12 +455,16 @@ const en: Dict = {
 };
 
 const es: Dict = {
+    theme: {
+        toggle: 'Cambiar tema',
+    },
     nav: {
         pages: 'Páginas del sitio',
         blog: 'Blog',
         quote: 'Carrito',
         panel: 'Panel',
         account: 'Mi cuenta',
+        login: 'Iniciar sesión',
     },
     hero: {
         eyebrow: 'Tienda de fábrica',
