@@ -16,7 +16,7 @@ import ServicesBlock from '../Blocks/ServicesBlock.vue';
 import TestimonialsBlock from '../Blocks/TestimonialsBlock.vue';
 import TextBlock from '../Blocks/TextBlock.vue';
 import SiteShell from '../components/SiteShell.vue';
-import SiteHead from '@/components/SiteHead.vue';
+import SiteHead from '../components/SiteHead.vue';
 import type { Block, NavigationItem, PageRecord } from '@modules/Page/resources/assets/js/types';
 
 const props = defineProps<{

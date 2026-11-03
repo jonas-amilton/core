@@ -3,7 +3,7 @@
 import SiteShell from '../components/SiteShell.vue';
 import type { NavigationItem } from '@modules/Page/resources/assets/js/types';
 import { useI18n } from '@/i18n';
-import SiteHead from '@/components/SiteHead.vue';
+import SiteHead from '../components/SiteHead.vue';
 
 type StoreItem = {
     id: number;

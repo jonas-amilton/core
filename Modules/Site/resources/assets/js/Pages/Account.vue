@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Link, router, usePage } from '@inertiajs/vue3';
-import SiteHead from '@/components/SiteHead.vue';
+import SiteHead from '../components/SiteHead.vue';
 import SiteShell from '../components/SiteShell.vue';
 import type { NavigationItem } from '@modules/Page/resources/assets/js/types';
 import { formatPrice } from '@/lib/format';

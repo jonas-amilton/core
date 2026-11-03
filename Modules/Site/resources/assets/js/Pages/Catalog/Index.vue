@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { Link, router, usePage } from '@inertiajs/vue3';
 import { ref } from 'vue';
-import SiteHead from '@/components/SiteHead.vue';
+import SiteHead from '../../components/SiteHead.vue';
 import ProductCard from '../../components/ProductCard.vue';
 import type { CardProduct } from '../../components/ProductCard.vue';
 import SiteShell from '../../components/SiteShell.vue';

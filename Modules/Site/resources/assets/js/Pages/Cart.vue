@@ -9,7 +9,7 @@ import { store } from '@/routes/quote';
 import { formatPrice } from '@/lib/format';
 import { siteFieldClasses } from '@/lib/formStyles';
 import { useI18n } from '@/i18n';
-import SiteHead from '@/components/SiteHead.vue';
+import SiteHead from '../components/SiteHead.vue';
 
 type CartItem = {
     id: number;
