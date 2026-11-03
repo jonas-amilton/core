@@ -16,7 +16,7 @@ final class IndexCatalogController
 {
     public function __invoke(Request $request, CatalogService $catalog, SiteNavigation $navigation): Response
     {
-        return Inertia::render('Catalog::Index', [
+        return Inertia::render('Site::Catalog/Index', [
             'products' => $catalog->products(
                 null,
                 null,

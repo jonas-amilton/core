@@ -22,21 +22,21 @@ import {
     useTemplateRef,
     watch,
 } from 'vue';
-import CtaBlock from '../Blocks/CtaBlock.vue';
-import ClientsBlock from '../Blocks/ClientsBlock.vue';
-import CareerBlock from '../Blocks/CareerBlock.vue';
-import CategoriesBlock from '../Blocks/CategoriesBlock.vue';
-import ContactBlock from '../Blocks/ContactBlock.vue';
-import FaqBlock from '../Blocks/FaqBlock.vue';
-import GridBlock from '../Blocks/GridBlock.vue';
-import HeroBlock from '../Blocks/HeroBlock.vue';
-import ImageBlock from '../Blocks/ImageBlock.vue';
-import NewsletterBlock from '../Blocks/NewsletterBlock.vue';
-import PostsBlock from '../Blocks/PostsBlock.vue';
-import ProductsBlock from '../Blocks/ProductsBlock.vue';
-import ServicesBlock from '../Blocks/ServicesBlock.vue';
-import TestimonialsBlock from '../Blocks/TestimonialsBlock.vue';
-import TextBlock from '../Blocks/TextBlock.vue';
+import CtaBlock from '@modules/Site/resources/assets/js/Blocks/CtaBlock.vue';
+import ClientsBlock from '@modules/Site/resources/assets/js/Blocks/ClientsBlock.vue';
+import CareerBlock from '@modules/Site/resources/assets/js/Blocks/CareerBlock.vue';
+import CategoriesBlock from '@modules/Site/resources/assets/js/Blocks/CategoriesBlock.vue';
+import ContactBlock from '@modules/Site/resources/assets/js/Blocks/ContactBlock.vue';
+import FaqBlock from '@modules/Site/resources/assets/js/Blocks/FaqBlock.vue';
+import GridBlock from '@modules/Site/resources/assets/js/Blocks/GridBlock.vue';
+import HeroBlock from '@modules/Site/resources/assets/js/Blocks/HeroBlock.vue';
+import ImageBlock from '@modules/Site/resources/assets/js/Blocks/ImageBlock.vue';
+import NewsletterBlock from '@modules/Site/resources/assets/js/Blocks/NewsletterBlock.vue';
+import PostsBlock from '@modules/Site/resources/assets/js/Blocks/PostsBlock.vue';
+import ProductsBlock from '@modules/Site/resources/assets/js/Blocks/ProductsBlock.vue';
+import ServicesBlock from '@modules/Site/resources/assets/js/Blocks/ServicesBlock.vue';
+import TestimonialsBlock from '@modules/Site/resources/assets/js/Blocks/TestimonialsBlock.vue';
+import TextBlock from '@modules/Site/resources/assets/js/Blocks/TextBlock.vue';
 import MediaPicker from '@modules/Media/resources/assets/js/components/MediaPicker.vue';
 import {
     blockLabels,

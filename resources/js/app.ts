@@ -32,17 +32,17 @@ void createInertiaApp({
     layout: (name) => {
         switch (true) {
             case name === 'Welcome':
-            case name === 'Page::Show':
             case name === 'Page::Preview':
-            case name === 'Blog::Feed':
-            case name === 'Blog::Article':
-            case name === 'Catalog::Index':
-            case name === 'Catalog::Show':
-            case name === 'Quote::Cart':
-            case name === 'Store::WhereToBuy':
-            case name === 'Settings::CookiePolicy':
-            case name === 'Search':
-            case name === 'Account':
+            case name === 'Site::Show':
+            case name === 'Site::Blog/Feed':
+            case name === 'Site::Blog/Article':
+            case name === 'Site::Catalog/Index':
+            case name === 'Site::Catalog/Show':
+            case name === 'Site::Cart':
+            case name === 'Site::WhereToBuy':
+            case name === 'Site::CookiePolicy':
+            case name === 'Site::Search':
+            case name === 'Site::Account':
                 return null;
             case name.startsWith('auth/'):
                 return AuthLayout;

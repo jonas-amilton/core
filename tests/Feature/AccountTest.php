@@ -50,7 +50,7 @@ class AccountTest extends TestCase
             ->get('/minha-conta')
             ->assertOk()
             ->assertInertia(fn (Assert $inertia) => $inertia
-                ->component('Account', false)
+                ->component('Site::Account', false)
                 ->has('orders', 1)
                 ->where('orders.0.id', $own->id)
                 ->where('orders.0.total', 200)
@@ -70,7 +70,7 @@ class AccountTest extends TestCase
             ->get('/minha-conta')
             ->assertOk()
             ->assertInertia(fn (Assert $inertia) => $inertia
-                ->component('Account', false)
+                ->component('Site::Account', false)
                 ->has('orders', 0)
             );
 

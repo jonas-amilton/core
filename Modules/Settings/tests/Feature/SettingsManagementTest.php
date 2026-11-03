@@ -38,7 +38,7 @@ class SettingsManagementTest extends TestCase
         $this->get(route('settings.cookie-policy'))
             ->assertOk()
             ->assertInertia(fn (Assert $inertia) => $inertia
-                ->component('Settings::CookiePolicy', false)
+                ->component('Site::CookiePolicy', false)
                 ->has('navigation')
                 ->where('cookieText', fn (string $text): bool => $text !== '')
             );

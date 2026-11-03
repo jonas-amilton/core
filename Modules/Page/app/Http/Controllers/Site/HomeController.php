@@ -23,7 +23,7 @@ final class HomeController
         $blocks = is_array($page['blocks'] ?? null) ? $page['blocks'] : [];
         $page['blocks'] = $content->resolve($blocks);
 
-        return Inertia::render('Page::Show', [
+        return Inertia::render('Site::Show', [
             'page' => $page,
             'navigation' => $navigation->items(),
         ]);

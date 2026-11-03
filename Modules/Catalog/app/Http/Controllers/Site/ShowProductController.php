@@ -39,7 +39,7 @@ final class ShowProductController
             'reviews' => fn ($query) => $query->where('approved', true)->latest(),
         ]);
 
-        return Inertia::render('Catalog::Show', [
+        return Inertia::render('Site::Catalog/Show', [
             'product' => $product->toPublicArray(),
             'related' => $product->related
                 ->map(fn (Product $item): array => $item->toSiteArray())

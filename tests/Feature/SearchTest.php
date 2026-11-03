@@ -42,7 +42,7 @@ class SearchTest extends TestCase
         $this->get('/busca?q=resistencia')
             ->assertOk()
             ->assertInertia(fn (Assert $inertia) => $inertia
-                ->component('Search', false)
+                ->component('Site::Search', false)
                 ->where('term', 'resistencia')
                 ->has('products', 1)
                 ->has('posts', 1)
@@ -57,7 +57,7 @@ class SearchTest extends TestCase
         $this->get('/busca')
             ->assertOk()
             ->assertInertia(fn (Assert $inertia) => $inertia
-                ->component('Search', false)
+                ->component('Site::Search', false)
                 ->where('term', '')
                 ->has('products', 0)
                 ->has('posts', 0)

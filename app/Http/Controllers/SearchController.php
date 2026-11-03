@@ -67,7 +67,7 @@ final class SearchController
                 ->all();
         }
 
-        return Inertia::render('Search', [
+        return Inertia::render('Site::Search', [
             'term' => $term,
             'products' => $products,
             'posts' => $posts,

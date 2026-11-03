@@ -53,14 +53,14 @@ class BlogManagementTest extends TestCase
         $this->get(route('blog.feed'))
             ->assertOk()
             ->assertInertia(fn (Assert $inertia) => $inertia
-                ->component('Blog::Feed', false)
+                ->component('Site::Blog/Feed', false)
                 ->has('posts', 1)
             );
 
         $this->get(route('blog.show', $post))
             ->assertOk()
             ->assertInertia(fn (Assert $inertia) => $inertia
-                ->component('Blog::Article', false)
+                ->component('Site::Blog/Article', false)
                 ->where('post.title', 'Novo artigo')
             );
     }
@@ -108,7 +108,7 @@ class BlogManagementTest extends TestCase
         $this->get(route('blog.category.show', $category))
             ->assertOk()
             ->assertInertia(fn (Assert $inertia) => $inertia
-                ->component('Blog::Feed', false)
+                ->component('Site::Blog/Feed', false)
                 ->has('posts', 1)
             );
 

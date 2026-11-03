@@ -17,7 +17,7 @@ final class IndexStoreController
     {
         $all = $stores->all();
 
-        return Inertia::render('Store::WhereToBuy', [
+        return Inertia::render('Site::WhereToBuy', [
             'physical' => $all
                 ->filter(fn (Store $store): bool => $store->kind === StoreKind::Physical)
                 ->map(fn (Store $store): array => $store->toSiteArray())

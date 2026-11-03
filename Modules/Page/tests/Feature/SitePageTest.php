@@ -36,14 +36,14 @@ class SitePageTest extends TestCase
         $this->get('/')
             ->assertOk()
             ->assertInertia(fn (Assert $inertia) => $inertia
-                ->component('Page::Show', false)
+                ->component('Site::Show', false)
                 ->where('page.slug', 'home')
             );
 
         $this->get('/home')
             ->assertOk()
             ->assertInertia(fn (Assert $inertia) => $inertia
-                ->component('Page::Show', false)
+                ->component('Site::Show', false)
                 ->where('page.slug', 'home')
             );
 
@@ -85,7 +85,7 @@ class SitePageTest extends TestCase
         $this->get('/sobre-nos')
             ->assertOk()
             ->assertInertia(fn (Assert $inertia) => $inertia
-                ->component('Page::Show', false)
+                ->component('Site::Show', false)
                 ->where('page.slug', 'sobre-nos')
                 ->where('page.title', 'Sobre nós')
             );
@@ -132,7 +132,7 @@ class SitePageTest extends TestCase
 
         $this->get('/sobre-nos')
             ->assertInertia(fn (Assert $inertia) => $inertia
-                ->component('Page::Show', false)
+                ->component('Site::Show', false)
                 ->has('page.blocks', 1)
                 ->where('page.blocks.0.body', 'Visível')
             );
@@ -149,7 +149,7 @@ class SitePageTest extends TestCase
         $this->get('/sobre-nos')
             ->assertOk()
             ->assertInertia(fn (Assert $inertia) => $inertia
-                ->component('Page::Show', false)
+                ->component('Site::Show', false)
                 ->has('navigation', 3)
                 ->where('navigation.0.slug', 'home')
                 ->where('navigation.1.slug', 'sobre-nos')

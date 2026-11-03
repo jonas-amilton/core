@@ -40,7 +40,7 @@ class QuoteTest extends TestCase
         $this->get(route('quote.cart'))
             ->assertOk()
             ->assertInertia(fn (Assert $inertia) => $inertia
-                ->component('Quote::Cart', false)
+                ->component('Site::Cart', false)
                 ->has('items', 1)
                 ->where('items.0.name', 'Resistência Cartucho')
                 ->where('items.0.quantity', 2)

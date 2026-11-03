@@ -17,7 +17,7 @@ final class ShowBlogController
     {
         abort_unless($post->isPublished(), 404);
 
-        return Inertia::render('Blog::Article', [
+        return Inertia::render('Site::Blog/Article', [
             'post' => $post->toPublicArray(),
             'navigation' => $navigation->items(),
             'latest' => $blog->publishedPosts(3)

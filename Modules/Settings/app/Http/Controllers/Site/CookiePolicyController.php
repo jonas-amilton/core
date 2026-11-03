@@ -13,7 +13,7 @@ final class CookiePolicyController
 {
     public function __invoke(SettingsService $settings, SiteNavigation $navigation): Response
     {
-        return Inertia::render('Settings::CookiePolicy', [
+        return Inertia::render('Site::CookiePolicy', [
             'cookieText' => $settings->get('cookie_text'),
             'navigation' => $navigation->items(),
         ]);

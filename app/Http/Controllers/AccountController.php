@@ -45,7 +45,7 @@ final class AccountController
             ->values()
             ->all() ?? [];
 
-        return Inertia::render('Account', [
+        return Inertia::render('Site::Account', [
             'orders' => $orders,
             'favorites' => $favorites,
             'navigation' => $navigation->items(),

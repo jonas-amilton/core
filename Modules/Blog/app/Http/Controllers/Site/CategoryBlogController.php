@@ -15,7 +15,7 @@ final class CategoryBlogController
 {
     public function __invoke(Category $category, BlogService $blog, SiteNavigation $navigation): Response
     {
-        return Inertia::render('Blog::Feed', [
+        return Inertia::render('Site::Blog/Feed', [
             'posts' => $blog->publishedPostsByCategory($category)
                 ->map(fn (Post $post): array => $post->toPublicArray())
                 ->all(),

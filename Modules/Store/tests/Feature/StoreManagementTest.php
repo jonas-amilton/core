@@ -65,7 +65,7 @@ class StoreManagementTest extends TestCase
         $this->get(route('stores.public'))
             ->assertOk()
             ->assertInertia(fn (Assert $inertia) => $inertia
-                ->component('Store::WhereToBuy', false)
+                ->component('Site::WhereToBuy', false)
                 ->has('physical', 1)
                 ->where('physical.0.name', 'Loja física')
                 ->has('online', 1)

@@ -38,7 +38,7 @@ final class PageController
         $blocks = is_array($data['blocks'] ?? null) ? $data['blocks'] : [];
         $data['blocks'] = $content->resolve($blocks);
 
-        return Inertia::render('Page::Show', [
+        return Inertia::render('Site::Show', [
             'page' => $data,
             'navigation' => $navigation->items(),
         ])->toResponse($request)->setStatusCode($status);

@@ -37,7 +37,7 @@ final class CartController
             ? $coupon->discountFor($subtotal)
             : 0.0;
 
-        return Inertia::render('Quote::Cart', [
+        return Inertia::render('Site::Cart', [
             'items' => $items,
             'subtotal' => $subtotal,
             'discount' => $discount,

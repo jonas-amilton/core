@@ -15,7 +15,7 @@ final class IndexBlogController
 {
     public function __invoke(BlogService $blog, SiteNavigation $navigation): Response
     {
-        return Inertia::render('Blog::Feed', [
+        return Inertia::render('Site::Blog/Feed', [
             'posts' => $blog->publishedPosts(12)
                 ->map(fn (Post $post): array => $post->toPublicArray())
                 ->all(),

@@ -30,7 +30,7 @@ class NotFoundPageTest extends TestCase
         $this->get('/nao-existe')
             ->assertNotFound()
             ->assertInertia(fn (Assert $inertia) => $inertia
-                ->component('Page::Show', false)
+                ->component('Site::Show', false)
                 ->where('page.slug', '404')
                 ->where('page.title', 'Página não encontrada')
                 ->has('page.blocks', 1)
@@ -49,7 +49,7 @@ class NotFoundPageTest extends TestCase
 
         $this->get('/')
             ->assertInertia(fn (Assert $inertia) => $inertia
-                ->component('Page::Show', false)
+                ->component('Site::Show', false)
                 ->has('navigation', 1)
                 ->where('navigation.0.slug', 'home')
             );

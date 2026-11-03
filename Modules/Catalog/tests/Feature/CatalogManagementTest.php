@@ -74,7 +74,7 @@ class CatalogManagementTest extends TestCase
         $this->get(route('catalog.index'))
             ->assertOk()
             ->assertInertia(fn (Assert $inertia) => $inertia
-                ->component('Catalog::Index', false)
+                ->component('Site::Catalog/Index', false)
                 ->has('products.data', 1)
                 ->where('products.data.0.name', 'Resistência Cartucho')
                 ->where('products.data.0.price', '189.90')
@@ -83,7 +83,7 @@ class CatalogManagementTest extends TestCase
         $this->get(route('catalog.show', $product))
             ->assertOk()
             ->assertInertia(fn (Assert $inertia) => $inertia
-                ->component('Catalog::Show', false)
+                ->component('Site::Catalog/Show', false)
                 ->where('product.name', 'Resistência Cartucho')
                 ->where('product.sku', 'C-AB')
                 ->where('product.price', '189.90')
@@ -111,7 +111,7 @@ class CatalogManagementTest extends TestCase
         $this->get(route('catalog.category', $parent))
             ->assertOk()
             ->assertInertia(fn (Assert $inertia) => $inertia
-                ->component('Catalog::Index', false)
+                ->component('Site::Catalog/Index', false)
                 ->has('products.data', 1)
             );
 
