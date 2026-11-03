@@ -26,12 +26,20 @@ final class ExportSubscribersController
             foreach ($subscribers as $subscriber) {
                 /** @var Subscriber $subscriber */
                 fputcsv($handle, [
-                    $subscriber->email,
+                    $this->csvCell($subscriber->email),
                     $subscriber->created_at?->toDateTimeString(),
                 ], ';');
             }
 
             fclose($handle);
         }, 'inscritos.csv', ['Content-Type' => 'text/csv; charset=UTF-8']);
+    }
+
+    /**
+     * Force spreadsheet apps to treat formula triggers as text.
+     */
+    private function csvCell(string $value): string
+    {
+        return preg_match('/^[=+\-@\t\r]/', $value) === 1 ? "'".$value : $value;
     }
 }

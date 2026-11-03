@@ -118,4 +118,15 @@ class ContactTest extends TestCase
             ->assertOk()
             ->assertHeader('content-type', 'text/csv; charset=UTF-8');
     }
+
+    public function test_subscriber_export_neutralizes_spreadsheet_formulas(): void
+    {
+        $this->post(route('newsletter.store'), ['email' => '=1+1@example.com']);
+
+        $csv = $this->actingAs(User::factory()->create())
+            ->get(route('contact.subscriber.export'))
+            ->streamedContent();
+
+        $this->assertStringContainsString("'=1+1@example.com", $csv);
+    }
 }
