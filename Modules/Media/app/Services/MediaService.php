@@ -4,10 +4,13 @@ declare(strict_types=1);
 
 namespace Modules\Media\Services;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
+use Modules\Blog\Models\Post;
+use Modules\Catalog\Models\Product;
 use Modules\Media\Contracts\MediaRepository;
 use Modules\Media\Data\MediaData;
 use Modules\Media\Models\Media;
@@ -59,17 +62,23 @@ final class MediaService
 
         if ($usage > 0) {
             throw ValidationException::withMessages([
-                'media' => "Este arquivo está sendo usado em {$usage} página(s) e não pode ser excluído.",
+                'media' => "Este arquivo está em uso em {$usage} conteúdo(s) do site e não pode ser excluído.",
             ]);
         }
 
-        Storage::disk($media->disk)->delete($media->path);
+        // Row first: if this fails, the file is still referenced. The other
+        // order leaves a record pointing at a file that no longer exists.
         $this->media->delete($media);
+        Storage::disk($media->disk)->delete($media->path);
     }
 
     public function usage(Media $media): int
     {
-        return $this->pages->countUsingMedia($media->id);
+        // Pages keep media ids inside their blocks; products attach media
+        // through a pivot and blog covers store the URL as a plain string.
+        return $this->pages->countUsingMedia($media->id)
+            + Product::query()->whereHas('media', fn (Builder $query): Builder => $query->whereKey($media->id))->count()
+            + Post::query()->where('cover', $media->url())->count();
     }
 
     /**

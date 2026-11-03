@@ -150,10 +150,10 @@ function remove(): void {
                     class="rounded-sm border border-stone-200 p-3 text-xs text-stone-600 dark:border-stone-800 dark:text-stone-400"
                 >
                     <p v-if="usage > 0">
-                        Usado em {{ usage }} página(s). Para excluir, remova o
-                        arquivo dessas páginas primeiro.
+                        Em uso em {{ usage }} conteúdo(s) do site. Para excluir,
+                        remova o arquivo deles primeiro.
                     </p>
-                    <p v-else>Nenhuma página usa este arquivo.</p>
+                    <p v-else>Nenhum conteúdo usa este arquivo.</p>
                 </div>
 
                 <button

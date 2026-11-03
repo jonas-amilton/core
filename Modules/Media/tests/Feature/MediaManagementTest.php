@@ -9,6 +9,8 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Testing\AssertableInertia as Assert;
+use Modules\Blog\Models\Post;
+use Modules\Catalog\Models\Product;
 use Modules\Media\Models\Media;
 use Modules\Page\Enums\PageStatus;
 use Modules\Page\Models\Page;
@@ -150,6 +152,46 @@ class MediaManagementTest extends TestCase
             ]],
             'status' => PageStatus::Draft,
         ]);
+
+        $this->delete(route('media.destroy', $media))
+            ->assertRedirect()
+            ->assertSessionHasErrors('media');
+
+        $this->assertDatabaseHas('media', ['id' => $media->id]);
+        Storage::disk('public')->assertExists($media->path);
+    }
+
+    public function test_media_used_as_a_blog_cover_cannot_be_deleted(): void
+    {
+        $this->actingAs(User::factory()->create());
+
+        $this->post(route('media.store'), [
+            'file' => UploadedFile::fake()->image('capa.jpg'),
+        ]);
+
+        $media = Media::firstOrFail();
+
+        Post::factory()->create(['slug' => 'capa-media', 'cover' => $media->url()]);
+
+        $this->delete(route('media.destroy', $media))
+            ->assertRedirect()
+            ->assertSessionHasErrors('media');
+
+        $this->assertDatabaseHas('media', ['id' => $media->id]);
+        Storage::disk('public')->assertExists($media->path);
+    }
+
+    public function test_media_used_by_a_product_cannot_be_deleted(): void
+    {
+        $this->actingAs(User::factory()->create());
+
+        $this->post(route('media.store'), [
+            'file' => UploadedFile::fake()->image('produto.jpg'),
+        ]);
+
+        $media = Media::firstOrFail();
+
+        Product::factory()->create(['slug' => 'produto-media'])->media()->attach($media->id);
 
         $this->delete(route('media.destroy', $media))
             ->assertRedirect()
