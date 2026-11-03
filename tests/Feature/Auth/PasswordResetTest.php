@@ -79,6 +79,20 @@ class PasswordResetTest extends TestCase
         });
     }
 
+    public function test_the_reset_link_response_does_not_reveal_whether_the_email_exists(): void
+    {
+        Notification::fake();
+
+        User::factory()->create(['email' => 'exists@example.com']);
+
+        $unknown = $this->post(route('password.email'), ['email' => 'nobody@example.com']);
+        $known = $this->post(route('password.email'), ['email' => 'exists@example.com']);
+
+        $unknown->assertSessionHasNoErrors()->assertSessionHas('status');
+        $known->assertSessionHasNoErrors()->assertSessionHas('status');
+        $this->assertSame($unknown->getSession()->get('status'), $known->getSession()->get('status'));
+    }
+
     public function test_password_cannot_be_reset_with_invalid_token(): void
     {
         $user = User::factory()->create();

@@ -11,6 +11,7 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rules\Password;
 use Inertia\Inertia;
+use Laravel\Fortify\Contracts\FailedPasswordResetLinkRequestResponse;
 use Laravel\Fortify\Contracts\LoginResponse;
 use Laravel\Fortify\Contracts\RegisterResponse;
 use Laravel\Fortify\Features;
@@ -30,6 +31,10 @@ class FortifyServiceProvider extends ServiceProvider
         $this->app->singleton(
             RegisterResponse::class,
             \App\Http\Responses\RegisterResponse::class,
+        );
+        $this->app->singleton(
+            FailedPasswordResetLinkRequestResponse::class,
+            \App\Http\Responses\FailedPasswordResetLinkRequestResponse::class,
         );
     }
 
