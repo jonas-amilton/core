@@ -112,4 +112,17 @@ class StoreManagementTest extends TestCase
 
         $this->assertSame(0, Store::query()->count());
     }
+
+    public function test_store_links_reject_executable_schemes(): void
+    {
+        $this->actingAs(User::factory()->create());
+
+        $this->post(route('stores.store'), [
+            'name' => 'Loja',
+            'kind' => 'online',
+            'url' => 'javascript:alert(1)',
+        ])->assertSessionHasErrors('url');
+
+        $this->assertSame(0, Store::query()->count());
+    }
 }

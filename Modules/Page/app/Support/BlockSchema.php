@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Modules\Page\Support;
 
+use App\Rules\SafeLink;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
 use Modules\Page\Enums\BlockType;
@@ -17,69 +18,73 @@ final class BlockSchema
     /**
      * Field rules per block type; `grid` is the only type with nested items.
      *
-     * @var array<string, array<string, array<int, string>>>
+     * @return array<string, array<string, array<int, string|object>>>
      */
-    private const RULES = [
-        'hero' => [
-            'title' => ['required', 'string', 'max:120'],
-            'subtitle' => ['nullable', 'string', 'max:240'],
-            'button_label' => ['nullable', 'string', 'max:40'],
-            'button_href' => ['nullable', 'string', 'max:255'],
-        ],
-        'text' => [
-            'body' => ['required', 'string', 'max:5000'],
-        ],
-        'image' => [
-            'src' => ['required', 'string', 'max:2048'],
-            'alt' => ['nullable', 'string', 'max:200'],
-            'caption' => ['nullable', 'string', 'max:200'],
-            'media_id' => ['nullable', 'integer', 'exists:media,id'],
-        ],
-        'cta' => [
-            'title' => ['required', 'string', 'max:120'],
-            'description' => ['nullable', 'string', 'max:300'],
-            'button_label' => ['required', 'string', 'max:40'],
-            'button_href' => ['nullable', 'string', 'max:255'],
-        ],
-        'grid' => [],
-        'services' => [
-            'title' => ['nullable', 'string', 'max:120'],
-            'subtitle' => ['nullable', 'string', 'max:240'],
-        ],
-        'testimonials' => [
-            'title' => ['nullable', 'string', 'max:120'],
-        ],
-        'faq' => [
-            'title' => ['nullable', 'string', 'max:120'],
-        ],
-        'clients' => [
-            'title' => ['nullable', 'string', 'max:120'],
-        ],
-        'posts' => [
-            'title' => ['nullable', 'string', 'max:120'],
-            'limit' => ['nullable', 'integer', 'min:1', 'max:12'],
-        ],
-        'products' => [
-            'title' => ['nullable', 'string', 'max:120'],
-            'limit' => ['nullable', 'integer', 'min:1', 'max:12'],
-        ],
-        'categories' => [
-            'title' => ['nullable', 'string', 'max:120'],
-            'subtitle' => ['nullable', 'string', 'max:240'],
-        ],
-        'contact' => [
-            'title' => ['nullable', 'string', 'max:120'],
-            'subtitle' => ['nullable', 'string', 'max:240'],
-        ],
-        'career' => [
-            'title' => ['nullable', 'string', 'max:120'],
-            'subtitle' => ['nullable', 'string', 'max:240'],
-        ],
-        'newsletter' => [
-            'title' => ['nullable', 'string', 'max:120'],
-            'description' => ['nullable', 'string', 'max:300'],
-        ],
-    ];
+    private static function rules(): array
+    {
+        return [
+            'hero' => [
+                'title' => ['required', 'string', 'max:120'],
+                'subtitle' => ['nullable', 'string', 'max:240'],
+                'button_label' => ['nullable', 'string', 'max:40'],
+                'button_href' => ['nullable', 'string', 'max:255', new SafeLink],
+            ],
+            'text' => [
+                'body' => ['required', 'string', 'max:5000'],
+            ],
+            'image' => [
+                'src' => ['required', 'string', 'max:2048'],
+                'alt' => ['nullable', 'string', 'max:200'],
+                'caption' => ['nullable', 'string', 'max:200'],
+                'media_id' => ['nullable', 'integer', 'exists:media,id'],
+            ],
+            'cta' => [
+                'title' => ['required', 'string', 'max:120'],
+                'description' => ['nullable', 'string', 'max:300'],
+                'button_label' => ['required', 'string', 'max:40'],
+                'button_href' => ['nullable', 'string', 'max:255', new SafeLink],
+            ],
+            'grid' => [],
+            'services' => [
+                'title' => ['nullable', 'string', 'max:120'],
+                'subtitle' => ['nullable', 'string', 'max:240'],
+            ],
+            'testimonials' => [
+                'title' => ['nullable', 'string', 'max:120'],
+            ],
+            'faq' => [
+                'title' => ['nullable', 'string', 'max:120'],
+            ],
+            'clients' => [
+                'title' => ['nullable', 'string', 'max:120'],
+            ],
+            'posts' => [
+                'title' => ['nullable', 'string', 'max:120'],
+                'limit' => ['nullable', 'integer', 'min:1', 'max:12'],
+            ],
+            'products' => [
+                'title' => ['nullable', 'string', 'max:120'],
+                'limit' => ['nullable', 'integer', 'min:1', 'max:12'],
+            ],
+            'categories' => [
+                'title' => ['nullable', 'string', 'max:120'],
+                'subtitle' => ['nullable', 'string', 'max:240'],
+            ],
+            'contact' => [
+                'title' => ['nullable', 'string', 'max:120'],
+                'subtitle' => ['nullable', 'string', 'max:240'],
+            ],
+            'career' => [
+                'title' => ['nullable', 'string', 'max:120'],
+                'subtitle' => ['nullable', 'string', 'max:240'],
+            ],
+            'newsletter' => [
+                'title' => ['nullable', 'string', 'max:120'],
+                'description' => ['nullable', 'string', 'max:300'],
+            ],
+        ];
+
+    }
 
     /**
      * @param  array<int, mixed>  $blocks
@@ -104,7 +109,7 @@ final class BlockSchema
             $rules["blocks.{$index}.type"] = ['required', 'in:'.implode(',', BlockType::values())];
             $rules["blocks.{$index}.hidden"] = ['boolean'];
 
-            foreach (self::RULES[$type] as $field => $fieldRules) {
+            foreach (self::rules()[$type] as $field => $fieldRules) {
                 $rules["blocks.{$index}.{$field}"] = $fieldRules;
             }
 
@@ -139,7 +144,7 @@ final class BlockSchema
                 $normalized['hidden'] = true;
             }
 
-            foreach (array_keys(self::RULES[$type]) as $field) {
+            foreach (array_keys(self::rules()[$type]) as $field) {
                 $normalized[$field] = $field === 'limit'
                     ? (int) ($block[$field] ?? 3)
                     : ($block[$field] ?? null);

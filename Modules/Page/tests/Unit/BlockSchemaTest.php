@@ -122,4 +122,23 @@ class BlockSchemaTest extends TestCase
             'title' => str_repeat('a', 121),
         ]]);
     }
+
+    public function test_executable_schemes_are_rejected_in_block_links(): void
+    {
+        foreach (['hero', 'cta'] as $type) {
+            try {
+                BlockSchema::validate([[
+                    'id' => 'b1',
+                    'type' => $type,
+                    'title' => 'Título',
+                    'button_label' => 'Ir',
+                    'button_href' => 'javascript:alert(1)',
+                ]]);
+
+                $this->fail("Esperava erro de validação para o bloco {$type}.");
+            } catch (ValidationException $exception) {
+                $this->assertArrayHasKey('blocks.0.button_href', $exception->errors());
+            }
+        }
+    }
 }

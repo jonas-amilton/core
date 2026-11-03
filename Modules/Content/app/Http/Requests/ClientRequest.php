@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Modules\Content\Http\Requests;
 
+use App\Rules\SafeLink;
 use Illuminate\Foundation\Http\FormRequest;
 use Modules\Content\Data\ClientData;
 
@@ -22,7 +23,7 @@ final class ClientRequest extends FormRequest
         return [
             'name' => ['required', 'string', 'max:120'],
             'logo' => ['nullable', 'string', 'max:2048'],
-            'url' => ['nullable', 'string', 'max:2048'],
+            'url' => ['nullable', 'string', 'max:2048', new SafeLink],
             'sort_order' => ['nullable', 'integer', 'min:0', 'max:9999'],
         ];
     }

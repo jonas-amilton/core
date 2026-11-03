@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Modules\Store\Http\Requests;
 
+use App\Rules\SafeLink;
 use App\Support\TranslationInput;
 use Illuminate\Foundation\Http\FormRequest;
 use Modules\Store\Data\StoreData;
@@ -16,7 +17,7 @@ final class StoreRequest extends FormRequest
     }
 
     /**
-     * @return array<string, array<int, string>>
+     * @return array<string, array<int, mixed>>
      */
     public function rules(): array
     {
@@ -25,7 +26,7 @@ final class StoreRequest extends FormRequest
             'kind' => ['required', 'in:physical,online'],
             'address' => ['nullable', 'string', 'max:255'],
             'phone' => ['nullable', 'string', 'max:60'],
-            'url' => ['nullable', 'string', 'max:2048'],
+            'url' => ['nullable', 'string', 'max:2048', new SafeLink],
             'position' => ['nullable', 'integer', 'min:0', 'max:9999'],
             'translations' => ['nullable', 'array'],
             'translations.*.name' => ['nullable', 'string', 'max:150'],
